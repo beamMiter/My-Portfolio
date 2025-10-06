@@ -121,7 +121,7 @@ export default function Navbar() {
           : 'bg-black/45 border-b border-transparent',
       ].join(' ')}
     >
-      <div className="mx-auto max-w-[1200px] h-16 px-4 md:px-6 flex items-center justify-between">
+      <div className="mx-auto max-w-[1200px] h-20 px-4 md:px-6 flex items-center justify-between">
         {/* Brand → ไปหน้าแรก '/' */}
         <Link
           href="/"
@@ -138,7 +138,7 @@ export default function Navbar() {
 
         {/* Center nav (desktop) */}
         <div className="hidden lg:flex">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 shadow-inner shadow-black/30">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-2.5 shadow-inner shadow-black/30">
             <ul className="flex items-center gap-1">
               {LINKS.map((item) => {
                 const isActive = pathname === HOME_BASE && activeSection === item.sectionId;
@@ -165,10 +165,10 @@ export default function Navbar() {
         {/* Right actions */}
         <div className="flex items-center gap-2">
           <IconBtn label="LinkedIn" onClick={openLinkedIn}>
-            <Linkedin className="h-5 w-5" />
+            <Linkedin className="h-6 w-6" />
           </IconBtn>
           <IconBtn label="GitHub" onClick={openGit}>
-            <Github className="h-5 w-5" />
+            <Github className="h-6 w-6" />
           </IconBtn>
 
           {/* mobile menu button */}
@@ -176,9 +176,9 @@ export default function Navbar() {
             type="button"
             aria-label="Open menu"
             onClick={() => setOpen(v => !v)}
-            className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 hover:text-white transition"
+            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 hover:text-white transition"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
@@ -243,7 +243,7 @@ function AnimatedText({ text }: { text: string }) {
   );
 }
 
-/** Small round icon button */
+/** Small round icon button (ขยายขนาดให้พอดีกับ navbar h-20) */
 function IconBtn({
   label,
   onClick,
@@ -259,7 +259,7 @@ function IconBtn({
       aria-label={label}
       onClick={onClick}
       title={label}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
     >
       {children}
     </button>
