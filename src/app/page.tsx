@@ -1,103 +1,116 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useEffect, useMemo, useState } from "react";
+import RubikCubeMini from "@/components/RubikCubeMini";
+import { motion, AnimatePresence } from "framer-motion";
+import HeroLeftAtomSpin from "@/components/HeroLeftAtomSpin";
+
+const TITLES = [
+  "TECHIN JETSRIBUMRUNG",
+  "Full-stack Developer",
+  "DevOps Engineer",
+  "AI Workflow Architect",
+];
+const SWITCH_MS = 4000; 
+
+function VerticalTicker({ items = TITLES, interval = SWITCH_MS }: { items?: string[]; interval?: number }) {
+  const [i, setI] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setI((v) => (v + 1) % items.length), interval);
+    return () => clearInterval(id);
+  }, [items.length, interval]);
+
+  const line = "1.3em";
+  const padTop = "0.05em"; 
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <span
+      className="relative inline-block overflow-hidden align-baseline"
+      style={{
+        height: line,
+        lineHeight: line,
+        verticalAlign: "baseline",
+      }}
+    >
+      <AnimatePresence mode="popLayout">
+        <motion.span
+          key={items[i]}
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: "0%", opacity: 1 }}
+          exit={{ y: "-100%", opacity: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="accent-text font-semibold inline-block will-change-transform"
+          style={{ lineHeight: line, paddingTop: padTop }}
+        >
+          {items[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default function HomePage() {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 20);
+    return () => clearTimeout(t);
+  }, []);
+
+  const highlights = useMemo(
+    () => ["Hospitals", "PR portals", "AI workflows"],
+    []
+  );
+
+  return (
+    <main className="bg-black text-white min-h-screen">
+      <style jsx global>{`
+        .headline { line-height: 1.06; letter-spacing: -0.02em; }
+        .accent-text {
+          background: linear-gradient(90deg, #10b981, #22d3ee);
+          -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        @keyframes gradient-move {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-move { background-size: 200% 200%; animation: gradient-move 8s linear infinite; }
+      `}</style>
+      <header className={`relative ${loaded ? "opacity-100" : "opacity-0"} transition-opacity duration-500`}>
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6 pt-24 md:pt-28 pb-16 min-h-[72svh] flex items-center">
+          <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-[440px_minmax(0,1fr)]">
+            <aside className="self-start">
+              <HeroLeftAtomSpin 
+              color="#8C8C8C"
+                rx={36}
+                ry={86}
+                dotR={8}
+                topSec={10}
+                leftSec={8}
+                rightSec={12}
+              />
+            </aside>
+
+            <div className="flex flex-col justify-center lg:pl-2">
+              <p className="mb-3 text-[18px] md:text-2xl text-zinc-300 leading-[1.3] flex items-baseline gap-1">
+                <span className="relative -top-[1px]">Hello, I&apos;m</span>
+                <VerticalTicker />
+              </p>
+
+              <h1 className="headline text-[clamp(32px,6.2vw,58px)] font-semibold max-w-[22ch]">
+                I build <span className="accent-text font-semibold">real-world systems</span> for {highlights.join(", ")} in Thailand
+              </h1>
+
+              <p className="mt-5 text-[15px] leading-relaxed text-zinc-300 max-w-[68ch]">
+                Next.js + Laravel + MySQL • Docker/CI • n8n orchestration • Secure automation for government-style ops
+              </p>
+
+              <div className="mt-8 border-t border-white/10" />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </header>
+    </main>
   );
 }
