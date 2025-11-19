@@ -1,22 +1,17 @@
-// app/page.tsx
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
 import RubikCubeMini from "@/components/RubikCubeMini";
 import { motion, AnimatePresence } from "framer-motion";
 
-/** ===== Config ===== */
 const TITLES = [
   "TECHIN JETSRIBUMRUNG",
   "Full-stack Developer",
   "DevOps Engineer",
   "AI Workflow Architect",
 ];
-const SWITCH_MS = 4000; // ความถี่ในการสลับข้อความ (ช้าลง)
+const SWITCH_MS = 4000; 
 
-/** =========================
- *  VerticalTicker — แบบเดิม (slide) แต่กันโดนกิน + baseline ตรง
- * ========================= */
 function VerticalTicker({ items = TITLES, interval = SWITCH_MS }: { items?: string[]; interval?: number }) {
   const [i, setI] = useState(0);
 
@@ -25,9 +20,8 @@ function VerticalTicker({ items = TITLES, interval = SWITCH_MS }: { items?: stri
     return () => clearInterval(id);
   }, [items.length, interval]);
 
-  // ใช้ em เพื่อให้สัดส่วนสัมพันธ์กับฟอนต์
-  const line = "1.3em"; // ความสูงบรรทัดคงที่
-  const padTop = "0.05em"; // กันโดนเฉือนหัวนิดหน่อย
+  const line = "1.3em"; 
+  const padTop = "0.05em";
 
   return (
     <span
@@ -44,7 +38,7 @@ function VerticalTicker({ items = TITLES, interval = SWITCH_MS }: { items?: stri
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: "0%", opacity: 1 }}
           exit={{ y: "-100%", opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} // นุ่มขึ้นเล็กน้อย
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="accent-text font-semibold inline-block will-change-transform"
           style={{ lineHeight: line, paddingTop: padTop }}
         >
@@ -55,9 +49,6 @@ function VerticalTicker({ items = TITLES, interval = SWITCH_MS }: { items?: stri
   );
 }
 
-/** =========================
- *   PAGE
- * ========================= */
 export default function HomePage() {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {

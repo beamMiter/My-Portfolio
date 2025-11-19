@@ -16,41 +16,41 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "PPK Screening & Referral System",
+    title: "PPK Screening Recommentdation",
     image: "/images/projects/ppk-referral.jpg",
-    tech: ["Next.js", "Laravel", "MySQL", "Docker", "CI/CD"],
+    tech: ["Next.js", "Laravel", "MySQL",],
     path: "/projects/ppk-screening",
     repo: "https://github.com/iMookatayou/PPK-Screening-Recommentdation",
   },
   {
     title: "PPK Kiosk Queue System",
     image: "/images/projects/ppk-kiosk.jpg",
-    tech: ["Next.js", "React", "TypeScript", "Laravel", "MySQL", "Docker"],
+    tech: ["Next.js", "Laravel", "MySQL"],
     path: "/projects/ppk-kiosk",
     repo: "https://github.com/iMookatayou/PPK-Kiosk-Queue-System",
   },
   {
-    title: "Realtime Chat with LINE & Facebook",
+    title: "Home Service",
     image: "/images/projects/realtime-chat.jpg",
-    tech: ["Node.js", "WebSocket", "MySQL"],
+    tech: ["Flutter", "Golang", "Postgresql"],
     href: "#",
   },
   {
-    title: "CSGAME Website",
+    title: "PPK Asset Repair",
     image: "/images/projects/csgame.jpg",
-    tech: ["PHP", "Node.js", "MySQL"],
+    tech: ["Laravel", "MySQL"],
     href: "#",
   },
   {
     title: "Special Disease Surveillance Dashboard",
     image: "/images/projects/surveillance.jpg",
-    tech: ["Next.js", "n8n", "Tailwind", "CI/CD"],
+    tech: ["Next.js", "Node.js", "Mysql"],
     href: "#",
   },
   {
-    title: "PR & Content Automation (AI+n8n)",
+    title: "PPK PR",
     image: "/images/projects/pr-automation.jpg",
-    tech: ["n8n", "AI Workflow", "Laravel"],
+    tech: ["Next.js", "Laravel", "Mysql", "n8n"],
     href: "#",
   },
 ];

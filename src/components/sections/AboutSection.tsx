@@ -60,53 +60,48 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="scroll-mt-28 py-16 border-b border-white/10"
+      className="scroll-mt-28 py-16 bg-black border-b border-white/10"
       aria-label="About"
     >
       <div className="mx-auto max-w-[1200px] px-6">
-        {/* ===== Header (แบบเก่า) ===== */}
+        {/* Header */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-xs tracking-[.3em] text-zinc-400"
+          className="text-xs tracking-[.3em] text-zinc-500"
         >
           ABOUT
         </motion.p>
 
         <div className="mt-4 grid gap-10 md:grid-cols-[1.05fr_0.95fr] items-start">
-          {/* ===== LEFT: Timeline (MY RESUME) ===== */}
+          {/* LEFT: Timeline */}
           <div>
-            {/* Chip */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs tracking-[.28em] text-zinc-400">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/60 px-3 py-1 text-xs tracking-[.28em] text-zinc-400">
               MY RESUME
             </div>
 
-            <h3 className="mt-3 text-2xl md:text-3xl font-semibold text-white">
+            <h3 className="mt-3 text-2xl md:text-3xl font-semibold text-[#10B981]">
               Education &amp; Experience
             </h3>
 
             <div className="mt-6 relative">
-              {/* Vertical line */}
               <div className="absolute left-[10px] top-0 bottom-0 w-px bg-white/10" />
 
               <ul className="space-y-10">
                 {timeline.map((item, idx) => (
                   <li key={idx} className="relative pl-10">
-                    {/* Dot */}
-                    <span className="absolute left-[6px] top-2 h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(16,185,129,0.15)]" />
+                    <span className="absolute left-[6px] top-2 h-2.5 w-2.5 rounded-full bg-[#10B981] shadow-[0_0_0_3px_rgba(16,185,129,0.2)]" />
 
-                    {/* Period pill */}
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-zinc-300">
                       <Calendar className="h-3.5 w-3.5 text-zinc-400" />
                       {item.period}
                     </div>
 
-                    {/* Card */}
                     <div className="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                        <h4 className="text-lg font-semibold text-white">
+                        <h4 className="text-lg font-semibold text-[#10B981]">
                           {item.title}
                         </h4>
                         <span className="text-zinc-400">[ {item.org} ]</span>
@@ -130,12 +125,12 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* ===== RIGHT: Intro (หัวข้อแบบเก่า) ===== */}
+          {/* RIGHT: Intro */}
           <div>
-            <h2 className="text-4xl md:text-5xl font-black leading-tight">
+            <h2 className="text-4xl md:text-5xl font-black leading-tight text-[#10B981]">
               I build{" "}
-              <span className="text-emerald-400">real-world systems</span> for
-              hospitals &amp; government-style ops.
+              <span className="text-[#34D399]">real-world systems</span>{" "}
+              for hospitals &amp; government-style ops.
             </h2>
 
             <p className="mt-5 max-w-2xl text-zinc-300">
