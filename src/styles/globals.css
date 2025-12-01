@@ -178,7 +178,6 @@ html,body{
   transition:left 60ms linear, top 60ms linear;
 }
 
-/* เคารพผู้ใช้ที่ลดแอนิเมชัน */
 @media (prefers-reduced-motion: reduce){
   .bg-spot::after{ transition:none; }
 }

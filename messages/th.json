@@ -1,0 +1,13 @@
+{
+  "Home": {
+    "title": "ผมใช้ AI หลายตัวยังไงในงานจริง",
+    "subtitle": "โซ่เครื่องมือ (toolchain) ที่ใช้ทั้ง dev, design และ automation จริง ๆ",
+    "cta": "ดู workflow ของผม"
+  },
+  "Navbar": {
+    "home": "หน้าแรก",
+    "projects": "โปรเจกต์",
+    "contact": "ติดต่อ",
+    "language": "ภาษา"
+  }
+}

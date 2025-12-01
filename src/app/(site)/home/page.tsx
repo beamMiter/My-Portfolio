@@ -9,7 +9,6 @@ import ProjectsSection from "@/components/sections/ProjectsSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import ContactSection from "@/components/sections/ContactSection";
 
-/** ===== เลื่อนอัตโนมัติเมื่อมี #section ใน URL ===== */
 function HashScroller() {
   useEffect(() => {
     const hash = window.location.hash?.slice(1);
@@ -28,7 +27,6 @@ export default function HomePage() {
     <main className="min-h-screen bg-black text-white">
       <HashScroller />
 
-      {/* ===== Global accent gradient ===== */}
       <style jsx global>{`
         :root {
           --accent-1: #22d3ee; /* cyan-400 */
@@ -48,13 +46,11 @@ export default function HomePage() {
         }
       `}</style>
 
-      {/* ===== HERO / INTRO ===== */}
       <section
         id="home"
         className="scroll-mt-28 min-h-[80svh] flex items-center bg-black text-white"
       >
         <div className="mx-auto max-w-[1200px] px-6">
-          {/* Intro line */}
           <p className="text-2xl md:text-3xl font-semibold text-white mb-4 tracking-tight">
             Hello, I&apos;m{" "}
             <span className="text-emerald-400 font-bold">
@@ -62,14 +58,12 @@ export default function HomePage() {
             </span>
           </p>
 
-          {/* Headline */}
           <h1 className="text-[clamp(30px,5.5vw,56px)] font-medium leading-tight text-zinc-100">
             A developer passionate about{" "}
             <span className="text-emerald-300">building clean & purposeful systems</span>{" "}
             for hospitals, public organizations, and real-world users
           </h1>
 
-          {/* Subtext */}
           <p className="mt-6 max-w-[70ch] text-zinc-400 text-[16px] leading-relaxed">
             I love crafting infrastructures that are stable, scalable, and
             thoughtfully designed — combining <strong>Next.js</strong>,{" "}
@@ -77,7 +71,6 @@ export default function HomePage() {
             seamless, production-grade automation for real-world operations
           </p>
 
-          {/* CTA buttons */}
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#about"
@@ -95,16 +88,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== WHAT I DO ===== */}
       <ServicesSection />
 
-      {/* ===== ABOUT ===== */}
       <AboutSection />
 
-      {/* ===== PROJECTS / PORTFOLIO ===== */}
       <ProjectsSection />
 
-      {/* ===== CONTACT ===== */}
       <ContactSection />
     </main>
   );

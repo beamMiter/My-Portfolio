@@ -1,0 +1,13 @@
+{
+  "Home": {
+    "title": "How I use multiple AI in real projects",
+    "subtitle": "A practical toolchain for development, design, and automation.",
+    "cta": "See my workflow"
+  },
+  "Navbar": {
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact",
+    "language": "Language"
+  }
+}

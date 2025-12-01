@@ -7,6 +7,7 @@ import { Github, Linkedin, Menu, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type LinkItem = { name: string; sectionId: string };
+
 const LINKS: LinkItem[] = [
   { name: 'Home',      sectionId: 'home' },
   { name: 'What I do', sectionId: 'what-i-do' },
@@ -15,7 +16,7 @@ const LINKS: LinkItem[] = [
   { name: 'Contact',   sectionId: 'contact' },
 ];
 
-const HOME_BASE = '/Home';
+const HOME_BASE = '/home';
 
 function cx(...a: Array<string | false | null | undefined>) {
   return a.filter(Boolean).join(' ');
@@ -31,26 +32,23 @@ function NavInner({
   openLinkedIn,
   menuBtnRef,
 }: {
-  NavLinks: React.ReactNode;                         // <li>...</li>[]
+  NavLinks: React.ReactNode;
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>; // รองรับ functional update
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onBrandClick: React.MouseEventHandler<HTMLAnchorElement>;
   openGit: () => void;
   openLinkedIn: () => void;
-  menuBtnRef: React.RefObject<HTMLButtonElement | null>;  // .current อาจเป็น null
+  menuBtnRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   return (
     <nav
       aria-label="Primary"
-      className={cx(
-        'border-b transition-colors duration-300',
-        'bg-black/55 backdrop-blur-sm border-white/10'
-      )}
+      className="transition-colors duration-300 bg-transparent"
     >
       <div className="mx-auto max-w-[1200px] h-20 px-4 md:px-6 flex items-center justify-between">
         {/* Brand */}
         <Link
-          href="/"
+          href={HOME_BASE}
           onClick={onBrandClick}
           className="relative inline-flex items-center gap-2 font-black tracking-[0.18em] text-white"
           aria-label="TECHIN — go to landing"
@@ -64,7 +62,7 @@ function NavInner({
 
         {/* Center nav (desktop) */}
         <div className="hidden lg:flex">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-2.5 shadow-inner shadow-black/30">
+          <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm px-4 py-2.5 shadow-md shadow-black/50">
             <ul className="flex items-center gap-1">{NavLinks}</ul>
           </div>
         </div>
@@ -86,7 +84,7 @@ function NavInner({
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen(v => !v)}
-            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 hover:text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm text-white/80 hover:text-white transition shadow-md shadow-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -119,54 +117,70 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('home');
 
-  // fixed layer controls (สองชั้นเพื่อกันอาการ "วาร์ป")
-  const [showFixed, setShowFixed] = useState<boolean>(pathname !== HOME_BASE); // หน้าอื่นโชว์ fixed เลย
-  const [anim, setAnim] = useState(false); // ขับ motion ของ fixed layer
-
   const menuBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  // สลับระหว่าง static กับ fixed ด้วยการสังเกต #home
+  // แยกมั่นใจว่า "home" คือ path ไหน
+  const isHome = pathname === HOME_BASE;
+
+  // fixed layer state (โผล่หลังหลุด hero)
+  const [showFixed, setShowFixed] = useState<boolean>(!isHome);
+  const [anim, setAnim] = useState(false);
+
+  /* ---------- สลับ static/fixed ด้วย IntersectionObserver ---------- */
   useEffect(() => {
-    if (pathname !== HOME_BASE) {
+    if (!isHome) {
+      // หน้าอื่นไม่มี hero ก็ให้ fixed โชว์ตลอด
       setShowFixed(true);
-      requestAnimationFrame(() => setAnim(true));
+      setAnim(true);
       return;
     }
 
     const hero = document.getElementById('home');
     if (!hero) {
       setShowFixed(true);
-      requestAnimationFrame(() => setAnim(true));
+      setAnim(true);
       return;
     }
+
+    // ตอนเริ่มต้นบน hero → ยังไม่โชว์ fixed
+    setShowFixed(false);
+    setAnim(false);
 
     const io = new IntersectionObserver(
       ([entry]) => {
         const out = !entry.isIntersecting; // หลุดจอ = true
         if (out) {
           setShowFixed(true);
-          requestAnimationFrame(() => setAnim(true)); // ไหลลงนิ่มๆ
+          // ให้ fixed ไหลลงมา
+          requestAnimationFrame(() => setAnim(true));
         } else {
+          // เลื่อนกลับขึ้นไปเห็น hero → fixed ค่อยไหลออก
           setAnim(false);
-          setTimeout(() => setShowFixed(false), 250);  // รอจบทรานซิชันแล้วปิด
+          setTimeout(() => setShowFixed(false), 250);
         }
       },
-      { rootMargin: '-80px 0px 0px 0px', threshold: 0 } // เผื่อความสูง navbar ~80px
+      {
+        // เผื่อให้รู้สึกพ้น hero ประมาณสูง navbar
+        rootMargin: '-80px 0px 0px 0px',
+        threshold: 0,
+      }
     );
 
     io.observe(hero);
     return () => io.disconnect();
-  }, [pathname]);
+  }, [isHome]);
 
-  // ไฮไลต์เมนูตาม section (เฉพาะหน้า /Home)
+  /* ---------- ไฮไลต์เมนูตาม section เฉพาะหน้า home ---------- */
   useEffect(() => {
-    if (pathname !== HOME_BASE) return;
+    if (!isHome) return;
 
-    const els = LINKS.map(l => document.getElementById(l.sectionId)).filter(Boolean) as HTMLElement[];
+    const els = LINKS.map(l => document.getElementById(l.sectionId)).filter(
+      Boolean
+    ) as HTMLElement[];
     if (els.length === 0) return;
 
     const obs = new IntersectionObserver(
-      (entries) => {
+      entries => {
         const visible = entries
           .filter(e => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
@@ -178,27 +192,28 @@ export default function Navbar() {
 
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
-  }, [pathname]);
+  }, [isHome]);
 
   /* ---------- Navigation handlers ---------- */
   const goHomeTop = useCallback(() => {
-    if (pathname !== HOME_BASE) {
+    if (!isHome) {
       router.push(`${HOME_BASE}#home`);
       return;
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setActiveSection('home');
-  }, [pathname, router]);
+  }, [isHome, router]);
 
   const goSection = useCallback(
     (sectionId: string) => {
       setOpen(false);
       const hash = `#${sectionId}`;
 
-      if (pathname !== HOME_BASE) {
+      if (!isHome) {
         router.push(`${HOME_BASE}${hash}`);
         return;
       }
+
       if (sectionId === 'home') {
         goHomeTop();
       } else {
@@ -207,25 +222,28 @@ export default function Navbar() {
         if (window.location.hash !== hash) window.location.hash = hash;
       }
     },
-    [pathname, router, goHomeTop]
+    [isHome, goHomeTop, router]
   );
 
-  const onBrandClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
-    if (pathname === '/') {
-      e.preventDefault();
+  const onBrandClick: React.MouseEventHandler<HTMLAnchorElement> = e => {
+    e.preventDefault();
+    if (!isHome) {
+      router.push(HOME_BASE);
+    } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  const openGit = () => window.open('https://github.com/iMookatayou', '_blank', 'noopener,noreferrer');
-  const openLinkedIn = () => window.open('https://www.linkedin.com/in/yourname', '_blank', 'noopener,noreferrer');
+  const openGit = () =>
+    window.open('https://github.com/iMookatayou', '_blank', 'noopener,noreferrer');
+  const openLinkedIn = () =>
+    window.open('https://www.linkedin.com/in/yourname', '_blank', 'noopener,noreferrer');
 
-  const isHome = pathname === HOME_BASE;
   const currentSectionId = isHome ? activeSection : null;
 
   const NavLinks = useMemo(
     () =>
-      LINKS.map((item) => {
+      LINKS.map(item => {
         const isActive = isHome && currentSectionId === item.sectionId;
         return (
           <li key={item.sectionId}>
@@ -249,24 +267,28 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ชั้นที่ 1: Static (อยู่กับ hero ตั้งแต่แรก, ไม่ตาม) */}
-      <div className="absolute top-0 left-0 right-0 z-30">
-        <NavInner
-          NavLinks={NavLinks}
-          open={open}
-          setOpen={setOpen}
-          onBrandClick={onBrandClick}
-          openGit={openGit}
-          openLinkedIn={openLinkedIn}
-          menuBtnRef={menuBtnRef}
-        />
-      </div>
+      {/* ชั้นที่ 1: Static/Absolute ติดกับ hero (เฉพาะหน้า /home) */}
+      {isHome && (
+        <div className="absolute top-0 left-0 right-0 z-30 pointer-events-none">
+          <div className="pointer-events-auto">
+            <NavInner
+              NavLinks={NavLinks}
+              open={open}
+              setOpen={setOpen}
+              onBrandClick={onBrandClick}
+              openGit={openGit}
+              openLinkedIn={openLinkedIn}
+              menuBtnRef={menuBtnRef}
+            />
+          </div>
+        </div>
+      )}
 
-      {/* ชั้นที่ 2: Fixed (เด้งตามเมื่อพ้น hero + motion ลื่นๆ) */}
+      {/* ชั้นที่ 2: Fixed ลอยหัวจอเมื่อเลื่อนพ้น hero */}
       {showFixed && (
         <div
           className={cx(
-            'fixed top-0 left-0 right-0 z-50',
+            'fixed top-0 left-0 right-0 z-40',
             'transition-all duration-300 ease-out',
             anim ? 'translate-y-0 opacity-100' : '-translate-y-6 opacity-0'
           )}
@@ -327,7 +349,12 @@ function IconBtn({
       aria-label={label}
       onClick={onClick}
       title={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full 
+                 border border-white/10 
+                 bg-black/40 backdrop-blur-sm 
+                 text-white/80 hover:text-white 
+                 transition shadow-md shadow-black/40
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
     >
       {children}
     </button>

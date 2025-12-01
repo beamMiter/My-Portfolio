@@ -15,6 +15,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "jsx": "preserve",
+    "allowJs": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -22,22 +23,23 @@
     "strict": true,
     "skipLibCheck": true,
     "incremental": true,
+    "forceConsistentCasingInFileNames": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "forceConsistentCasingInFileNames": true,
-    "allowJs": true
+    "ignoreDeprecations": "6.0"
   },
   "include": [
-    "next-env.d.ts",
+    "**/*.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.d.ts",
+    "next-env.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "src/components/PortfolioMosaic.jsx"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next"
   ]
 }
