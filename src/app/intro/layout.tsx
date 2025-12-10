@@ -2,6 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 import SmartCursorClient from "@/components/ux/SmartCursorClient";
 import ScrollProgressToTopButton from "@/components/ux/ScrollProgressToTopButton";
+import { IntroUIProvider } from "@/components/intro/IntroUIContext";
+import IntroLangSwitch from "@/components/intro/IntroLangSwitch";
 
 export const metadata: Metadata = {
   title: "Intro | TECHIN",
@@ -13,10 +15,17 @@ export default function IntroLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="min-h-screen bg-black text-white">
-      {children}
-      <SmartCursorClient />
-      <ScrollProgressToTopButton offset={250} />
-    </section>
+    <IntroUIProvider>
+      <section className="min-h-screen bg-[#0b0b0b] text-zinc-50 relative">
+        {/* เนื้อหาของแต่ละ page */}
+        {children}
+
+        {/* EN/TH อยู่ใน layout เหมือน nav/footer */}
+        <IntroLangSwitch />
+
+        <SmartCursorClient />
+        <ScrollProgressToTopButton offset={250} />
+      </section>
+    </IntroUIProvider>
   );
 }

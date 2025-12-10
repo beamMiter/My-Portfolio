@@ -8,6 +8,7 @@ import { SiReact, SiNextdotjs, SiTypescript, SiLaravel, SiGo, SiNodedotjs, SiDoc
 import Marquee from "react-fast-marquee";
 import { ICON_SRC_MAP, IconName } from "@/data/icons";
 import Wave from "react-wavify";
+import { useIntroUI } from "@/components/intro/IntroUIContext";
 
 import IntroCube from "@/components/intro/IntroCube";
 
@@ -48,18 +49,36 @@ function VerticalTicker({
         verticalAlign: "baseline",
       }}
     >
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="wait">
         <motion.span
           key={items[i]}
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: "-100%", opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          initial={{
+            y: -32,          // โผล่มาจากบน
+            opacity: 0,
+          }}
+          animate={{
+            y: 0,            // มาหยุดที่ตำแหน่งปกติ
+            opacity: 1,
+            transition: {
+              type: "spring",
+              stiffness: 520, // เด้งแรงขึ้น
+              damping: 18,    // ดึงให้เด้งนิด ๆ ไม่ย้วย
+              mass: 0.7,
+            },
+          }}
+          exit={{
+            y: -18,          // เลื่อนขึ้นนิดเดียวแล้วค่อยหาย
+            opacity: 0,
+            transition: {
+              duration: 0.35,
+              ease: [0.22, 1, 0.36, 1],
+            },
+          }}
           className="font-heading-dev inline-block will-change-transform text-[0.7em] md:text-[0.8em] tracking-[0.12em] uppercase"
           style={{
             lineHeight: line,
             paddingTop: padTop,
-            color: "var(--dev-accent)", // 👈 ใช้สีจากตัวแปรกลาง
+            color: "var(--dev-accent)",
           }}
         >
           {items[i]}
@@ -171,6 +190,8 @@ export default function IntroWavePage() {
   const [showContent, setShowContent] = useState(false);
   const [btnHovered, setBtnHovered] = useState(false);
 
+  const { setShowLang } = useIntroUI();
+
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 30);
     return () => clearTimeout(t);
@@ -178,13 +199,17 @@ export default function IntroWavePage() {
 
   useEffect(() => {
     const stageTimer = setTimeout(() => setShowStage(true), 2800);
-    const contentTimer = setTimeout(() => setShowContent(true), 3800);
+
+    const contentTimer = setTimeout(() => {
+      setShowContent(true);
+      setShowLang(true);
+    }, 3800);
 
     return () => {
       clearTimeout(stageTimer);
       clearTimeout(contentTimer);
     };
-  }, []);
+  }, [setShowLang]);
 
   return (
     <main className="bg-[#0b0b0b] min-h-screen text-zinc-50">
@@ -242,7 +267,6 @@ export default function IntroWavePage() {
         }
       `}</style>
 
-   
     <div
       className={`relative min-h-screen overflow-hidden transition-opacity duration-500 ${
         loaded ? "opacity-100" : "opacity-0"
@@ -335,14 +359,6 @@ export default function IntroWavePage() {
             {/* RIGHT: TEXT + BUTTON */}
             <div className="w-full md:w-[60%] lg:w-[62%] max-w-[44rem] font-sans-dev text-white md:pl-4 lg:pl-8">
               <div className="subpixel-antialiased transform-gpu">
-                {/* TOP LABEL */}
-                <RevealLine delay={0.15}>
-                  <div className="py-1">
-                    <p className="text-[10px] md:text-[11px] uppercase font-mono-dev tracking-[0.25em] text-zinc-400">
-                      SOFTWARE ENGINEER · THAILAND
-                    </p>
-                  </div>
-                </RevealLine>
 
                 {/* HEADLINE + TICKER */}
                 <RevealLine delay={0.35}>
@@ -1294,7 +1310,6 @@ export default function IntroWavePage() {
             </div>
           </div>
 
-          {/* RIGHT: STACKED INFO BLOCKS */}
           <div className="space-y-8 text-[12px] md:text-[13px]">
             <div>
               <div className="pb-2 border-b border-zinc-800 mb-2">
