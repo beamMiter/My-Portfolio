@@ -1,4 +1,3 @@
-// src/components/sections/ServicesSection.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -57,55 +56,66 @@ const services: Service[] = [
   },
 ];
 
+// Icon tint → Dev Green
 const ICON_FILTER =
-  "invert sepia saturate-[700%] hue-rotate-[95deg] brightness-[1.2] contrast-[0.95]";
+  "invert sepia saturate-[650%] hue-rotate-[110deg] brightness-[1.1] contrast-[0.95]";
 
 export default function ServicesSection() {
   return (
     <section id="what-i-do" className="scroll-mt-28 py-16 bg-[#101214]">
       <div className="mx-auto max-w-[1200px] px-6">
+        {/* HEADER */}
         <div className="text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/60 px-3 py-1 text-xs tracking-[.25em] text-zinc-400">
-            MY SERVICES
-          </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-white">
+          <p className="text-xs tracking-[0.3em] uppercase text-white/45">
+            My Services
+          </p>
+
+          <h2 className="mt-3 text-[clamp(26px,3.6vw,38px)] font-medium leading-snug tracking-[-0.015em] text-white">
             What{" "}
-            <span className="bg-gradient-to-r from-emerald-300 via-emerald-400 to-teal-300 bg-clip-text text-transparent">
+            <span className="text-[#3edc8a]">
               Services
             </span>{" "}
-            I Provide?
+            I Provide ?
           </h2>
         </div>
 
+        {/* GRID */}
         <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <motion.article
               key={s.title}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all hover:-translate-y-1 hover:bg-white/[0.05] hover:shadow-xl hover:shadow-black/20"
+              transition={{ duration: 0.35, delay: i * 0.05 }}
+              className="group rounded-2xl border border-white/10 bg-white/[0.025] p-7
+                         transition-all hover:-translate-y-1
+                         hover:bg-white/[0.04]"
             >
               <div className="flex items-start gap-5">
                 <Image
                   src={s.iconSrc}
                   alt={s.alt || s.title}
-                  width={48}
-                  height={48}
+                  width={44}
+                  height={44}
                   className={`object-contain ${ICON_FILTER}`}
                   priority={i < 2}
                 />
 
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white">{s.title}</h3>
-                  <p className="mt-0.5 text-sm text-emerald-300/90">
+                  <h3 className="text-[15px] font-normal text-white">
+                    {s.title}
+                  </h3>
+                  <p className="mt-0.5 text-xs text-[#3edc8a]/85">
                     {s.subtitle}
                   </p>
                 </div>
               </div>
 
-              <p className="mt-4 text-sm leading-6 text-zinc-300">{s.desc}</p>
+              <p className="mt-4 text-sm leading-6 text-white/65">
+                {s.desc}
+              </p>
+
               <div className="mt-5 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </motion.article>
           ))}

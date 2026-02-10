@@ -111,7 +111,6 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
               isWideChar ? "w-[1.35em]" : "w-[1.0em]"
             }`}
           >
-            {/* VIEW PORTFOLIO (บน) – สีขาว */}
             <motion.span
               initial={false}
               animate={
@@ -125,7 +124,6 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
               {topChar === " " ? "\u00A0" : topChar}
             </motion.span>
 
-            {/* DEV PORTFOLIO (ล่าง) – ใช้สีเดียวกับ VerticalTicker */}
             <motion.span
               initial={false}
               animate={
@@ -1355,7 +1353,6 @@ export default function IntroWavePage() {
           </div>
         </div>
 
-        {/* BOTTOM BAR */}
         <div className="mt-10 border-t border-zinc-800 pt-4 flex flex-col gap-2 text-[11px] md:flex-row md:items-center md:justify-between text-zinc-500 font-mono-dev">
           <span>
             © {new Date().getFullYear()} TECHIN JETSRIBUMRUNG · Internal Systems / Dev &amp; Ops

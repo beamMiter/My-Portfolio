@@ -62,8 +62,21 @@ function NavInner({
 
         {/* Center nav (desktop) */}
         <div className="hidden lg:flex">
-          <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm px-4 py-2.5 shadow-md shadow-black/50">
-            <ul className="flex items-center gap-1">{NavLinks}</ul>
+          <div
+            className={cx(
+              // ✅ ขอบเหลี่ยมขึ้น
+              'rounded-[10px]',
+              // ✅ สีพื้นหลังเทาสว่างขึ้น (จากเดิมดำจัด)
+              'bg-neutral-800/70 backdrop-blur-sm',
+              // ✅ ขอบ/เงาเบา ๆ คล้ายรูป
+              'border border-white/10',
+              'shadow-md shadow-black/40',
+              // ✅ padding กล่องคงความกว้างรวมเดิม
+              'px-5 py-3'
+            )}
+          >
+            {/* ✅ เมนูชิดกันมากขึ้น */}
+            <ul className="flex items-center gap-2">{NavLinks}</ul>
           </div>
         </div>
 
@@ -84,7 +97,16 @@ function NavInner({
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen(v => !v)}
-            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm text-white/80 hover:text-white transition shadow-md shadow-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+            className={cx(
+              'lg:hidden inline-flex h-10 w-10 items-center justify-center',
+              // ✅ เหลี่ยมขึ้น
+              'rounded-[10px]',
+              // ✅ พื้นเทาสว่างขึ้น
+              'bg-neutral-800/70 backdrop-blur-sm',
+              'border border-white/10',
+              'text-white/80 hover:text-white transition shadow-md shadow-black/40',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60'
+            )}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -100,7 +122,17 @@ function NavInner({
         )}
       >
         <div className="mx-auto max-w-[1200px] px-4 pb-4">
-          <div className="rounded-2xl border border-white/10 bg-black/70 backdrop-blur px-3 py-3">
+          <div
+            className={cx(
+              // ✅ เหลี่ยมขึ้น
+              'rounded-[10px]',
+              // ✅ พื้นเทาสว่างขึ้น
+              'bg-neutral-800/80 backdrop-blur-sm',
+              'border border-white/10',
+              'px-3 py-3',
+              'shadow-md shadow-black/40'
+            )}
+          >
             <ul className="flex flex-col">{NavLinks}</ul>
           </div>
         </div>
@@ -251,12 +283,18 @@ export default function Navbar() {
               type="button"
               onClick={() => goSection(item.sectionId)}
               className={cx(
-                'group relative inline-flex items-center px-3.5 py-2 rounded-xl transition',
-                'text-sm font-semibold uppercase tracking-wide',
+                'group relative inline-flex items-center',
+                // ✅ เมนูชิดกันมากขึ้น (ลด padding)
+                'px-2.5 py-1.5 rounded-[8px] transition',
+                // ✅ ฟอนต์คงโทนเดิม แต่ไม่แตะ animation
+                'text-sm font-semibold tracking-[0.02em]',
+                // (ยังคง uppercase ตามของเดิมไว้ ถ้าคุณอยากให้เหมือนภาพมากขึ้นให้ลบ uppercase เองได้)
+                'uppercase',
                 isActive ? 'text-white' : 'text-gray-300 hover:text-white'
               )}
               aria-current={isActive ? 'page' : undefined}
             >
+              {/* ✅ ไม่ลบ AnimatedText ตามที่สั่ง */}
               <AnimatedText text={item.name} />
             </button>
           </li>
@@ -308,7 +346,6 @@ export default function Navbar() {
   );
 }
 
-/** ตัวหนังสือเด้งเป็นคลื่นตอน hover */
 function AnimatedText({ text }: { text: string }) {
   return (
     <span aria-hidden className="inline-block">
@@ -333,7 +370,6 @@ function AnimatedText({ text }: { text: string }) {
   );
 }
 
-/** ปุ่มไอคอนวงกลม */
 function IconBtn({
   label,
   onClick,
@@ -349,12 +385,14 @@ function IconBtn({
       aria-label={label}
       onClick={onClick}
       title={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full 
-                 border border-white/10 
-                 bg-black/40 backdrop-blur-sm 
-                 text-white/80 hover:text-white 
-                 transition shadow-md shadow-black/40
-                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+      className={cx(
+        'inline-flex h-10 w-10 items-center justify-center rounded-full',
+        'bg-neutral-800/70 backdrop-blur-sm',
+        'border border-white/10',
+        'text-white/80 hover:text-white transition',
+        'shadow-md shadow-black/40',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60'
+      )}
     >
       {children}
     </button>

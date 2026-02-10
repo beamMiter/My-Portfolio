@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 
 import AboutSection from "@/components/sections/AboutSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
@@ -29,71 +27,70 @@ export default function HomePage() {
 
       <style jsx global>{`
         :root {
-          --accent-1: #22d3ee; /* cyan-400 */
-          --accent-2: #3b82f6; /* blue-500 */
-          --accent-3: #a78bfa; /* violet-400 */
+          /* Dev Green – brighter but still calm */
+          --dev-green: #3edc8a;
+          --dev-green-soft: #5ae6a3;
+          --dev-green-dark: #27b874;
         }
-        .accent {
-          background: linear-gradient(
-            90deg,
-            var(--accent-1),
-            var(--accent-2),
-            var(--accent-3)
-          );
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
+
+        .dev-green {
+          color: var(--dev-green);
+        }
+        .dev-green-soft {
+          color: var(--dev-green-soft);
         }
       `}</style>
 
       <section
         id="home"
-        className="scroll-mt-28 min-h-[80svh] flex items-center bg-black text-white"
+        className="scroll-mt-28 min-h-[85svh] flex items-center bg-black text-white"
       >
-        <div className="mx-auto max-w-[1200px] px-6">
-          <p className="text-2xl md:text-3xl font-semibold text-white mb-4 tracking-tight">
-            Hello, I&apos;m{" "}
-            <span className="text-emerald-400 font-bold">
-              Techin Jetsribumrung
-            </span>
-          </p>
+        <div className="mx-auto w-full max-w-[1400px] px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
+            {/* LEFT : TEXT */}
+            <div className="max-w-[640px]">
+              {/* ROLE */}
+              <p className="text-xs md:text-sm tracking-[0.28em] uppercase text-white/55">
+                Full-stack Developer
+              </p>
 
-          <h1 className="text-[clamp(30px,5.5vw,56px)] font-medium leading-tight text-zinc-100">
-            A developer passionate about{" "}
-            <span className="text-emerald-300">building clean & purposeful systems</span>{" "}
-            for hospitals, public organizations, and real-world users
-          </h1>
+              {/* HERO */}
+              <h1 className="mt-4 text-[clamp(46px,6.4vw,88px)] font-semibold leading-[1.02] tracking-[-0.035em] text-white">
+                Hello, I&apos;m{" "}
+                <span className="dev-green font-semibold">
+                  Techin
+                </span>
+              </h1>
 
-          <p className="mt-6 max-w-[70ch] text-zinc-400 text-[16px] leading-relaxed">
-            I love crafting infrastructures that are stable, scalable, and
-            thoughtfully designed — combining <strong>Next.js</strong>,{" "}
-            <strong>Laravel</strong>, and <strong>n8n</strong> to deliver
-            seamless, production-grade automation for real-world operations
-          </p>
+              {/* TAGLINE */}
+              <h2 className="mt-4 text-[clamp(18px,2.2vw,28px)] font-medium leading-snug text-white/80">
+                I design and build{" "}
+                <span className="dev-green-soft">
+                  reliable software systems
+                </span>{" "}
+                that turn complex workflows into simple, scalable solutions.
+              </h2>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#about"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/10 hover:text-white transition-colors"
-            >
-              About Me
-            </a>
-            <a
-              href="#portfolio"
-              className="inline-flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-2.5 text-sm font-medium text-emerald-300 hover:bg-emerald-500/15 hover:text-emerald-200 transition-colors"
-            >
-              View My Work →
-            </a>
+              {/* BODY – แนะนำตัวแบบมืออาชีพ */}
+              <p className="mt-6 max-w-[60ch] text-[15px] md:text-[16px] leading-relaxed text-white/55">
+                I work across system architecture, backend services, and
+                automation-driven workflows — focusing on clarity, long-term
+                maintainability, and software that teams can trust in real
+                production environments.
+              </p>
+            </div>
+
+            {/* RIGHT : IMAGE PLACEHOLDER */}
+            <div className="hidden lg:flex justify-center items-center">
+              {/* ใส่รูป / motion / portrait ตรงนี้ */}
+            </div>
           </div>
         </div>
       </section>
 
       <ServicesSection />
-
       <AboutSection />
-
       <ProjectsSection />
-
       <ContactSection />
     </main>
   );

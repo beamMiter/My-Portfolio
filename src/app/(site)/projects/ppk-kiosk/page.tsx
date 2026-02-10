@@ -1,148 +1,125 @@
-// src/app/projects/ppk-kiosk/page.tsx
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { Github, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "PPK Kiosk Queue System — Case Study",
+  title: "PPK Kiosk Queue System Case Study",
   description:
-    "Self-service kiosk for hospital queueing with Thai National ID, entitlement verification, ticket printing, and counter routing. Built with Next.js, React, TypeScript, Laravel, MySQL, and Docker.",
+    "Self service kiosk for hospital queue management with Thai National ID and ticket printing.",
 };
-
-const TECH = ["Next.js", "React", "TypeScript", "Laravel", "MySQL", "Docker"];
 
 export default function PpkKioskPage() {
   return (
-    <main className="min-h-screen bg-black text-white">
-      <div className="mx-auto max-w-[1100px] px-6 py-10">
-        {/* Back */}
-        <div className="mb-8">
-          <Link
-            href="/Home#projects"
-            className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to portfolio
-          </Link>
+    <main className="min-h-screen bg-zinc-950 text-white">
+      <div
+        className="pointer-events-none fixed inset-0 -z-10"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(70rem 55rem at 10% 0%, rgba(255,255,255,0.06), transparent 55%), radial-gradient(55rem 45rem at 95% 10%, rgba(255,255,255,0.045), transparent 60%), linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.85))",
+        }}
+      />
+
+      <div className="mx-auto max-w-[1200px] px-6 py-10 md:px-10 lg:px-14">
+        <header className="mt-12 text-center md:mt-16">
+          <h1 className="text-[clamp(28px,5.2vw,52px)] font-semibold leading-tight">
+            PPK Kiosk <span className="text-zinc-400">Queue System</span>
+          </h1>
+          <p className="mt-2 text-[11px] tracking-widest text-zinc-400">
+            by Techin
+          </p>
+        </header>
+
+        <div className="mt-8 overflow-hidden rounded-xl shadow-[0_18px_40px_-34px_rgba(0,0,0,0.95)]">
+          <Image
+            src="/images/projects/ppk-kiosk4.png"
+            alt="PPK Kiosk Queue System hero"
+            width={1920}
+            height={1080}
+            className="h-auto w-full"
+            priority
+          />
         </div>
 
-        {/* Tech chips */}
-        <div className="flex flex-wrap justify-center gap-2">
-          {TECH.map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
+        <section className="mt-16">
+          <div className="mx-auto max-w-4xl text-zinc-200">
+            <p className="text-base md:text-lg leading-relaxed">
+              <span
+                className="float-left mr-4 mt-1 text-white font-medium leading-none text-[clamp(42px,4.4vw,58px)]"
+                style={{ lineHeight: "2.4rem" }}
+              >
+                PPK
+              </span>
+              Kiosk Queue System is designed for hospital lobbies where the first
+              interaction must be fast and clear. Patients identify themselves
+              using a Thai National ID and receive a queue ticket without requiring
+              staff assistance.
+            </p>
 
-        {/* Title */}
-        <h1 className="mt-6 text-center text-[clamp(28px,5.4vw,48px)] font-semibold leading-tight">
-          PPK Kiosk Queue System
-        </h1>
-        <p className="mt-2 text-center text-[11px] tracking-widest text-emerald-300">
-          by Techin
-        </p>
+            <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
+              The system verifies entitlement automatically and determines the
+              correct queue group and counter. This reduces reception workload and
+              removes uncertainty during peak hours.
+            </p>
 
-        {/* Hero image */}
-        <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40">
-          <div className="relative h-[300px] md:h-[460px]">
-            <Image
-              src="/images/projects/ppk-kiosk.jpg"
-              alt="PPK Kiosk — hero mockup"
-              fill
-              className="object-cover"
-              sizes="(min-width:1024px) 1100px, 100vw"
-              priority
-            />
+            <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
+              The interface is built for public kiosks. Large touch targets and
+              high contrast visuals help patients complete the process with
+              confidence even without guidance.
+            </p>
           </div>
-        </div>
+        </section>
 
-        {/* Body */}
-        <article className="prose prose-invert prose-zinc mt-10 max-w-none">
-          <p className="text-zinc-300">
-            PPK Kiosk Queue System is a self-service web application for hospital
-            lobbies. Patients identify themselves with a Thai National ID, the
-            system checks entitlement, and a ticket is printed with the correct
-            counter and queue group. The goal is to reduce reception workload
-            and make the first touchpoint simple and predictable.
-          </p>
+        <hr className="my-16 border-white/10" />
 
-          <h3 className="font-semibold">Capabilities</h3>
-          <ul className="text-zinc-300">
-            <li>
-              National ID based sign-in and entitlement verification with clear
-              feedback on success or next steps.
-            </li>
-            <li>
-              Queue ticket printing (thermal printer) with clinic/counter
-              mapping and optional QR on the slip.
-            </li>
-            <li>
-              Configurable queue groups, prefixes, and service hours per
-              department.
-            </li>
-            <li>
-              Simple admin views for counters, prefixes, and daily resets.
-            </li>
-            <li>
-              Accessibility-minded UI: large targets, high contrast, readable
-              fonts for public kiosks.
-            </li>
-          </ul>
+        <section className="mt-16">
+          <div className="mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12 items-start">
+            {/* lower image: same (no edge) */}
+            <figure className="overflow-hidden rounded-xl shadow-[0_18px_40px_-34px_rgba(0,0,0,0.95)]">
+              <div className="relative aspect-[3/4] w-full">
+                <Image
+                  src="/images/projects/ppk-kiosk2.jpg"
+                  alt="PPK Kiosk vertical screen"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width:1024px) 420px, 100vw"
+                />
+              </div>
+            </figure>
 
-          <h3 className="font-semibold">Architecture</h3>
-          <ul className="text-zinc-300">
-            <li>
-              <span className="text-zinc-200">Frontend:</span> Next.js, React,
-              TypeScript, Tailwind.
-            </li>
-            <li>
-              <span className="text-zinc-200">Backend:</span> Laravel 12
-              (RESTful APIs), MySQL with normalized tables for queues,
-              counters, and service profiles.
-            </li>
-            <li>
-              <span className="text-zinc-200">DevOps:</span> Docker Compose for
-              local and production parity, environment separation, migrations
-              and backups.
-            </li>
-            <li>
-              Network-safe printing via a small local print bridge or direct
-              ESC/POS, depending on site constraints.
-            </li>
-          </ul>
+            <div>
+              <h3 className="text-lg font-medium tracking-wide text-zinc-100">
+                What it does
+              </h3>
 
-          <h3 className="font-semibold">Outcomes</h3>
-          <ul className="text-zinc-300">
-            <li>Shorter lines at reception and fewer manual lookups</li>
-            <li>Consistent ticket formats and clearer routing to counters</li>
-            <li>Easy to extend with new departments and prefixes</li>
-          </ul>
+              <div className="mt-6 space-y-7 leading-relaxed text-zinc-300">
+                <p>
+                  PPK Kiosk handles patient identification through Thai National
+                  ID input and validates eligibility before issuing a queue ticket.
+                  This ensures that patients are routed correctly from the moment
+                  they arrive.
+                </p>
 
-          <hr className="border-white/10" />
+                <p>
+                  Queue tickets are printed immediately using a thermal printer.
+                  Each ticket includes the appropriate counter and queue prefix so
+                  patients know exactly where to go next.
+                </p>
 
-          <p className="text-sm text-zinc-400">
-            The repository below includes the web kiosk and the backend API,
-            packaged for Docker to simplify deployment and updates.
-          </p>
-        </article>
+                <p>
+                  Queue groups and service hours can be configured by staff. This
+                  allows departments to adapt the system to daily operations without
+                  changing code.
+                </p>
 
-        {/* Footer actions */}
-        <div className="mt-8 flex flex-wrap items-center gap-4">
-          <Link
-            href="https://github.com/iMookatayou/PPK-Kiosk-Queue-System"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-zinc-200 hover:text-white"
-          >
-            <Github className="h-4 w-4" />
-            View on GitHub
-          </Link>
-        </div>
+                <p>
+                  The kiosk integrates with backend queue services to keep counters
+                  and administrative views consistent. This improves traceability
+                  and reduces manual resets.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   );

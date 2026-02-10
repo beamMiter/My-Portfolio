@@ -1,4 +1,3 @@
-// src/components/ux/SmartCursor.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -6,11 +5,11 @@ import { motion, useMotionValue } from "framer-motion";
 
 export default function SmartCursor({
   baseSize = 10,
-  hoverScale = 6.2, // ⭐ ใหญ่ขึ้นกำลังดี
+  hoverScale = 6.2, 
   zIndex = 9999,
-  preHopScale = 0.9, // นุ่มก่อนเด้ง
-  preHopDuration = 0.12, // ⭐ ช้าลง
-  expandDuration = 0.34, // ⭐ ขยายช้าลง
+  preHopScale = 0.9, 
+  preHopDuration = 0.12, 
+  expandDuration = 0.34, 
 }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
