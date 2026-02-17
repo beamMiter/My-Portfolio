@@ -89,7 +89,7 @@ export default function ProjectsSection() {
     }
 
     if (hasValidHref(p.href)) {
-      router.push(p.href!);
+      window.location.href = p.href!;
     }
   };
 
@@ -130,7 +130,7 @@ export default function ProjectsSection() {
                 key={p.title}
                 className={[
                   "group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/20 backdrop-blur-sm",
-                  "min-h-[440px]",
+                  "min-h-[440px] flex flex-col",
                   canOpen
                     ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40"
                     : "cursor-default",
@@ -141,55 +141,55 @@ export default function ProjectsSection() {
                 onClick={() => canOpen && openProject(p)}
                 onKeyDown={(e) => onCardKeyDown(e, p, canOpen)}
               >
-                <div className="relative">
-                  <div className="relative h-72 w-full">
-                    <Image
-                      src={p.image}
-                      alt={p.title}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-                      priority={i < 2}
-                    />
-                  </div>
+                <div className="relative h-72 w-full overflow-hidden">
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                    priority={i < 2}
+                  />
                   
                   {p.logo && (
-                    <div className="absolute top-3 right-3">
-                      <Image
-                        src={p.logo}
-                        alt="Project Logo"
-                        width={60}
-                        height={30}
-                        className="h-auto w-auto opacity-90"
-                      />
+                    <div className="absolute top-4 right-4 z-20 drop-shadow-md">
+                      <div className="relative w-[110px] h-[55px]">
+                        <Image
+                          src={p.logo}
+                          alt="Project Logo"
+                          fill
+                          className="object-contain object-right-top opacity-100"
+                        />
+                      </div>
                     </div>
                   )}
+                  
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                <div className="p-6">
-                  <h3 id={headingId} className="text-xl font-semibold text-white">
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 id={headingId} className="text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">
                     {p.title}
                   </h3>
 
-                  <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
-                    {p.tech.map((t, idx) => (
-                      <TechChip key={`${t}-${idx}`} canHover={canOpen}>{t}</TechChip>
-                    ))}
-                  </div>
+                  <div className="mt-auto pt-5">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                      {p.tech.map((t, idx) => (
+                        <TechChip key={`${t}-${idx}`} canHover={canOpen}>{t}</TechChip>
+                      ))}
+                    </div>
 
-                  <div className="mt-5">
-                    {canOpen ? (
-                      <Link
-                        href={p.path || p.href!}
-                        onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1.5 text-sm text-emerald-400 transition-colors hover:text-emerald-300 font-medium"
-                        aria-label={`View project: ${p.title}`}
-                      >
-                        View <ExternalLink className="h-4 w-4" />
-                      </Link>
-                    ) : (
-                      <span className="text-sm text-zinc-600 font-medium">Internal / Coming soon</span>
-                    )}
+                    <div className="mt-6">
+                      {canOpen ? (
+                        <div
+                          className="inline-flex items-center gap-1.5 text-sm text-emerald-400 transition-colors hover:text-emerald-300 font-medium"
+                        >
+                          View <ExternalLink className="h-4 w-4" />
+                        </div>
+                      ) : (
+                        <span className="text-sm text-zinc-600 font-medium italic">Internal / Coming soon</span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </article>
