@@ -1,12 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  images: { unoptimized: true },
+  output: 'export', // สำคัญมาก: เพื่อให้สร้างไฟล์ .html สำหรับ GitHub Pages
+  
+  // ใส่ชื่อ Repository ของคุณเพื่อให้ CSS และ JS โหลดติด
+  basePath: '/Portfolio.dev', 
+  
+  // ปิดระบบจัดการรูปภาพของ Next.js เพราะ GitHub Pages ไม่รองรับ
+  images: {
+    unoptimized: true,
+  },
+
+  // ข้ามการตรวจ Error จุกจิกที่ทำให้การ Build พัง
   eslint: {
-    ignoreDuringBuilds: true, // ข้ามการตรวจ ESLint ที่พังอยู่
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true, // ข้ามการตรวจ Type ที่อาจจะทำให้ build ไม่ผ่าน
+    ignoreBuildErrors: true,
   },
 };
+
 export default nextConfig;
