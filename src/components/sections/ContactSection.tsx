@@ -1,51 +1,80 @@
 "use client";
-
 import {
   Mail,
   Instagram,
-  Twitter,
-  Facebook,
   Linkedin,
   Github,
-  Zap,
+  Briefcase,
 } from "lucide-react";
 
-export default function ContactSection() {
-  const contacts = [
-    { icon: Mail, label: "Email", href: "mailto:jetsribumrungtechin@gmail.com" },
-    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/fenyb" },
-    { icon: Github, label: "GitHub", href: "https://github.com/iMookatayou" },
-    { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/fenyb_" },
-    { icon: Twitter, label: "Twitter (X)", href: "https://twitter.com/fenyb_" },
-    { icon: Facebook, label: "Facebook", href: "https://facebook.com/fenyb" },
-    { icon: Zap, label: "Fastwork", href: "https://fastwork.co/user/fenyb_" },
-  ];
+type ContactIcon = {
+  icon: React.ElementType;
+  label: string;
+  href: string;
+};
 
+const contacts: ContactIcon[] = [
+  {
+    icon: Mail,
+    label: "Email",
+    href: "mailto:jetsribumrungtechin@gmail.com",
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/fenyb",
+  },
+  {
+    icon: Github,
+    label: "GitHub",
+    href: "https://github.com/iMookatayou",
+  },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    href: "https://www.instagram.com/fenyb_",
+  },
+  {
+    icon: Briefcase,
+    label: "Freelance",
+    href: "https://your-freelance-link.com", // อย่าลืมแก้ลิงก์จริง
+  },
+];
+
+export default function ContactSection() {
   return (
-    <section
-      id="contact"
-      className="scroll-mt-28 py-20 bg-[#0d0f11] border-t border-white/10"
-    >
-      <div className="mx-auto max-w-[900px] px-6">
-        <h2 className="text-3xl md:text-4xl font-black text-white text-center">
-          Contact
+    // แก้ไขตรงนี้: ลบ bg-[#101214] ออก
+    <section id="contact" className="scroll-mt-28 py-20">
+      <div className="mx-auto max-w-[900px] px-6 text-center">
+        
+        {/* เพิ่มเส้นคั่นด้านบนให้เหมือน Footer (Optional: ถ้าอยากให้มีขอบเขตชัดเจน) */}
+        {/* <div className="h-px bg-white/15 mb-16 mx-auto max-w-xs" /> */}
+
+        {/* Header */}
+        <p className="text-xs tracking-[0.3em] uppercase text-white/50">
+          Get in Touch
+        </p>
+        <h2 className="mt-3 text-[clamp(26px,3.6vw,38px)] font-medium tracking-[-0.015em] text-white">
+          Contact <span className="text-white">Me</span>
         </h2>
 
-        {/* ===== รายการพร้อมเส้นแบ่ง ===== */}
-        <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
+        {/* Icons only */}
+        <div className="mt-12 flex items-center justify-center gap-8">
           {contacts.map(({ icon: Icon, label, href }) => (
             <a
               key={label}
               href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between py-4 hover:bg-white/5 px-2 md:px-4 transition-colors"
+              target={href.startsWith("mailto:") ? "_self" : "_blank"}
+              rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+              aria-label={label}
+              title={label}
+              className="transition-transform duration-300 hover:-translate-y-1"
             >
-              <div className="flex items-center gap-3">
-                <Icon size={18} className="text-emerald-300" />
-                <span className="text-zinc-200 hover:text-white">{label}</span>
-              </div>
-              <span className="text-zinc-500 text-sm">→</span>
+              <Icon
+                size={22}
+                // สีเริ่มต้นขาวจางๆ (white/60) -> โฮเวอร์แล้วขาวจั๊วะ (white)
+                className="text-white/60 hover:text-white transition-colors"
+              />
             </a>
           ))}
         </div>

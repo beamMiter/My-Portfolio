@@ -5,153 +5,166 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "PPK Screening Referral System Case Study",
   description:
-    "A production web app for hospital screening and referral. Built with Next.js React TypeScript Laravel MySQL and Docker.",
+    "Hospital screening system for intake and referral recommendations.",
 };
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function TechStackClean({ items }: { items: string[] }) {
   return (
     <section className="mt-16">
-      <h3 className="text-lg font-medium tracking-wide text-zinc-100">
-        {title}
-      </h3>
-      <div className="mt-6 text-zinc-300">{children}</div>
+      <div className="mx-auto max-w-4xl text-center">
+        <h3 className="text-lg font-medium tracking-wide text-zinc-100">
+          Tech Stack
+        </h3>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center text-sm text-zinc-300">
+          {items.map((tech, index) => (
+            <div key={tech} className="flex items-center">
+              <span className="px-4">{tech}</span>
+              {index !== items.length - 1 && (
+                <span className="h-4 w-px bg-white/15" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
 
 export default function PpkScreeningPage() {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      {/* background */}
-      <div
-        className="pointer-events-none fixed inset-0 -z-10"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(70rem 55rem at 10% 0%, rgba(255,255,255,0.06), transparent 55%), radial-gradient(55rem 45rem at 95% 10%, rgba(255,255,255,0.045), transparent 60%), linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.85))",
-        }}
-      />
+    <main className="min-h-screen text-white">
+      {/* ลบ background gradient div ออกทั้งหมด - ใช้ bg จาก globals.css แทน */}
 
-      <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-14 py-10">
+      <div className="mx-auto max-w-[1300px] px-6 md:px-10 lg:px-16 py-10">
         {/* Header */}
         <header className="mt-12 md:mt-16 text-center">
           <h1 className="text-[clamp(28px,5.2vw,52px)] font-semibold leading-tight">
             PPK Screening{" "}
             <span className="text-zinc-400">Recommendation Room</span>
           </h1>
-          <p className="mt-2 text-[11px] tracking-widest text-zinc-400">
-            by Techin
-          </p>
         </header>
 
         {/* Hero */}
-        <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset,0_30px_60px_-30px_rgba(0,0,0,0.6)]">
+        <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5">
           <Image
             src="/images/projects/ppk-screening.png"
             alt="PPK Screening Referral hero"
-            width={1920}
-            height={1080}
+            width={1800}
+            height={1000}
             className="h-auto w-full"
             priority
           />
         </div>
 
-        {/* Editorial intro block */}
+        {/* Intro */}
         <section className="mt-16">
           <div className="mx-auto max-w-4xl text-zinc-200">
             <p className="text-base md:text-lg leading-relaxed">
               <span
-                className="
-                  float-left
-                  mr-4
-                  mt-1
-                  text-white
-                  font-medium
-                  leading-none
-                  text-[clamp(42px,4.4vw,58px)]
-                "
+                className="float-left mr-4 mt-1 text-white font-medium leading-none text-[clamp(42px,4.4vw,58px)]"
                 style={{ lineHeight: "2.4rem" }}
               >
                 PPK
               </span>
-              Screening and Referral System is designed for outpatient screening
-              in a public hospital environment. The system focuses on collecting
-              accurate information once and guiding staff toward the correct
-              clinical decision.
+              Screening Recommendation Room supports two operational modes: full intake case
+              screening and quick room recommendation. Both modes store results
+              in the database for operational analytics and dashboard reporting.
             </p>
 
             <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
-              Instead of relying on memory or paper based processes. The system
-              applies predefined rules to determine the next step for each
-              patient. This helps reduce mistakes and ensures consistency across
-              different staff members and service periods.
+              In full intake mode, staff can insert a Thai National ID card to
+              automatically retrieve patient identity and basic entitlement
+              information, eliminating repetitive manual entry.
             </p>
 
             <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
-              The interface is predictable and calm. The backend validates data
-              and preserves long term integrity. The output can be printed for
-              on site use and shared between counters and clinical rooms.
+              Completed screenings are recorded in the database and accessible
+              through patient history, supporting traceability and structured
+              clinical handoffs.
             </p>
           </div>
         </section>
 
-        {/* Divider */}
         <hr className="my-16 border-white/10" />
 
-        {/* What it does aligned with PPK */}
+        {/* Expanded What it does */}
         <section className="mt-16">
           <div className="mx-auto max-w-4xl">
             <h3 className="text-lg font-medium tracking-wide text-zinc-100">
               What it does
             </h3>
 
-            <div className="mt-6 space-y-7 leading-relaxed text-zinc-300">
+            <div className="mt-6 space-y-8 leading-relaxed text-zinc-300">
               <p>
-                PPK provides a structured screening flow that guides nurses through
-                consistent data capture at the counter. The design reduces hesitation
-                and allows staff to focus on patient interaction rather than system
-                logic.
+                Provides a structured screening workflow that guides staff
+                through consistent patient intake, reducing reliance on memory
+                and minimizing variation between shifts.
               </p>
 
               <p>
-                Based on the collected information. The system recommends the next
-                clinic using predefined referral rules. This keeps routing decisions
-                consistent across different shifts and experience levels.
+                Supports dual screening modes: a detailed case-based intake
+                flow for collecting symptoms and contextual data, and a fast
+                recommendation flow focused solely on routing patients to the
+                appropriate examination room.
               </p>
 
               <p>
-                Identity and eligibility checks are aligned with common hospital
-                operations. All changes are recorded so decisions can be reviewed when
-                needed.
+                Integrates Thai National ID card reading to automatically
+                retrieve identity and basic entitlement information, improving
+                speed, accuracy, and user experience at the counter.
               </p>
 
               <p>
-                A clear summary is generated at the end of the flow. This summary can be
-                printed and used by the next room without losing context.
+                Applies predefined referral logic to recommend clinics based on
+                screening inputs, ensuring routing decisions remain consistent
+                and rule-driven.
+              </p>
+
+              <p>
+                Stores every screening result in a centralized database,
+                enabling dashboard analytics that reveal trends such as the
+                most common screening reasons or peak intake periods.
+              </p>
+
+              <p>
+                Maintains searchable patient history records so staff can
+                review past screening outcomes, supporting continuity of care
+                and operational traceability.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Second image */}
-        <figure className="mt-14 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset,0_30px_60px_-30px_rgba(0,0,0,0.6)]">
+        {/* Bottom image */}
+        <div className="mt-16 mx-auto max-w-4xl">
           <Image
-            src="/images/projects/ppk-referral-02.png"
-            alt="PPK tablet and form screen"
-            width={1920}
-            height={1200}
+            src="/images/projects/ppk-referral-03.png"
+            alt="PPK referral summary screen"
+            width={2200}
+            height={1400}
             className="h-auto w-full"
           />
-          <figcaption className="p-4 text-center text-xs text-zinc-400">
-            Tablet friendly layout for quick capture at screening counters.
-          </figcaption>
-        </figure>
+        </div>
+
+        <hr className="my-20 border-white/10" />
+
+        {/* Tech Stack */}
+        <TechStackClean
+          items={["Next.js", "React", "TypeScript", "Laravel", "PHP", "MySQL"]}
+        />
+
+        {/* Final divider + Conference Info */}
+        <div className="mt-16">
+          <hr className="border-white/10" />
+          <div className="mt-4 flex justify-end">
+            <p className="text-sm text-zinc-500 italic">
+              Presented at <span className="text-zinc-300">AUCC Conference 2026</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="h-20" />
       </div>
     </main>
   );

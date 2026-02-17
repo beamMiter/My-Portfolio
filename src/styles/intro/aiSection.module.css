@@ -1,0 +1,303 @@
+/* src/styles/intro/aiSection.module.css */
+
+.section {
+  position: relative;
+  background: #0f1115;
+  border-top: 1px solid rgb(24 24 27);
+  padding-block: 5rem; /* py-20 */
+  overflow: hidden;
+  min-height: 105vh;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: 7rem; /* md:py-28 */
+  }
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background: #0f1115;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding-inline: 1.5rem; /* px-6 */
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding-inline: 3rem; /* md:px-12 */
+  }
+}
+@media (min-width: 1024px) {
+  .inner {
+    padding-inline: 5rem; /* lg:px-20 */
+  }
+}
+@media (min-width: 1280px) {
+  .inner {
+    padding-inline: 8rem; /* xl:px-32 */
+  }
+}
+@media (min-width: 1536px) {
+  .inner {
+    padding-inline: 10rem; /* 2xl:px-40 */
+  }
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3.5rem; /* gap-14 */
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem; /* lg:gap-16 */
+  }
+}
+
+/* LEFT COLUMN */
+.leftCol {
+  max-width: 40rem;
+  color: rgb(244 244 245);
+}
+
+.kicker {
+  margin-bottom: 1rem;
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgb(113 113 122);
+}
+@media (min-width: 768px) {
+  .kicker {
+    font-size: 11px;
+  }
+}
+
+.title {
+  font-size: clamp(32px, 5.6vw, 82px);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: rgb(244 244 245);
+}
+
+.accentText {
+  background: linear-gradient(120deg, #22c55e, #4ade80);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgb(212 212 216);
+  margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+  .desc {
+    font-size: 14px;
+  }
+}
+
+/* AI LIST */
+.aiList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.aiItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.aiImage {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+@media (min-width: 768px) {
+  .aiImage {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.aiContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.aiHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.aiName {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(244 244 245);
+}
+@media (min-width: 768px) {
+  .aiName {
+    font-size: 15px;
+  }
+}
+
+.aiRole {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(113 113 122);
+}
+@media (min-width: 768px) {
+  .aiRole {
+    font-size: 11px;
+  }
+}
+
+/* แก้ไขตรงนี้ - เพิ่ม word-break เพื่อแก้ปัญหาคำติด */
+.aiDesc {
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgb(212 212 216);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+@media (min-width: 768px) {
+  .aiDesc {
+    font-size: 13px;
+  }
+}
+
+/* RIGHT COLUMN */
+.rightCol {
+  width: 100%;
+  color: rgb(244 244 245);
+}
+
+@media (min-width: 1024px) {
+  .rightCol {
+    padding-left: 2.5rem; /* lg:pl-10 */
+  }
+}
+
+.rightInner {
+  max-width: 24rem; /* max-w-sm */
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+@media (min-width: 1024px) {
+  .rightInner {
+    margin-left: auto;
+  }
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.blockTitle {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(113 113 122);
+}
+@media (min-width: 768px) {
+  .blockTitle {
+    font-size: 11px;
+  }
+}
+
+/* แก้ไขตรงนี้ - เพิ่ม word-break */
+.blockText {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgb(212 212 216);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+@media (min-width: 768px) {
+  .blockText {
+    font-size: 14px;
+  }
+}
+
+/* PRINCIPLES CARD */
+.card {
+  border-radius: 1rem;
+  border: 1px solid rgb(39 39 42);
+  background: rgba(24, 24, 27, 0.4);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardTitle {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(161 161 170);
+}
+@media (min-width: 768px) {
+  .cardTitle {
+    font-size: 11px;
+  }
+}
+
+/* แก้ไขตรงนี้ - เพิ่ม word-break */
+.cardList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 12px;
+  color: rgb(212 212 216);
+}
+@media (min-width: 768px) {
+  .cardList {
+    font-size: 13px;
+  }
+}
+
+.cardList li {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.highlightTitle {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #34d399; /* emerald-400 */
+}
+@media (min-width: 768px) {
+  .highlightTitle {
+    font-size: 11px;
+  }
+}

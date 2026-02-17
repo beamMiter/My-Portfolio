@@ -1,0 +1,140 @@
+.section {
+  position: relative;
+  border-top: 1px solid rgb(24 24 27);
+  background: #0f1115;
+  color: rgb(244 244 245);
+  padding-block: 6rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: 7rem;
+  }
+}
+
+.inner {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 56rem;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 3rem;
+}
+
+.kicker {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  color: rgb(113 113 122);
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: clamp(34px, 5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.05em;
+}
+
+.desc {
+  margin-top: 1rem;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgb(161 161 170);
+  max-width: 42rem;
+}
+
+/* CONTACT GRID */
+.grid {
+  display: grid;
+  gap: 2rem;
+  font-size: 14px;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: rgb(161 161 170);
+  margin-top: 2px;
+}
+
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgb(113 113 122);
+}
+
+.value {
+  margin-top: 0.25rem;
+  color: rgb(212 212 216);
+}
+
+/* LINKS */
+.linksWrap {
+  margin-top: 3.5rem;
+  border-top: 1px solid rgb(39 39 42);
+  padding-top: 1.5rem;
+}
+
+.linksTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgb(113 113 122);
+  margin-bottom: 1.25rem;
+}
+
+.linksRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  font-size: 14px;
+}
+
+.linkItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgb(212 212 216);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.linkItem:hover {
+  color: white;
+}
+
+.linkIcon {
+  width: 16px;
+  height: 16px;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 4rem;
+  border-top: 1px solid rgb(39 39 42);
+  padding-top: 1.5rem;
+  font-size: 12px;
+  color: rgb(113 113 122);
+}

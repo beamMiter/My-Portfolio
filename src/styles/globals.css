@@ -2,7 +2,7 @@
 
 /* app/globals.css */
 :root{
-  --ink:#0b0c0d;
+  --ink:#09090b;
   --ink-2:#0f1113;
   --ink-3:#16181c;
   --accent:#22d3ee;
@@ -15,11 +15,11 @@
 }
 
 html,body{
-  background:var(--ink);
+  background:#09090b;   /* zinc-950 */
   color:#e5e7eb;
-  overscroll-behavior-y:none;  /* กัน rubber-band บน macOS */
+  overscroll-behavior-y:none;
   scroll-behavior:smooth;
-  margin:0;                     /* กัน UA margin */
+  margin:0;
   min-height:100%;
 }
 
@@ -30,19 +30,22 @@ html,body{
   z-index:0;
   isolation:isolate;
   background:
-    /* ต้นกำเนิดอยู่ในกรอบ + ใหญ่กว่าจอเพื่อตัดขอบเนียน */
-    radial-gradient(1200px 800px at 15% 5%, rgba(34,211,238,.08), transparent 62%),
-    radial-gradient(950px 650px at 85% 35%, rgba(16,185,129,.08), transparent 62%),
-    /* conic แบบไร้รอยต่อ */
+    /* [แก้ไข] เปลี่ยนสีฟ้า -> เป็นสีขาวจางๆ (Opacity 3%) เพื่อสร้างมิติ */
+    radial-gradient(1200px 800px at 15% 5%, rgba(255,255,255,0.03), transparent 62%),
+    
+    /* [แก้ไข] ลบสีเขียวทิ้ง หรือเปลี่ยนเป็นสีขาวจางๆ (Opacity 2%) */
+    radial-gradient(950px 650px at 85% 35%, rgba(255,255,255,0.02), transparent 62%),
+    
+    /* พื้นหลังหลัก Conic Gradient (Dark Zinc) */
     conic-gradient(
       from 180deg at 50% 50%,
-      #0a0b0c 0deg,
+      #09090b 0deg,
       #0d0f11 140deg,
-      #0a0b0c 360deg,
-      #0a0b0c 360.0001deg
+      #09090b 360deg,
+      #09090b 360.0001deg
     );
-  backface-visibility:hidden;     /* ลด subpixel popping */
-  transform:translateZ(0);         /* force compositing */
+  backface-visibility:hidden;
+  transform:translateZ(0);
 }
 
 .bg-stage::before{
@@ -63,14 +66,15 @@ html,body{
   background:
     linear-gradient(
       to bottom,
-      #0a0b0c 0%,
-      rgba(10,11,12,.92) 35%,
-      rgba(10,11,12,.72) 70%,
+      #09090b 0%,
+      rgba(9,9,11,.92) 35%,
+      rgba(9,9,11,.72) 70%,
       transparent 100%
     );
   pointer-events:none;
 }
 
+/* Spotlight ที่ตามเมาส์ (ถ้ามี JS คุม) */
 .bg-spot{
   position:absolute; inset:0;
   pointer-events:none; z-index:-1;
@@ -81,99 +85,10 @@ html,body{
   width:560px; height:560px; border-radius:50%;
   left:calc(var(--mx) - 280px);
   top:calc(var(--my) - 280px);
-  background:radial-gradient(circle at center, rgba(34,211,238,.14), transparent 72%);
-  filter:blur(34px);
-  transition:left 60ms linear, top 60ms linear;
-}
-
-/* เคารพผู้ใช้ที่ลดแอนิเมชัน */
-@media (prefers-reduced-motion: reduce){
-  .bg-spot::after{ transition:none; }
-}
-@import "tailwindcss";
-
-/* app/globals.css */
-:root{
-  --ink:#0b0c0d;
-  --ink-2:#0f1113;
-  --ink-3:#16181c;
-  --accent:#22d3ee;
-  --accent2:#10b981;
-  --muted:#aab0b6;
-
-  /* ค่าตำแหน่ง spotlight เริ่มต้น */
-  --mx:50vw;
-  --my:40vh;
-}
-
-html,body{
-  background:var(--ink);
-  color:#e5e7eb;
-  overscroll-behavior-y:none;  /* กัน rubber-band บน macOS */
-  scroll-behavior:smooth;
-  margin:0;                     /* กัน UA margin */
-  min-height:100%;
-}
-
-/* ===== พื้นหลัง stage + spotlight ===== */
-.bg-stage{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  isolation:isolate;
-  background:
-    /* ต้นกำเนิดอยู่ในกรอบ + ใหญ่กว่าจอเพื่อตัดขอบเนียน */
-    radial-gradient(1200px 800px at 15% 5%, rgba(34,211,238,.08), transparent 62%),
-    radial-gradient(950px 650px at 85% 35%, rgba(16,185,129,.08), transparent 62%),
-    /* conic แบบไร้รอยต่อ */
-    conic-gradient(
-      from 180deg at 50% 50%,
-      #0a0b0c 0deg,
-      #0d0f11 140deg,
-      #0a0b0c 360deg,
-      #0a0b0c 360.0001deg
-    );
-  backface-visibility:hidden;     /* ลด subpixel popping */
-  transform:translateZ(0);         /* force compositing */
-}
-
-.bg-stage::before{
-  content:"";
-  position:absolute; inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-  background-size:22px 22px,22px 22px;
-  mix-blend-mode:soft-light;
-  pointer-events:none;
-}
-
-/* เพดานมืด (mask) กันฮาโลใต้ Navbar ให้เนียน */
-.bg-stage::after{
-  content:"";
-  position:absolute; left:0; right:0; top:0; height:160px;
-  background:
-    linear-gradient(
-      to bottom,
-      #0a0b0c 0%,
-      rgba(10,11,12,.92) 35%,
-      rgba(10,11,12,.72) 70%,
-      transparent 100%
-    );
-  pointer-events:none;
-}
-
-.bg-spot{
-  position:absolute; inset:0;
-  pointer-events:none; z-index:-1;
-}
-.bg-spot::after{
-  content:"";
-  position:absolute;
-  width:560px; height:560px; border-radius:50%;
-  left:calc(var(--mx) - 280px);
-  top:calc(var(--my) - 280px);
-  background:radial-gradient(circle at center, rgba(34,211,238,.14), transparent 72%);
+  
+  /* [แก้ไข] เปลี่ยนแสงตามเมาส์จากสีฟ้า -> เป็นสีขาวจางๆ */
+  background:radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 72%);
+  
   filter:blur(34px);
   transition:left 60ms linear, top 60ms linear;
 }

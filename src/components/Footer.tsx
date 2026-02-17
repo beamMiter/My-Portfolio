@@ -1,11 +1,15 @@
-// components/Footer.tsx
-'use client';
+"use client";
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 border-t border-white/5">
-      <div className="max-w-[1200px] mx-auto px-4 py-8 text-sm text-gray-400 text-center">
-        @2025 by Techin
+    <footer>
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
+        <div className="h-px bg-white/15" />
+        <div className="py-6 sm:py-8 text-center">
+          <p className="text-xs sm:text-sm text-white">
+            © 2025 Techin. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import AboutSection from "@/components/sections/AboutSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
@@ -11,87 +12,117 @@ function HashScroller() {
   useEffect(() => {
     const hash = window.location.hash?.slice(1);
     if (!hash) return;
+
     const t = setTimeout(() => {
       const el = document.getElementById(hash);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 0);
+    }, 100);
+
     return () => clearTimeout(t);
   }, []);
+
   return null;
+}
+
+const TITLES = ["Techin", "Developer"];
+const SWITCH_MS = 3200;
+
+function VerticalTicker({
+  items = TITLES,
+  interval = SWITCH_MS,
+}: {
+  items?: string[];
+  interval?: number;
+}) {
+  const [i, setI] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setI((v) => (v + 1) % items.length);
+    }, interval);
+    return () => clearInterval(id);
+  }, [items.length, interval]);
+
+  const minCh = useMemo(() => {
+    const maxLen = items.reduce((m, s) => Math.max(m, s.length), 0);
+    return Math.max(8, maxLen + 1);
+  }, [items]);
+
+  return (
+    <span
+      className="inline-block align-baseline whitespace-nowrap"
+      style={{ minWidth: `${minCh}ch` }}
+    >
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={items[i]}
+          className="inline-block text-[#3edc8a] font-semibold will-change-transform normal-case tracking-[0.04em] sm:tracking-[0.05em] lg:tracking-[0.06em]"
+          // แก้เป็นร่วงจากบนลงล่างตามสั่ง
+          initial={{ y: "-0.9em", opacity: 0 }}
+          animate={{
+            y: "0em",
+            opacity: 1,
+            transition: {
+              type: "spring",
+              stiffness: 520,
+              damping: 18,
+              mass: 0.7,
+            },
+          }}
+          // แก้เป็นหายลงไปข้างล่าง
+          exit={{
+            y: "0.55em",
+            opacity: 0,
+            transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+          }}
+        >
+          {items[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
 }
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen text-white">
       <HashScroller />
-
-      <style jsx global>{`
-        :root {
-          /* Dev Green – brighter but still calm */
-          --dev-green: #3edc8a;
-          --dev-green-soft: #5ae6a3;
-          --dev-green-dark: #27b874;
-        }
-
-        .dev-green {
-          color: var(--dev-green);
-        }
-        .dev-green-soft {
-          color: var(--dev-green-soft);
-        }
-      `}</style>
 
       <section
         id="home"
-        className="scroll-mt-28 min-h-[85svh] flex items-center bg-black text-white"
+        className="scroll-mt-24 md:scroll-mt-28 min-h-[85svh] flex items-center px-5 sm:px-7 lg:px-9 xl:px-12 pt-5 lg:pt-6"
       >
-        <div className="mx-auto w-full max-w-[1400px] px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-            {/* LEFT : TEXT */}
-            <div className="max-w-[640px]">
-              {/* ROLE */}
-              <p className="text-xs md:text-sm tracking-[0.28em] uppercase text-white/55">
-                Full-stack Developer
-              </p>
-
-              {/* HERO */}
-              <h1 className="mt-4 text-[clamp(46px,6.4vw,88px)] font-semibold leading-[1.02] tracking-[-0.035em] text-white">
-                Hello, I&apos;m{" "}
-                <span className="dev-green font-semibold">
-                  Techin
+        <div className="mx-auto w-full max-w-[1400px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-14">
+            <div className="max-w-[760px]">
+              <h1 className="mt-4 text-[clamp(40px,6.1vw,88px)] sm:text-[clamp(44px,6.2vw,88px)] font-semibold leading-[1.02] tracking-[-0.03em] text-white">
+                {/* เพิ่ม whitespace-nowrap เพื่อให้ Techin อยู่ข้าง Hello, I'm เสมอ */}
+                <span className="inline-flex items-baseline gap-x-4 gap-y-0 whitespace-nowrap">
+                  <span className="inline-block">Hello, I&apos;m</span>
+                  <VerticalTicker />
                 </span>
               </h1>
 
-              {/* TAGLINE */}
-              <h2 className="mt-4 text-[clamp(18px,2.2vw,28px)] font-medium leading-snug text-white/80">
-                I design and build{" "}
-                <span className="dev-green-soft">
-                  reliable software systems
-                </span>{" "}
-                that turn complex workflows into simple, scalable solutions.
-              </h2>
-
-              {/* BODY – แนะนำตัวแบบมืออาชีพ */}
-              <p className="mt-6 max-w-[60ch] text-[15px] md:text-[16px] leading-relaxed text-white/55">
-                I work across system architecture, backend services, and
-                automation-driven workflows — focusing on clarity, long-term
-                maintainability, and software that teams can trust in real
-                production environments.
+              <p className="mt-6 max-w-[62ch] text-[15px] md:text-[16px] leading-relaxed text-white/80">
+                I’m a fresh graduate developer who enjoys building practical
+                and reliable software. I’ve worked on real hospital projects,
+                building internal systems and workflow tools that reduce
+                manual steps and keep operations running smoothly.
               </p>
             </div>
 
-            {/* RIGHT : IMAGE PLACEHOLDER */}
             <div className="hidden lg:flex justify-center items-center">
-              {/* ใส่รูป / motion / portrait ตรงนี้ */}
             </div>
           </div>
         </div>
       </section>
-
-      <ServicesSection />
-      <AboutSection />
-      <ProjectsSection />
-      <ContactSection />
+      <div className="w-full h-px bg-white/5" />
+      <div className="flex flex-col w-full">
+        <ServicesSection />
+        <AboutSection />
+        <ProjectsSection />
+        <ContactSection />
+      </div>
     </main>
   );
 }

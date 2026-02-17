@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
 type Project = {
@@ -12,6 +11,7 @@ type Project = {
   tech: string[];
   path?: string;
   href?: string;
+  logo?: string;
 };
 
 const projects: Project[] = [
@@ -20,42 +20,53 @@ const projects: Project[] = [
     image: "/images/projects/ppk-screening.png",
     tech: ["Next.js", "Laravel", "MySQL"],
     path: "/projects/ppk-screening",
+    logo: "/images/aucc_logo.png",
   },
   {
     title: "PPK Kiosk Queue",
     image: "/images/projects/ppk-kiosk4.png",
-    tech: ["Next.js", "Laravel", "Prisma"],
+    tech: ["Next.js", "Laravel", "Prisma", "MySQL"],
     path: "/projects/ppk-kiosk",
+    logo: "/images/aucc_logo.png",
   },
   {
     title: "Home Service",
-    image: "/images/projects/realtime-chat.jpg",
-    tech: ["Flutter", "Golang", "PostgreSQL"],
+    image: "/images/projects/home-service.png",
+    tech: ["Flutter", "GoLang", "PostgreSQL"],
     href: "#",
   },
   {
-    title: "PPK Asset Repair",
+    title: "PPK Asset Repair Management",
     image: "/images/projects/ppk-repair.png",
     tech: ["Laravel", "MySQL"],
     path: "/projects/ppk-asset-repair",
   },
   {
-    title: "Special Disease Surveillance Dashboard",
-    image: "/images/projects/surveillance.jpg",
-    tech: ["Next.js", "Node.js", "MySQL"],
-    href: "#",
-  },
-  {
-    title: "PPK PR",
-    image: "/images/projects/pr-automation.jpg",
+    title:
+      "PPK PR Integrated Policy, Performance and Knowledge Governance for Public Relations",
+    image: "/images/projects/ppk-pr.png",
     tech: ["Next.js", "Laravel", "MySQL", "n8n"],
     href: "#",
   },
+  {
+    title: "WelaCode",
+    image: "/images/projects/welacode1.png",
+    tech: ["Next.js"],
+    href: "/projects/welacode",
+  },
 ];
 
-function TechChip({ children }: { children: React.ReactNode }) {
+function TechChip({ children, canHover = true }: { children: React.ReactNode; canHover?: boolean }) {
+  if (!canHover) {
+    return (
+      <span className="text-[13px] font-medium text-zinc-500">
+        {children}
+      </span>
+    );
+  }
+  
   return (
-    <span className="inline-block rounded-full border border-white/10 px-2.5 py-1 text-xs text-zinc-300">
+    <span className="relative text-[13px] font-medium text-zinc-500 transition-all duration-300 group-hover:text-emerald-400 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-emerald-400 after:transition-all after:duration-300 group-hover:after:w-full">
       {children}
     </span>
   );
@@ -76,8 +87,9 @@ export default function ProjectsSection() {
       router.push(p.path);
       return;
     }
+
     if (hasValidHref(p.href)) {
-      window.open(p.href, "_blank", "noopener,noreferrer");
+      router.push(p.href!);
     }
   };
 
@@ -96,41 +108,32 @@ export default function ProjectsSection() {
   return (
     <section
       id="portfolio"
-      className="scroll-mt-28 bg-[#101214] py-16"
+      className="scroll-mt-28 py-16 relative z-10 text-white"
       aria-label="Projects"
     >
-      <div className="mx-auto max-w-[1300px] px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center text-xs tracking-[.3em] text-zinc-400"
-        >
+      <div className="mx-auto max-w-[1500px] px-8">
+        <p className="text-center text-xs tracking-[0.3em] uppercase text-white/45">
           MY PORTFOLIO
-        </motion.p>
+        </p>
 
-        <h2 className="mt-2 text-center text-3xl font-extrabold leading-tight tracking-tight text-white md:text-4xl">
+        <h2 className="mt-3 text-center text-[clamp(26px,3.6vw,38px)] font-medium leading-snug tracking-[-0.015em] text-white">
           See My Works
         </h2>
 
-        <div className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => {
             const headingId = `project-${i}`;
             const canOpen = !!p.path || hasValidHref(p.href);
 
             return (
-              <motion.article
+              <article
                 key={p.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.06 }}
                 className={[
-                  "group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]",
-                  "transition-colors hover:bg-white/[0.05]",
-                  canOpen ? "cursor-pointer" : "cursor-default",
-                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60",
+                  "group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/20 backdrop-blur-sm",
+                  "min-h-[440px]",
+                  canOpen
+                    ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40"
+                    : "cursor-default",
                 ].join(" ")}
                 aria-labelledby={headingId}
                 role={canOpen ? "button" : undefined}
@@ -139,7 +142,7 @@ export default function ProjectsSection() {
                 onKeyDown={(e) => onCardKeyDown(e, p, canOpen)}
               >
                 <div className="relative">
-                  <div className="relative h-60 w-full md:h-64 lg:h-64">
+                  <div className="relative h-72 w-full">
                     <Image
                       src={p.image}
                       alt={p.title}
@@ -149,50 +152,47 @@ export default function ProjectsSection() {
                       priority={i < 2}
                     />
                   </div>
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                  
+                  {p.logo && (
+                    <div className="absolute top-3 right-3">
+                      <Image
+                        src={p.logo}
+                        alt="Project Logo"
+                        width={60}
+                        height={30}
+                        className="h-auto w-auto opacity-90"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-6">
-                  <h3
-                    id={headingId}
-                    className="text-lg font-semibold text-white"
-                  >
+                  <h3 id={headingId} className="text-xl font-semibold text-white">
                     {p.title}
                   </h3>
 
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
                     {p.tech.map((t, idx) => (
-                      <TechChip key={`${t}-${idx}`}>{t}</TechChip>
+                      <TechChip key={`${t}-${idx}`} canHover={canOpen}>{t}</TechChip>
                     ))}
                   </div>
 
-                  <div className="mt-4">
-                    {p.path ? (
+                  <div className="mt-5">
+                    {canOpen ? (
                       <Link
-                        href={p.path}
+                        href={p.path || p.href!}
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1.5 text-sm text-emerald-400 transition-colors hover:text-emerald-300"
+                        className="inline-flex items-center gap-1.5 text-sm text-emerald-400 transition-colors hover:text-emerald-300 font-medium"
                         aria-label={`View project: ${p.title}`}
                       >
                         View <ExternalLink className="h-4 w-4" />
                       </Link>
-                    ) : hasValidHref(p.href) ? (
-                      <a
-                        href={p.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1.5 text-sm text-emerald-400 transition-colors hover:text-emerald-300"
-                        aria-label={`Open project: ${p.title}`}
-                      >
-                        View <ExternalLink className="h-4 w-4" />
-                      </a>
                     ) : (
-                      <span className="text-sm text-zinc-500">Coming soon</span>
+                      <span className="text-sm text-zinc-600 font-medium">Internal / Coming soon</span>
                     )}
                   </div>
                 </div>
-              </motion.article>
+              </article>
             );
           })}
         </div>

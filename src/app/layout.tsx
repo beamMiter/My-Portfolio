@@ -1,9 +1,8 @@
-// src/app/layout.tsx
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "TECHIN Portfolio",
+  title: "JETSRI DEV LOG",
   description: "Personal portfolio of Techin Jetsribumrung",
 };
 
@@ -14,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white antialiased">
+      <body className="min-h-screen bg-zinc-950 text-white antialiased">
         {children}
       </body>
     </html>

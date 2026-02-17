@@ -1,126 +1,121 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, MapPin } from "lucide-react";
 
 type TimelineItem = {
   period: string;
   title: string;
   org: string;
-  location?: string;
-  bullets: string[];
+  body: string[];
 };
 
 const timeline: TimelineItem[] = [
   {
-    period: "Feb 2025 – Present",
-    title: "AI Engineer",
-    org: "KBTG (Mock)",
-    location: "Bangkok, TH",
-    bullets: [
-      "Designed data + LLM pipelines for document analysis and quality checks.",
-      "Shipped model-serving services with queues, retries, and monitoring.",
-      "Built prompt tooling and evaluation loops to improve task accuracy.",
-      "Maintained APIs with structured logs and clear error budgets.",
+    period: "2026 – Present",
+    title: "Full Stack Developer",
+    org: "Phrapokklao Hospital X Technology Group",
+    body: [
+      "I am currently developing a hospital program as a solo full-stack developer, taking ownership of the full lifecycle from requirement discovery to deployment. The goal is to deliver software that fits real operational workflows, where correctness and stability matter as much as speed of delivery.",
+      "I design the database structure to keep records consistent and easy to maintain, implement backend APIs with clear business rules and predictable behavior, and build frontend interfaces that help staff complete tasks quickly with minimal friction. My approach emphasizes clean structure, readable code, and careful handling of edge cases so the system stays reliable in production.",
+      "Because I build the system end-to-end, I keep a strong connection between data models, API contracts, and UI behavior. This allows the product to evolve safely over time while remaining maintainable, testable, and aligned with real usage patterns in a hospital environment.",
     ],
   },
   {
-    period: "Feb 2024 – Jan 2025",
-    title: "Innovation Engineer",
-    org: "KBTG (Mock)",
-    location: "Bangkok, TH",
-    bullets: [
-      "Prototyped AI features for fintech and insurtech use-cases.",
-      "Containerized workloads with Docker and automated CI/CD pipelines.",
-      "Optimized model serving for reliability and stability.",
-      "Worked cross-functionally to ship POCs to production.",
+    period: "2025",
+    title: "Full Stack Developer (Intern)",
+    org: "Phrapokklao Hospital X Rambhai Barni Rajabhat University",
+    body: [
+      "I completed my internship as a Full Stack Developer at Phrapokklao Hospital in Chanthaburi. Working in a real hospital context helped me understand practical constraints such as time pressure, user adoption, and the importance of data integrity in daily operations.",
+      "During the internship, I contributed across the stack by developing UI pages, implementing backend endpoints, and integrating database operations. I worked iteratively based on feedback from real users, refining flows and improving usability so staff could complete tasks faster and with fewer errors.",
+      "This experience strengthened my ability to translate user needs into stable features, ship improvements safely, and build systems that match real workflow requirements rather than only technical specifications.",
     ],
   },
   {
-    period: "2023",
-    title: "Freelance Full-Stack",
-    org: "Self-Employed",
-    bullets: [
-      "Delivered Next.js + Laravel systems with clean APIs and audit-friendly records.",
-      "Implemented CI/CD, backups, and staged rollouts.",
+    period: "2022 – 2024",
+    title: "B.Sc. Computer Science",
+    org: "Rambhai Barni Rajabhat University",
+    body: [
+      "I studied Computer Science at Rambhai Barni Rajabhat University in Chanthaburi, Thailand. My focus was building practical foundations that translate directly into real development work: programming fundamentals, system thinking, and database concepts.",
+      "Through coursework and projects, I practiced breaking down problems into maintainable components, modeling data correctly, and implementing end-to-end applications with clear structure. This foundation supports how I build production systems today: readable code, predictable behavior, and strong attention to correctness.",
     ],
   },
-  {
-    period: "2019 – 2023",
-    title: "B.Eng. Computer Engineering",
-    org: "Your University (Mock)",
-    bullets: [
-      "Focused on distributed systems, databases, and machine learning.",
-    ],
-  },
+];
+
+const PROFILE = {
+  name: "Techin Jetsribumrung",
+  role: "Full Stack Developer",
+  summary:
+    "I build software that supports real operational workflows. My focus is reliability, structured backend systems, and clear user interfaces that reduce friction in daily work.",
+  accent: "#3edc8a",
+};
+
+const SKILLS = [
+  "Web Application Development",
+  "Mobile Application Development",
+  "API & Backend Architecture",
+  "Database Design",
+  "Docker & Containerization",
+  "Workflow Automation",
 ];
 
 export default function AboutSection() {
   return (
     <section
       id="about"
-      className="scroll-mt-28 py-16 bg-[#101214] border-b border-white/10"
-      aria-label="About"
+      className="scroll-mt-28 py-16 bg-[#0f1115] border-b border-white/5"
     >
       <div className="mx-auto max-w-[1200px] px-6">
-        {/* HEADER */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
+          transition={{ duration: 0.4 }}
           className="text-xs tracking-[0.3em] uppercase text-white/45"
         >
           About
         </motion.p>
 
         <div className="mt-4 grid gap-10 md:grid-cols-[1.05fr_0.95fr] items-start">
-          {/* LEFT : TIMELINE */}
+          
           <div>
-            <h3 className="mt-2 text-[clamp(22px,3vw,34px)] font-medium leading-snug tracking-[-0.01em] text-white">
-              Education &amp; Experience
+            <h3 className="mt-2 text-[clamp(22px,3vw,34px)] font-medium text-white">
+              Education & Experience
               <span className="ml-2 text-[#3edc8a]">Timeline</span>
             </h3>
 
-            <p className="mt-2 text-sm text-white/60">
-              Roles and systems I&apos;ve worked on, with a focus on reliability
-              and real-world operations.
-            </p>
+            <div className="mt-8">
+              <ul className="relative space-y-16">
+                <div className="absolute left-[14px] top-[9px] bottom-[9px] w-px bg-white/10" />
 
-            <div className="mt-7 relative">
-              <div className="absolute left-[10px] top-0 bottom-0 w-px bg-white/10" />
-
-              <ul className="space-y-10">
                 {timeline.map((item, idx) => (
-                  <li key={idx} className="relative pl-10">
-                    <span className="absolute left-[6px] top-2 h-2.5 w-2.5 rounded-full bg-[#3edc8a] shadow-[0_0_0_3px_rgba(62,220,138,0.18)]" />
-
-                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white/70">
-                      <Calendar className="h-3.5 w-3.5 text-white/45" />
-                      {item.period}
+                  <li key={idx} className="grid grid-cols-[28px_1fr] gap-x-8">
+                    <div className="flex justify-center">
+                      <span className="mt-[6px] h-2.5 w-2.5 rounded-full bg-[#3edc8a]" />
                     </div>
 
-                    <div className="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:bg-white/[0.045]">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                        <h4 className="text-[15px] md:text-base font-normal text-white">
-                          <span className="text-[#3edc8a]">{item.title}</span>
-                        </h4>
-
-                        <span className="text-white/45">• {item.org}</span>
-
-                        {item.location && (
-                          <span className="inline-flex items-center gap-1 text-xs text-white/45">
-                            <MapPin className="h-3.5 w-3.5" />
-                            {item.location}
-                          </span>
-                        )}
+                    <div>
+                      <div className="text-[12px] text-white/55">
+                        {item.period}
                       </div>
 
-                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-6 text-white/65">
-                        {item.bullets.map((b, i) => (
-                          <li key={i}>{b}</li>
+                      <h4 className="mt-3 text-[26px] font-medium text-white">
+                        {item.title}
+                      </h4>
+
+                      <div className="mt-2 text-sm text-white/60">
+                        [{item.org}]
+                      </div>
+
+                      <div className="mt-4 space-y-4 max-w-[80ch]">
+                        {item.body.map((p, i) => (
+                          <p
+                            key={i}
+                            className="text-[14.5px] leading-7 text-white"
+                          >
+                            {p}
+                          </p>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   </li>
                 ))}
@@ -128,39 +123,42 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* RIGHT : INTRO */}
-          <div className="pt-1">
-            <h2 className="text-[clamp(26px,3.8vw,44px)] font-light leading-tight tracking-[-0.02em] text-white">
-              I build{" "}
-              <span className="text-[#3edc8a]">real-world systems</span> for
-              hospitals and public-sector workflows.
+          <div>
+            <h2 className="text-[clamp(32px,4vw,48px)] font-light text-white leading-tight">
+              I&apos;m{" "}
+              <span style={{ color: PROFILE.accent }} className="font-medium">
+                {PROFILE.name}
+              </span>
+              <br />
+              <span className="text-white">{PROFILE.role}</span>
             </h2>
 
-            <p className="mt-5 max-w-2xl text-white/65 leading-7">
-              Next.js + Laravel + MySQL • Docker / CI • automation workflows •
-              observability. I focus on clean, readable code and predictable
-              operations that teams can trust in production.
+            <p className="mt-6 text-white leading-7 max-w-[60ch]">
+              {PROFILE.summary}
             </p>
 
-            <ul className="mt-6 grid grid-cols-2 gap-3 text-sm text-white/70">
-              <li className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                6+ shipped projects
-              </li>
-              <li className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                99.9% uptime target
-              </li>
-              <li className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                CI/CD + Dockerized
-              </li>
-              <li className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                AI + automation
-              </li>
-            </ul>
+            <div className="mt-12">
+              <h3 className="text-sm font-medium text-white/40 mb-5">
+                Skills
+              </h3>
 
-            <p className="mt-6 text-xs text-white/45">
-              * Entries marked “Mock” are placeholders for portfolio presentation.
-            </p>
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+                {SKILLS.map((skill, idx) => (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.05 }}
+                    className="text-[14px] text-white"
+                  >
+                    {skill}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>

@@ -1,0 +1,431 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgb(24 24 27); /* zinc-900 */
+  background: #0f1115;
+  padding-block: 5rem; /* py-20 */
+  min-height: 105vh; /* เพิ่ม min-height เหมือน AI section */
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: 7rem; /* เปลี่ยนจาก 6rem เป็น 7rem เหมือน AI section */
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding-inline: 1.5rem; /* px-6 */
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding-inline: 3rem; /* md:px-12 */
+  }
+}
+@media (min-width: 1024px) {
+  .inner {
+    padding-inline: 5rem; /* lg:px-20 */
+  }
+}
+@media (min-width: 1280px) {
+  .inner {
+    padding-inline: 8rem; /* เปลี่ยนจาก 7rem เป็น 8rem เหมือน AI section */
+  }
+}
+@media (min-width: 1536px) {
+  .inner {
+    padding-inline: 10rem; /* เปลี่ยนจาก 8rem เป็น 10rem เหมือน AI section */
+  }
+}
+
+/* header block */
+.head {
+  margin-bottom: 2.5rem; /* mb-10 */
+}
+@media (min-width: 768px) {
+  .head {
+    margin-bottom: 3.5rem; /* md:mb-14 */
+  }
+}
+
+.kickerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem; /* mb-3 */
+  color: rgb(113 113 122); /* zinc-500 */
+  font-size: 11px; /* text-[11px] */
+}
+
+@media (min-width: 768px) {
+  .kickerRow {
+    font-size: 0.75rem; /* md:text-xs */
+  }
+}
+
+.kickerLeft {
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.kickerRight {
+  display: none;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .kickerRight {
+    display: inline;
+  }
+}
+
+.title {
+  max-width: 56rem; /* max-w-4xl */
+  text-transform: uppercase;
+  color: rgb(250 250 250); /* zinc-50 */
+  font-size: clamp(34px, 6.2vw, 80px);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+
+.accentText {
+  display: inline-block;
+  background: linear-gradient(120deg, #22c55e, #4ade80);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* grid layout */
+.grid {
+  display: grid;
+  column-gap: 2.5rem; /* gap-x-10 */
+  row-gap: 2.5rem; /* gap-y-10 */
+}
+
+@media (min-width: 768px) {
+  .grid {
+    row-gap: 3.5rem; /* md:gap-y-14 */
+    grid-template-columns: 1.35fr 1.1fr 0.9fr;
+    align-items: center;
+  }
+}
+
+/* left text column */
+.leftText {
+  display: grid;
+  gap: 1rem; /* space-y-4 */
+}
+@media (min-width: 1024px) {
+  .leftText {
+    gap: 1.25rem; /* lg:space-y-5 */
+  }
+}
+
+.p1 {
+  max-width: 36rem; /* max-w-xl */
+  color: rgb(212 212 216); /* zinc-300 */
+  font-size: clamp(14px, 1.3vw, 18px);
+  line-height: 1.75;
+  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
+  overflow-wrap: break-word;
+}
+
+.p2 {
+  max-width: 36rem;
+  color: rgb(161 161 170); /* zinc-400 */
+  font-size: clamp(13px, 1.15vw, 17px);
+  line-height: 1.75;
+  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
+  overflow-wrap: break-word;
+}
+
+.p2Strong {
+  color: rgb(212 212 216); /* zinc-300 */
+}
+
+.ctaBlock {
+  padding-top: 0.375rem; /* pt-1.5 */
+  display: grid;
+  gap: 0.75rem; /* space-y-3 */
+}
+
+.contactBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(82, 82, 91, 0.8); /* zinc-600/80 */
+  padding: 0.625rem 1.5rem; /* px-6 py-2.5 */
+  background: transparent;
+  color: rgb(250 250 250);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 11px;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+@media (min-width: 768px) {
+  .contactBtn {
+    font-size: 12px;
+  }
+}
+
+.contactBtn:hover {
+  border-color: rgb(52 211 153); /* emerald-400 */
+  color: rgb(110 231 183); /* emerald-300 */
+}
+
+.focusBlock {
+  color: rgb(161 161 170); /* zinc-400 */
+  font-size: 11px;
+}
+@media (min-width: 768px) {
+  .focusBlock {
+    font-size: 12px;
+  }
+}
+
+.focusLabel {
+  color: rgb(113 113 122);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  margin-bottom: 0.25rem;
+}
+
+.focusText {
+  line-height: 1.7;
+  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
+  overflow-wrap: break-word;
+}
+
+/* center "dashboard card" */
+.midWrap {
+  position: relative;
+  width: 100%;
+  max-width: 28rem; /* max-w-md */
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .midWrap {
+    max-width: 32rem; /* lg:max-w-lg */
+  }
+}
+@media (min-width: 768px) {
+  .midWrap {
+    margin-inline: 0;
+  }
+}
+
+.card {
+  position: relative;
+  aspect-ratio: 4 / 4.6;
+  overflow: hidden;
+  border-radius: 1.9rem;
+  border: 1px solid rgba(63, 63, 70, 0.7); /* zinc-700/70 */
+  background: rgb(9 9 11); /* zinc-950 */
+}
+
+.cardTopbar {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem; /* px-5 py-3 */
+  color: rgb(161 161 170); /* zinc-400 */
+  font-size: 10px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem; /* gap-1.5 */
+}
+
+.dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  display: inline-block;
+}
+.dotRed { background: rgba(239, 68, 68, 0.85); }
+.dotAmber { background: rgba(251, 191, 36, 0.85); }
+.dotGreen { background: rgba(52, 211, 153, 0.85); }
+
+.cardLine {
+  position: absolute;
+  inset-inline: 1.25rem; /* inset-x-5 */
+  top: 2.5rem; /* top-10 */
+  height: 1px;
+  background: rgba(63, 63, 70, 0.7);
+}
+
+.cardInset {
+  position: absolute;
+  inset: 9px;
+  border-radius: 1.6rem;
+  border: 1px solid rgba(63, 63, 70, 0.4);
+  pointer-events: none;
+}
+
+.cardContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem; /* gap-5 */
+  padding-inline: 1.5rem; /* px-6 */
+}
+
+.bars {
+  display: grid;
+  gap: 0.625rem; /* space-y-2.5 */
+}
+
+.barA { height: 10px; width: 8rem; border-radius: 9999px; background: rgba(16,185,129,0.9); }
+.barB { height: 6px; width: 11rem; border-radius: 9999px; background: rgba(244,244,245,0.85); }
+.barC { height: 6px; width: 9rem; border-radius: 9999px; background: rgba(113,113,122,0.85); }
+
+.list {
+  margin-top: 0.75rem; /* mt-3 */
+  display: grid;
+  gap: 0.625rem; /* space-y-2.5 */
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* gap-3 */
+  font-size: 10px;
+  color: rgba(212, 212, 216, 0.9); /* zinc-300/90 */
+}
+
+.rowTick {
+  height: 3px;
+  width: 2.5rem; /* w-10 */
+  border-radius: 9999px;
+  background: rgba(16,185,129,0.8);
+}
+
+.rowLine {
+  height: 1px;
+  flex: 1;
+  border-radius: 9999px;
+  background: rgba(82, 82, 91, 0.7);
+}
+
+.rowLabel {
+  font-size: 9px;
+  color: rgba(161, 161, 170, 0.9);
+}
+
+/* reveal wipe overlay */
+.cardWipe {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: rgb(9 9 11);
+  transform-origin: left;
+}
+
+/* right stats */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem; /* gap-8 */
+}
+@media (min-width: 768px) {
+  .rightCol {
+    align-items: flex-end;
+  }
+}
+
+.availBlock {
+  width: 100%;
+  display: grid;
+  gap: 0.375rem; /* space-y-1.5 */
+}
+@media (min-width: 768px) {
+  .availBlock {
+    text-align: right;
+  }
+}
+
+.availLabel {
+  color: rgb(113 113 122);
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  font-size: 10px;
+}
+@media (min-width: 768px) {
+  .availLabel {
+    font-size: 11px;
+  }
+}
+
+.availText {
+  color: rgb(161 161 170);
+  font-size: clamp(12px, 1.05vw, 15px);
+  max-width: 20rem; /* max-w-xs */
+  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
+  overflow-wrap: break-word;
+}
+@media (min-width: 768px) {
+  .availText {
+    margin-left: auto; /* md:ml-auto */
+  }
+}
+
+.periodCard {
+  width: 100%;
+  border-radius: 1rem; /* rounded-2xl */
+  border: 1px solid rgba(39, 39, 42, 0.8); /* zinc-800/80 */
+  background: rgba(24, 24, 27, 0.4); /* zinc-900/40 */
+  padding: 0.75rem 1rem; /* px-4 py-3 */
+  display: grid;
+  gap: 0.25rem; /* space-y-1 */
+  box-shadow: none;
+}
+@media (min-width: 768px) {
+  .periodCard {
+    text-align: right;
+    margin-left: auto;
+    max-width: 20rem; /* md:max-w-xs */
+  }
+}
+
+.periodLabel {
+  color: rgb(113 113 122);
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  font-size: 10px;
+}
+
+.periodYear {
+  color: rgb(244 244 245);
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.08em;
+  white-space: nowrap;
+}
+
+.periodNote {
+  margin-top: 0.25rem;
+  font-size: 11px;
+  color: rgb(113 113 122);
+  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
+  overflow-wrap: break-word;
+}
+@media (min-width: 768px) {
+  .periodNote {
+    font-size: 12px;
+  }
+}

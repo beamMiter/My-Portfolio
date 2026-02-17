@@ -6,7 +6,7 @@ import { IntroUIProvider } from "@/components/intro/IntroUIContext";
 import IntroLangSwitch from "@/components/intro/IntroLangSwitch";
 
 export const metadata: Metadata = {
-  title: "Intro | TECHIN",
+  title: "JETSRI DEV LOG",
 };
 
 export default function IntroLayout({
@@ -17,12 +17,8 @@ export default function IntroLayout({
   return (
     <IntroUIProvider>
       <section className="min-h-screen bg-[#0b0b0b] text-zinc-50 relative">
-        {/* เนื้อหาของแต่ละ page */}
         {children}
-
-        {/* EN/TH อยู่ใน layout เหมือน nav/footer */}
         <IntroLangSwitch />
-
         <SmartCursorClient />
         <ScrollProgressToTopButton offset={250} />
       </section>

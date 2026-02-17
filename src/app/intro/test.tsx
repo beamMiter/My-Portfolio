@@ -167,10 +167,6 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
   );
 }
 
-/* =========================
-   Scroll utilities / Scene
-   ========================= */
-
 function clamp01(n: number) {
   return Math.min(1, Math.max(0, n));
 }
@@ -221,10 +217,6 @@ function RevealLineScroll({
     </motion.div>
   );
 }
-
-/* =========================
-   Section 3: Icon Cloud data
-   ========================= */
 
 type CloudIcon = {
   name: string;
@@ -360,7 +352,6 @@ const ICON_LIST: CloudIcon[] = [
   },
 ];
 
-// ✅ FIX: ห้ามเรียก useTransform ใน .map() => แตกเป็น component ย่อย
 function IconBubble({
   lp,
   icon,
@@ -436,17 +427,13 @@ function IconCloudScroll({
   );
 }
 
-/* =========================
-   Page: Main เดียว + Scene1..Scene5
-   ========================= */
-
 export default function IntroWavePage() {
   const router = useRouter();
   const [btnHovered, setBtnHovered] = useState(false);
   const { setShowLang } = useIntroUI();
 
   useEffect(() => {
-    setShowLang(true);
+    setShowLang(false);
   }, [setShowLang]);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -575,10 +562,6 @@ export default function IntroWavePage() {
     </main>
   );
 }
-
-/* =========================
-   Scene 1: HERO
-   ========================= */
 
 function HeroScene({
   lp,

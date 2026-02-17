@@ -1,35 +1,59 @@
+// src/app/projects/ppk-kiosk/page.tsx
 import type { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "PPK Kiosk Queue System Case Study",
   description:
-    "Self service kiosk for hospital queue management with Thai National ID and ticket printing.",
+    "Self service kiosk for hospital queue management with Thai National ID verification and ticket printing.",
 };
+
+function TechStackClean({ items }: { items: string[] }) {
+  return (
+    <section className="mt-16">
+      <div className="mx-auto max-w-4xl text-center">
+        <h3 className="text-lg font-medium tracking-wide text-zinc-100">
+          Tech Stack
+        </h3>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center text-sm text-zinc-300">
+          {items.map((tech, index) => (
+            <div key={tech} className="flex items-center">
+              <span className="px-4">{tech}</span>
+              {index !== items.length - 1 && (
+                <span className="h-4 w-px bg-white/15" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function PpkKioskPage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
+      {/* background */}
       <div
         className="pointer-events-none fixed inset-0 -z-10"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(70rem 55rem at 10% 0%, rgba(255,255,255,0.06), transparent 55%), radial-gradient(55rem 45rem at 95% 10%, rgba(255,255,255,0.045), transparent 60%), linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.85))",
+            "radial-gradient(70rem 55rem at 10% 0%, rgba(255,255,255,0.06), transparent 55%), radial-gradient(55rem 45rem at 95% 10%, rgba(255,255,255,0.045), transparent 60%)",
         }}
       />
 
-      <div className="mx-auto max-w-[1200px] px-6 py-10 md:px-10 lg:px-14">
+      <div className="mx-auto max-w-[1300px] px-6 py-10 md:px-10 lg:px-16">
+        {/* Header */}
         <header className="mt-12 text-center md:mt-16">
           <h1 className="text-[clamp(28px,5.2vw,52px)] font-semibold leading-tight">
             PPK Kiosk <span className="text-zinc-400">Queue System</span>
           </h1>
-          <p className="mt-2 text-[11px] tracking-widest text-zinc-400">
-            by Techin
-          </p>
         </header>
 
-        <div className="mt-8 overflow-hidden rounded-xl shadow-[0_18px_40px_-34px_rgba(0,0,0,0.95)]">
+        {/* Hero (thin edge) */}
+        <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5">
           <Image
             src="/images/projects/ppk-kiosk4.png"
             alt="PPK Kiosk Queue System hero"
@@ -40,6 +64,7 @@ export default function PpkKioskPage() {
           />
         </div>
 
+        {/* Intro */}
         <section className="mt-16">
           <div className="mx-auto max-w-4xl text-zinc-200">
             <p className="text-base md:text-lg leading-relaxed">
@@ -49,16 +74,25 @@ export default function PpkKioskPage() {
               >
                 PPK
               </span>
-              Kiosk Queue System is designed for hospital lobbies where the first
-              interaction must be fast and clear. Patients identify themselves
-              using a Thai National ID and receive a queue ticket without requiring
-              staff assistance.
+              Kiosk Queue System is designed for hospital lobbies where the
+              first interaction must be fast and clear. Patients identify
+              themselves using a Thai National ID and receive a queue ticket
+              without requiring staff assistance.
             </p>
 
             <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
-              The system verifies entitlement automatically and determines the
-              correct queue group and counter. This reduces reception workload and
-              removes uncertainty during peak hours.
+              When a patient inserts a National ID card, the kiosk reads the ID
+              number and calls the hospital API to validate the citizen ID and
+              retrieve basic entitlement information. This allows the system to
+              determine the correct queue group and route the patient to the
+              appropriate counter immediately.
+            </p>
+
+            <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
+              The kiosk then prints a queue ticket that includes essential
+              patient and entitlement details. Screening staff can use this
+              information as a starting point for triage without asking the
+              patient to repeat basic identity and eligibility data.
             </p>
 
             <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
@@ -69,12 +103,14 @@ export default function PpkKioskPage() {
           </div>
         </section>
 
+        {/* Divider */}
         <hr className="my-16 border-white/10" />
 
+        {/* What it does + lower image */}
         <section className="mt-16">
           <div className="mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12 items-start">
-            {/* lower image: same (no edge) */}
-            <figure className="overflow-hidden rounded-xl shadow-[0_18px_40px_-34px_rgba(0,0,0,0.95)]">
+            {/* lower image (no edge) */}
+            <div>
               <div className="relative aspect-[3/4] w-full">
                 <Image
                   src="/images/projects/ppk-kiosk2.jpg"
@@ -84,8 +120,9 @@ export default function PpkKioskPage() {
                   sizes="(min-width:1024px) 420px, 100vw"
                 />
               </div>
-            </figure>
+            </div>
 
+            {/* text */}
             <div>
               <h3 className="text-lg font-medium tracking-wide text-zinc-100">
                 What it does
@@ -93,33 +130,53 @@ export default function PpkKioskPage() {
 
               <div className="mt-6 space-y-7 leading-relaxed text-zinc-300">
                 <p>
-                  PPK Kiosk handles patient identification through Thai National
-                  ID input and validates eligibility before issuing a queue ticket.
-                  This ensures that patients are routed correctly from the moment
-                  they arrive.
+                  Reads Thai National ID from a card reader and sends the citizen
+                  ID to the hospital API for verification and basic entitlement
+                  lookup. This confirms identity and reduces manual input at the
+                  front desk.
                 </p>
 
                 <p>
-                  Queue tickets are printed immediately using a thermal printer.
-                  Each ticket includes the appropriate counter and queue prefix so
-                  patients know exactly where to go next.
+                  Automatically determines the correct queue group and service
+                  counter based on entitlement and routing rules, so patients
+                  receive clear instructions immediately after identification.
                 </p>
 
                 <p>
-                  Queue groups and service hours can be configured by staff. This
-                  allows departments to adapt the system to daily operations without
-                  changing code.
+                  Prints a queue ticket with essential baseline information
+                  (identity + entitlement + routing). Screening units can use
+                  the printed data to start triage quickly and consistently.
                 </p>
 
                 <p>
-                  The kiosk integrates with backend queue services to keep counters
-                  and administrative views consistent. This improves traceability
-                  and reduces manual resets.
+                  Supports configurable queue groups and operating hours, so
+                  departments can adjust the kiosk behavior to real daily
+                  operations without changing code.
                 </p>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Divider before Tech */}
+        <hr className="my-20 border-white/10" />
+
+        {/* Tech Stack */}
+        <TechStackClean
+          items={["Next.js", "React", "TypeScript", "Prisma", "MySQL"]}
+        />
+
+        {/* Bottom Divider + Conference Info */}
+        <div className="mt-16">
+          <hr className="border-white/10" />
+          <div className="mt-4 flex justify-end">
+            <p className="text-sm text-zinc-500 italic">
+              Presented at <span className="text-zinc-300">AUCC Conference 2026</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="h-20" />
       </div>
     </main>
   );

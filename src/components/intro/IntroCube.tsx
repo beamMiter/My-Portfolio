@@ -40,8 +40,7 @@ const TRACKS: Record<FaceKey, TrackConfig> = {
   },
 };
 
-// ===== SEA WAVE (RIGHT FACE) ============================
-function SeaWaveFace({ dur = 12, delay = 0 }: { dur?: number; delay?: number }) {
+function SeaWaveFace() {
   return (
     <svg
       viewBox="0 0 400 160"
@@ -49,72 +48,17 @@ function SeaWaveFace({ dur = 12, delay = 0 }: { dur?: number; delay?: number }) 
       className="absolute inset-0 h-full w-full"
       aria-hidden
     >
-      <defs>
-        <linearGradient id="seaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#0ea5e9" />
-          <stop offset="60%" stopColor="#2563eb" />
-          <stop offset="100%" stopColor="#0b1120" />
-        </linearGradient>
-      </defs>
+      {/* คลื่นลูกหลัง (ลูกใหญ่) - ดำสนิท */}
+      <path 
+        fill="#000000" 
+        d="M0,110 Q80,80 160,100 T320,110 T400,105 L400,160 L0,160 Z" 
+      />
 
-      <path fill="url(#seaGrad)" fillOpacity={0.95}>
-        <animate
-          attributeName="d"
-          dur={`${dur}s`}
-          begin={`${delay}s`}
-          repeatCount="indefinite"
-          values={`
-            M0,110 Q80,80 160,100 T320,110 T400,105 L400,160 L0,160 Z;
-            M0,100 Q80,120 160,95 T320,105 T400,115 L400,160 L0,160 Z;
-            M0,110 Q80,80 160,100 T320,110 T400,105 L400,160 L0,160 Z
-          `}
-        />
-      </path>
-
-      <path fill="#e0f2fe" fillOpacity={0.9}>
-        <animate
-          attributeName="d"
-          dur={`${dur * 1.2}s`}
-          begin={`${delay - 0.8}s`}
-          repeatCount="indefinite"
-          values={`
-            M0,90 Q80,60 160,85 T320,95 T400,90 L400,160 L0,160 Z;
-            M0,95 Q80,70 160,80 T320,90 T400,100 L400,160 L0,160 Z;
-            M0,90 Q80,60 160,85 T320,95 T400,90 L400,160 L0,160 Z
-          `}
-        />
-      </path>
-
-      <g fill="#f9fafb" fillOpacity="0.8">
-        <circle r="2.2">
-          <animate
-            attributeName="cx"
-            values="40;380;40"
-            dur={`${dur * 1.4}s`}
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="cy"
-            values="40;30;40"
-            dur={`${dur * 1.4}s`}
-            repeatCount="indefinite"
-          />
-        </circle>
-        <circle r="1.6">
-          <animate
-            attributeName="cx"
-            values="120;360;120"
-            dur={`${dur * 1.1}s`}
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="cy"
-            values="52;36;52"
-            dur={`${dur * 1.1}s`}
-            repeatCount="indefinite"
-          />
-        </circle>
-      </g>
+      {/* คลื่นลูกหน้า (ลูกเล็ก) - เทาเข้ม เพื่อให้ตัดกับสีดำด้านหลัง */}
+      <path 
+        fill="#444444" 
+        d="M0,90 Q80,60 160,85 T320,95 T400,90 L400,160 L0,160 Z" 
+      />
     </svg>
   );
 }
@@ -365,7 +309,7 @@ export default function IntroCube() {
                       height="6"
                       rx="1"
                     />
-                  ))
+                  )),
                 )}
               </g>
 
@@ -381,21 +325,74 @@ export default function IntroCube() {
           </div>
         </div>
 
-        {/* BACK – PHOTO FULL BLEED */}
-        <div className="intro-cube__face intro-cube__face--back">
-          <div className="face-inner face-inner--photoFull">
-            <img
-              src="/images/anime/anime1.jpg"
-              alt="TECHIN"
-              className="photo-full-img"
-            />
+        {/* TOP – หน้าที่มึงแคปมา ลบจุดกลมออก และเอา Animation ออกให้นิ่งสนิท */}
+        <div className="intro-cube__face intro-cube__face--top">
+          <div
+            className="face-inner face-inner--topVortex"
+            role="button"
+            onClick={() => playTrack("top")}
+            style={{ background: "#f9fafb" }}
+          >
+            <svg className="top-vortex-svg" viewBox="0 0 400 400">
+              <g className="top-vortex-group-static">
+                {Array.from({ length: 24 }).map((_, i) => {
+                  const angle = i * 15;
+                  const isLight = i % 2 === 0;
+                  return (
+                    <path
+                      key={i}
+                      fill={isLight ? "#ffffff" : "#000000"}
+                      /* ลบจุดกลมๆ ออกจากปลายเส้น (Vortex Ray) */
+                      d="M200 200 L400 210 Q310 230 240 270 Q210 290 200 320 Z"
+                      transform={`rotate(${angle} 200 200)`}
+                    />
+                  );
+                })}
+              </g>
+              {/* Progress Bar นิ่งๆ ตามสถานะเพลง */}
+              <path
+                className="top-vortex-progress"
+                style={{ stroke: "#0ea5e9", fill: "none", strokeWidth: 4 }}
+                d={`M 80 300 A 150 150 0 0 1 ${80 + 240 * progress} 300`}
+              />
+            </svg>
           </div>
         </div>
 
-        {/* RIGHT – SEA WAVE */}
+        {/* BACK – เปลี่ยนหน้าอนิเมะเป็นกราฟิกเส้นนิ่งๆ (Static) */}
+        <div className="intro-cube__face intro-cube__face--back">
+          <div
+            className="face-inner"
+            style={{ background: "#000", padding: 0 }}
+          >
+            <svg viewBox="0 0 400 400" className="w-full h-full">
+              <g stroke="#fff" strokeLinecap="round">
+                {Array.from({ length: 80 }).map((_, i) => {
+                  const angle = (i * 360) / 80;
+                  const rad = (angle * Math.PI) / 180;
+                  const len = 100 + (i % 8) * 20;
+                  return (
+                    <line
+                      key={i}
+                      x1="200"
+                      y1="200"
+                      x2={200 + Math.cos(rad) * len}
+                      y2={200 + Math.sin(rad) * len}
+                      strokeWidth={i % 4 === 0 ? 2.5 : 0.8}
+                      opacity="0.8"
+                    />
+                  );
+                })}
+              </g>
+              <circle cx="200" cy="200" r="35" fill="#000" />
+            </svg>
+          </div>
+        </div>
+
+        {/* RIGHT – SEA WAVE (B&W VERSION) */}
         <div className="intro-cube__face intro-cube__face--right">
-          <div className="face-inner face-inner--seaWave">
-            <SeaWaveFace dur={14} delay={0} />
+          <div className="face-inner face-inner--seaWave" style={{ background: '#fff' }}>
+            <SeaWaveFace />
           </div>
         </div>
 
@@ -416,11 +413,7 @@ export default function IntroCube() {
             tabIndex={0}
             onClick={() => playTrack("top")}
           >
-            <svg
-              className="top-vortex-svg"
-              viewBox="0 0 400 400"
-              aria-hidden
-            >
+            <svg className="top-vortex-svg" viewBox="0 0 400 400" aria-hidden>
               <g className="top-vortex-group">
                 {Array.from({ length: 24 }).map((_, i) => {
                   const angle = i * 15;
@@ -568,28 +561,22 @@ export default function IntroCube() {
 
         /* POSITIONS */
         .intro-cube__face--front {
-          transform: rotateY(0deg)
-            translateZ(calc(var(--cube-size) / 2));
+          transform: rotateY(0deg) translateZ(calc(var(--cube-size) / 2));
         }
         .intro-cube__face--back {
-          transform: rotateY(180deg)
-            translateZ(calc(var(--cube-size) / 2));
+          transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2));
         }
         .intro-cube__face--right {
-          transform: rotateY(90deg)
-            translateZ(calc(var(--cube-size) / 2));
+          transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2));
         }
         .intro-cube__face--left {
-          transform: rotateY(-90deg)
-            translateZ(calc(var(--cube-size) / 2));
+          transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2));
         }
         .intro-cube__face--top {
-          transform: rotateX(90deg)
-            translateZ(calc(var(--cube-size) / 2));
+          transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2));
         }
         .intro-cube__face--bottom {
-          transform: rotateX(-90deg)
-            translateZ(calc(var(--cube-size) / 2));
+          transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2));
         }
 
         .face-inner {
