@@ -139,13 +139,12 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
 
   return (
     <span
-      className={`${heroStyles.fontHeading} text-2xl sm:text-4xl md:text-5xl tracking-[0.02em] sm:tracking-[0.05em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
+      className={`${heroStyles.fontHeading} text-3xl sm:text-4xl md:text-5xl tracking-[0.05em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
     >
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
         const bottomChar = BOTTOM_LABEL[index] ?? " ";
-        
-        const delay = index * 0.07; 
+        const delay = index * 0.035;
 
         const isWideChar =
           ["W", "M"].includes(topChar) || ["W", "M"].includes(bottomChar);
@@ -154,7 +153,7 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
           <span
             key={index}
             className={`relative inline-block overflow-hidden h-[1.2em] ${
-              isWideChar ? "w-[1.15em] sm:w-[1.35em]" : "w-[0.85em] sm:w-[1.0em]"
+              isWideChar ? "w-[1.35em]" : "w-[1.0em]"
             }`}
           >
             <motion.span
@@ -164,8 +163,7 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
                   ? { y: "-100%", opacity: topChar === " " ? 0 : 1 }
                   : { y: "0%", opacity: topChar === " " ? 0 : 1 }
               }
-
-              transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96], delay }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay }}
               className="absolute inset-0 flex items-center justify-center text-white bg-transparent will-change-transform"
             >
               {topChar === " " ? "\u00A0" : topChar}
@@ -178,7 +176,7 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
                   ? { y: "0%", opacity: bottomChar === " " ? 0 : 1 }
                   : { y: "100%", opacity: bottomChar === " " ? 0 : 1 }
               }
-              transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96], delay }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay }}
               className="absolute inset-0 flex items-center justify-center will-change-transform bg-transparent"
               style={{ color: "var(--dev-accent)" }}
             >
