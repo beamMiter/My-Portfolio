@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { Liter, Inter } from "next/font/google"; // เพิ่ม Inter
 import {
   Code2,
   ServerCog,
@@ -56,6 +57,19 @@ import clamStyles from "@/styles/intro/calmSection.module.css";
 import stackStyles from "@/styles/intro/stackSection.module.css";
 import aiStyles from "@/styles/intro/aiSection.module.css";
 import contactStyles from "@/styles/intro/contactSection.module.css";
+
+// ตั้งค่าฟอนต์ Liter
+const liter = Liter({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+// ตั้งค่าฟอนต์ Inter
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const TITLES = ["Developer", "Full-stack Developer", "Software Engineer"];
 const SWITCH_MS = 6500;
@@ -125,12 +139,13 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
 
   return (
     <span
-      className={`${heroStyles.fontHeading} text-3xl sm:text-4xl md:text-5xl tracking-[0.05em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
+      className={`${heroStyles.fontHeading} text-2xl sm:text-4xl md:text-5xl tracking-[0.02em] sm:tracking-[0.05em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
     >
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
         const bottomChar = BOTTOM_LABEL[index] ?? " ";
-        const delay = index * 0.035;
+        
+        const delay = index * 0.07; 
 
         const isWideChar =
           ["W", "M"].includes(topChar) || ["W", "M"].includes(bottomChar);
@@ -139,7 +154,7 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
           <span
             key={index}
             className={`relative inline-block overflow-hidden h-[1.2em] ${
-              isWideChar ? "w-[1.35em]" : "w-[1.0em]"
+              isWideChar ? "w-[1.15em] sm:w-[1.35em]" : "w-[0.85em] sm:w-[1.0em]"
             }`}
           >
             <motion.span
@@ -149,7 +164,8 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
                   ? { y: "-100%", opacity: topChar === " " ? 0 : 1 }
                   : { y: "0%", opacity: topChar === " " ? 0 : 1 }
               }
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay }}
+
+              transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96], delay }}
               className="absolute inset-0 flex items-center justify-center text-white bg-transparent will-change-transform"
             >
               {topChar === " " ? "\u00A0" : topChar}
@@ -162,7 +178,7 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
                   ? { y: "0%", opacity: bottomChar === " " ? 0 : 1 }
                   : { y: "100%", opacity: bottomChar === " " ? 0 : 1 }
               }
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay }}
+              transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96], delay }}
               className="absolute inset-0 flex items-center justify-center will-change-transform bg-transparent"
               style={{ color: "var(--dev-accent)" }}
             >
@@ -278,8 +294,18 @@ export default function IntroWavePage() {
             <div className={heroStyles.contentContainer}>
               <div className={heroStyles.leftCol}>
                 <motion.div
-                  initial={{ scale: 0.06, opacity: 0, rotateZ: 0 }}
-                  animate={{ scale: 0.9, opacity: 1, rotateZ: 360 }}
+                  initial={{ 
+                    scale: 0.06, 
+                    opacity: 0, 
+                    rotateZ: 0,
+                    x: 0 
+                  }}
+                  animate={{ 
+                    scale: 0.9, 
+                    opacity: 1, 
+                    rotateZ: 360,
+                    x: "var(--cube-x)" 
+                  }}
                   transition={{
                     delay: 0.55,
                     duration: 1.4,
@@ -305,39 +331,51 @@ export default function IntroWavePage() {
               <div className={`${heroStyles.rightCol} ${heroStyles.fontSans}`}>
                 <div className="subpixel-antialiased transform-gpu">
                   <RevealLine delay={0.35}>
-                    <div className="relative inline-block">
-                      <h1
-                        className={`${heroStyles.heroTitle} ${heroStyles.headline} ${heroStyles.fontHeading}`}
+                    <div className="relative flex flex-col items-start justify-start mb-6">
+                      <span
+                        className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase"
                       >
-                        <span className="text-white">Hello, I&apos;m</span>
-                        <span className={heroStyles.tickerWrap}>
-                          <VerticalTicker />
+                        Developer
+                      </span>
+                      <h1
+                        className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight`}
+                      >
+                        <span className="text-white tracking-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
+                          Hello
+                          <span className={liter.className}>,</span> I
+                          <span className={liter.className}>’</span>m
+                        </span>
+                        
+                        <span 
+                          style={{ color: "var(--dev-accent)" }}
+                          className="mt-1 tracking-[0.05em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold" 
+                        >
+                          Techin Jetsribumrung
                         </span>
                       </h1>
-                      <div className={heroStyles.dividerLine} />
                     </div>
                   </RevealLine>
 
                   <div className={heroStyles.paragraphGroup}>
                     <RevealLine delay={0.7}>
-                      <p className={heroStyles.pText}>
-                        I build high-performance internal platforms and mission-critical software 
-                        for hospitals, enterprise-scale businesses, and organizations that 
-                        demand absolute reliability and security.
+                      <p className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}>
+                        Designing high-performance internal platforms and 
+                        mission-critical software for hospitals and enterprise 
+                        organizations is where I focus my expertise in reliability and security.
                       </p>
                     </RevealLine>
                     <RevealLine delay={1.0}>
-                      <p className={heroStyles.pText}>
-                        My work is dedicated to eliminating operational complexity through 
-                        automation and stable full-stack architecture, ensuring your technical 
-                        infrastructure supports sustainable and rapid growth.
+                      <p className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}>
+                        My commitment lies in eliminating operational complexity 
+                        through intelligent automation and stable full-stack architecture 
+                        to ensure that your technical foundation supports sustainable growth.
                       </p>
                     </RevealLine>
                     <RevealLine delay={1.3}>
-                      <p className={heroStyles.pText}>
-                        I focus on delivering measurable business impact—transforming 
-                        technology from a complex overhead into a strategic advantage that 
-                        empowers teams and streamlines core workflows.
+                      <p className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}>
+                        Each project is driven by the goal of delivering measurable 
+                        business impact by transforming complex technology into a 
+                        strategic advantage that empowers teams and streamlines core workflows.
                       </p>
                     </RevealLine>
                   </div>

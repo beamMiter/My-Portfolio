@@ -46,9 +46,19 @@
 
 @media (max-width: 640px) {
   .heroBlob {
-    inset-inline: -30%;
-    bottom: -52%;
-    height: 185%;
+    /* 1. กางกว้างเท่าเดิมเพื่อให้ "มน" ไม่แหลม */
+    inset-inline: -100%; 
+    
+    /* 2. ดึงมันขึ้นมา! จาก -70% ให้เหลือแค่ -20% หรือ -15% */
+    /* ยิ่งติดลบน้อยลง ยอดคลื่นจะยิ่งวิ่งสูงขึ้นไปบรรจบด้านบน */
+    bottom: -20%; 
+    
+    /* 3. เพิ่มความสูงให้พุ่งไปให้สุด */
+    height: 180%; 
+    
+    /* 4. รักษาความมนป้านเอาไว้ */
+    border-top-left-radius: 50% 35%;
+    border-top-right-radius: 50% 35%;
   }
 }
 
@@ -119,10 +129,19 @@
 .cubeWrap {
   display: inline-block;
   will-change: transform, opacity;
-  transform: translate(-80px, -24px);
+  --cube-x: 0px; 
 }
-@media (max-width: 768px) {
-  .cubeWrap { transform: translate(-40px, -16px); } 
+
+@media (min-width: 768px) {
+  .cubeWrap {
+    --cube-x: -80px; 
+  }
+}
+
+@media (min-width: 1024px) {
+  .cubeWrap {
+    --cube-x: -150px; 
+  }
 }
 
 .rightCol {

@@ -57,7 +57,6 @@ function VerticalTicker({
         <motion.span
           key={items[i]}
           className="inline-block text-[#3edc8a] font-semibold will-change-transform normal-case tracking-[0.04em] sm:tracking-[0.05em] lg:tracking-[0.06em]"
-          // แก้เป็นร่วงจากบนลงล่างตามสั่ง
           initial={{ y: "-0.9em", opacity: 0 }}
           animate={{
             y: "0em",
@@ -69,7 +68,6 @@ function VerticalTicker({
               mass: 0.7,
             },
           }}
-          // แก้เป็นหายลงไปข้างล่าง
           exit={{
             y: "0.55em",
             opacity: 0,
@@ -95,10 +93,9 @@ export default function HomePage() {
         <div className="mx-auto w-full max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-14">
             <div className="max-w-[760px]">
-              <h1 className="mt-4 text-[clamp(40px,6.1vw,88px)] sm:text-[clamp(44px,6.2vw,88px)] font-semibold leading-[1.02] tracking-[-0.03em] text-white">
-                {/* เพิ่ม whitespace-nowrap เพื่อให้ Techin อยู่ข้าง Hello, I'm เสมอ */}
-                <span className="inline-flex items-baseline gap-x-4 gap-y-0 whitespace-nowrap">
-                  <span className="inline-block">Hello, I&apos;m</span>
+              <h1 className="mt-4 text-[clamp(40px,6.1vw,88px)] sm:text-[clamp(44px,6.2vw,88px)] font-semibold leading-[1.2] sm:leading-[1.02] tracking-[-0.03em] text-white">
+                <span className="block sm:inline-block">Hello, I&apos;m</span>
+                <span className="block sm:inline-block sm:ml-4">
                   <VerticalTicker />
                 </span>
               </h1>
