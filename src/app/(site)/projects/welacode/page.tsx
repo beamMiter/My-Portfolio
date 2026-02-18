@@ -1,12 +1,11 @@
+"use client";
+
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "WelaCode Group",
-  description:
-    "WelaCode is a software interface initiative built with Next.js and TypeScript.",
-};
+// หมายเหตุ: Metadata ต้องอยู่ใน Server Component หรือแยกไฟล์ 
+// ถ้าไฟล์นี้เป็น "use client" ให้ย้าย Metadata ออกไปไว้ที่ layout หรือไฟล์ page หลัก
 
 function Section({
   title,
@@ -49,6 +48,9 @@ function TechStackClean({ items }: { items: string[] }) {
 }
 
 export default function WelaCodePage() {
+  // ตัวอย่าง Base64 ของรูปเบลอ (ปกติจะใช้เครื่องมือ gen หรือดึงจากระบบหลังบ้าน)
+  const blurData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+ZNPQAIXwMwFByNxgAAAABJRU5ErkJggg==";
+
   return (
     <main className="min-h-screen text-white">
       <div className="mx-auto max-w-[1100px] px-6 md:px-10 lg:px-14 py-10">
@@ -60,15 +62,18 @@ export default function WelaCodePage() {
           </h1>
         </header>
 
-        {/* Hero Image */}
-        <div className="mt-10 overflow-hidden rounded-lg ring-1 ring-white/5">
+        {/* Hero Image - อัปเกรดจุดนี้ */}
+        <div className="mt-10 overflow-hidden rounded-lg ring-1 ring-white/5 bg-zinc-900">
           <Image
-            src="/images/projects/welacode1.png"
+            src="/images/projects/welacode.avif"
             alt="WelaCode visual"
             width={1920}
             height={1080}
-            className="h-auto w-full"
-            priority
+            className="h-auto w-full transition-opacity duration-500" // เพิ่ม Transition ให้ตอนรูปจริงมาแล้วไม่กระชาก
+            priority // สำคัญมากสำหรับรูปบนสุด
+            placeholder="blur" // เปิดโหมดเบลอ
+            blurDataURL={blurData} // รูปจิ๋วที่จะให้โชว์ก่อน
+            onLoadingComplete={(img) => img.classList.remove("opacity-0")} // ค่อยๆ เฟดเข้า
           />
         </div>
 

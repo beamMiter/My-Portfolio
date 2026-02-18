@@ -1,11 +1,10 @@
+"use client";
+
 import type { Metadata } from "next";
 import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "PPK Screening Referral System Case Study",
-  description:
-    "Hospital screening system for intake and referral recommendations.",
-};
+// Placeholder Base64 แบบจิ๋วเพื่อใช้ทำ Effect ตอนกำลังโหลด
+const BLUR_DATA_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 function TechStackClean({ items }: { items: string[] }) {
   return (
@@ -45,14 +44,17 @@ export default function PpkScreeningPage() {
         </header>
 
         {/* Hero */}
-        <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5">
+        <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5 bg-zinc-900/50">
           <Image
             src="/images/projects/ppk-screening.avif"
             alt="PPK Screening Referral hero"
             width={1800}
             height={1000}
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-500"
             priority
+            // เทคนิคโหลดไว
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
           />
         </div>
 
@@ -136,13 +138,16 @@ export default function PpkScreeningPage() {
         </section>
 
         {/* Bottom image */}
-        <div className="mt-16 mx-auto max-w-4xl">
+        <div className="mt-16 mx-auto max-w-4xl overflow-hidden rounded-lg bg-zinc-900/50">
           <Image
             src="/images/projects/ppk-screening1.avif"
             alt="PPK referral summary screen"
             width={2200}
             height={1400}
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-500"
+            // เทคนิคโหลดไว
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
           />
         </div>
 

@@ -1,12 +1,11 @@
 // src/app/projects/ppk-kiosk/page.tsx
+"use client";
+
 import type { Metadata } from "next";
 import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "PPK Kiosk Queue System Case Study",
-  description:
-    "Self service kiosk for hospital queue management with Thai National ID verification and ticket printing.",
-};
+// Placeholder Base64 ขนาดจิ๋วเพื่อแสดงผลขณะรอโหลดรูปภาพจริง
+const BLUR_DATA_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 function TechStackClean({ items }: { items: string[] }) {
   return (
@@ -53,14 +52,17 @@ export default function PpkKioskPage() {
         </header>
 
         {/* Hero (thin edge) */}
-        <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5">
+        <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5 bg-zinc-900/50">
           <Image
             src="/images/projects/ppk-kiosk.avif"
             alt="PPK Kiosk Queue System hero"
             width={1920}
             height={1080}
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-500"
             priority
+            // เพิ่มเทคนิคโหลดไว
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
           />
         </div>
 
@@ -110,14 +112,17 @@ export default function PpkKioskPage() {
         <section className="mt-16">
           <div className="mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12 items-start">
             {/* lower image (no edge) */}
-            <div>
+            <div className="overflow-hidden rounded-lg bg-zinc-900/50">
               <div className="relative aspect-[3/4] w-full">
                 <Image
                   src="/images/projects/ppk-kiosk1.avif"
                   alt="PPK Kiosk vertical screen"
                   fill
-                  className="object-cover"
+                  className="object-cover transition-opacity duration-500"
                   sizes="(min-width:1024px) 420px, 100vw"
+                  // เพิ่มเทคนิคโหลดไว
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               </div>
             </div>

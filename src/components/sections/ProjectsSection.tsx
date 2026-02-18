@@ -56,6 +56,9 @@ const projects: Project[] = [
   },
 ];
 
+// Base64 Placeholder แบบโปร่งแสงสำหรับสร้าง Effect ตอนโหลดรูป
+const BLUR_DATA_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+
 function TechChip({ children, canHover = true }: { children: React.ReactNode; canHover?: boolean }) {
   if (!canHover) {
     return (
@@ -141,14 +144,17 @@ export default function ProjectsSection() {
                 onClick={() => canOpen && openProject(p)}
                 onKeyDown={(e) => onCardKeyDown(e, p, canOpen)}
               >
-                <div className="relative h-72 w-full overflow-hidden">
+                <div className="relative h-72 w-full overflow-hidden bg-zinc-800">
                   <Image
                     src={p.image}
                     alt={p.title}
                     fill
-                    className="object-cover transition-transform duration-500"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
                     priority={i < 2}
+                    // เพิ่มเทคนิคการโหลดภาพ
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
                   />
                   
                   {p.logo && (
