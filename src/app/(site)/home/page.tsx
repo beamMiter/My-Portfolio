@@ -2,11 +2,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Inter, Liter } from "next/font/google";
 
 import AboutSection from "@/components/sections/AboutSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import ContactSection from "@/components/sections/ContactSection";
+
+const inter = Inter({ subsets: ["latin"] });
+const liter = Liter({ subsets: ["latin"], weight: "400" });
 
 function HashScroller() {
   useEffect(() => {
@@ -50,28 +54,29 @@ function VerticalTicker({
 
   return (
     <span
-      className="inline-block align-baseline whitespace-nowrap"
-      style={{ minWidth: `${minCh}ch` }}
+      // แก้ไข: ใช้ inline-flex และ items-baseline เพื่อให้ตัวหนังสือไม่ลอย
+      className="relative inline-flex items-baseline overflow-hidden"
+      style={{ minWidth: `${minCh}ch`, height: "1.15em", verticalAlign: "top" }}
     >
       <AnimatePresence mode="wait">
         <motion.span
           key={items[i]}
-          className="inline-block text-[#3edc8a] font-semibold will-change-transform normal-case tracking-[0.04em] sm:tracking-[0.05em] lg:tracking-[0.06em]"
-          initial={{ y: "-0.9em", opacity: 0 }}
-          animate={{
-            y: "0em",
-            opacity: 1,
+          // แก้ไข: เอา absolute ออกเพื่อให้มันจัดตำแหน่งตาม flex ของตัวแม่
+          className="inline-block text-[#3edc8a] font-bold will-change-transform normal-case tracking-[0.01em] sm:tracking-[0.015em] lg:tracking-[0.02em]"
+          initial={{ y: "100%" }}
+          animate={{ 
+            y: "0%",
             transition: {
-              type: "spring",
-              stiffness: 520,
-              damping: 18,
-              mass: 0.7,
-            },
+              duration: 0.6,
+              ease: [0.16, 1, 0.3, 1]
+            }
           }}
-          exit={{
-            y: "0.55em",
-            opacity: 0,
-            transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+          exit={{ 
+            y: "-100%",
+            transition: {
+              duration: 0.4,
+              ease: [0.7, 0, 0.84, 0]
+            }
           }}
         >
           {items[i]}
@@ -83,7 +88,7 @@ function VerticalTicker({
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen text-white">
+    <main className={`${inter.className} min-h-screen text-white`}>
       <HashScroller />
 
       <section
@@ -93,16 +98,21 @@ export default function HomePage() {
         <div className="mx-auto w-full max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-14">
             <div className="max-w-[760px]">
-              <h1 className="mt-4 text-[clamp(40px,6.1vw,88px)] sm:text-[clamp(44px,6.2vw,88px)] font-semibold leading-[1.2] sm:leading-[1.02] tracking-[-0.03em] text-white">
-                <span className="block sm:inline-block">Hello, I&apos;m</span>
-                <span className="block sm:inline-block sm:ml-4">
-                  <VerticalTicker />
+              <h1 className="mt-4 text-[clamp(40px,6.1vw,88px)] sm:text-[clamp(44px,6.2vw,88px)] font-bold leading-[1.1] sm:leading-[1.02] tracking-[-0.03em] text-white">
+                <span className="flex flex-col sm:flex-row sm:items-baseline">
+                  <span className="whitespace-nowrap">
+                    Hello<span className={`${liter.className} font-normal`}>,</span> I
+                    <span className={`${liter.className} font-normal`}>’</span>m
+                  </span>
+                  <span className="sm:ml-4 flex items-baseline">
+                    <VerticalTicker />
+                  </span>
                 </span>
               </h1>
 
               <p className="mt-6 max-w-[62ch] text-[15px] md:text-[16px] leading-relaxed text-white/80">
-                I’m a fresh graduate developer who enjoys building practical
-                and reliable software. I’ve worked on real hospital projects,
+                I<span className={`${liter.className} font-normal`}>’</span>m a fresh graduate developer who enjoys building practical
+                and reliable software. I<span className={`${liter.className} font-normal`}>’</span>ve worked on real hospital projects<span className={`${liter.className} font-normal`}>,</span>
                 building internal systems and workflow tools that reduce
                 manual steps and keep operations running smoothly.
               </p>

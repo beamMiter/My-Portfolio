@@ -1,4 +1,3 @@
-// src/app/projects/ppk-screening/page.tsx
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -34,7 +33,7 @@ function TechStackClean({ items }: { items: string[] }) {
 export default function PpkScreeningPage() {
   return (
     <main className="min-h-screen text-white">
-      {/* ลบ background gradient div ออกทั้งหมด - ใช้ bg จาก globals.css แทน */}
+      {/* ลบ background gradient disv ออกทั้งหมด - ใช้ bg จาก globals.css แทน */}
 
       <div className="mx-auto max-w-[1300px] px-6 md:px-10 lg:px-16 py-10">
         {/* Header */}
@@ -48,7 +47,7 @@ export default function PpkScreeningPage() {
         {/* Hero */}
         <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5">
           <Image
-            src="/images/projects/ppk-screening.png"
+            src="/images/projects/ppk-screening.avif"
             alt="PPK Screening Referral hero"
             width={1800}
             height={1000}
@@ -139,7 +138,7 @@ export default function PpkScreeningPage() {
         {/* Bottom image */}
         <div className="mt-16 mx-auto max-w-4xl">
           <Image
-            src="/images/projects/ppk-referral-03.png"
+            src="/images/projects/ppk-screening1.avif"
             alt="PPK referral summary screen"
             width={2200}
             height={1400}

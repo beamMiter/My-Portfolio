@@ -17,40 +17,40 @@ type Project = {
 const projects: Project[] = [
   {
     title: "PPK Screening Recommendation",
-    image: "/images/projects/ppk-screening.png",
+    image: "/images/projects/ppk-screening.avif",
     tech: ["Next.js", "Laravel", "MySQL"],
     path: "/projects/ppk-screening",
     logo: "/images/aucc_logo.png",
   },
   {
     title: "PPK Kiosk Queue",
-    image: "/images/projects/ppk-kiosk4.png",
+    image: "/images/projects/ppk-kiosk.avif",
     tech: ["Next.js", "Laravel", "Prisma", "MySQL"],
     path: "/projects/ppk-kiosk",
     logo: "/images/aucc_logo.png",
   },
   {
     title: "Home Service",
-    image: "/images/projects/home-service.png",
+    image: "/images/projects/home-service.avif",
     tech: ["Flutter", "GoLang", "PostgreSQL"],
     href: "#",
   },
   {
     title: "PPK Asset Repair Management",
-    image: "/images/projects/ppk-repair.png",
+    image: "/images/projects/ppk-repair.avif",
     tech: ["Laravel", "MySQL"],
     path: "/projects/ppk-asset-repair",
   },
   {
     title:
       "PPK PR Integrated Policy, Performance and Knowledge Governance for Public Relations",
-    image: "/images/projects/ppk-pr.png",
+    image: "/images/projects/ppk-pr.avif",
     tech: ["Next.js", "Laravel", "MySQL", "n8n"],
     href: "#",
   },
   {
     title: "WelaCode",
-    image: "/images/projects/welacode1.png",
+    image: "/images/projects/welacode.avif",
     tech: ["Next.js"],
     href: "/projects/welacode",
   },
@@ -146,14 +146,14 @@ export default function ProjectsSection() {
                     src={p.image}
                     alt={p.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500"
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
                     priority={i < 2}
                   />
                   
                   {p.logo && (
                     <div className="absolute top-4 right-4 z-20 drop-shadow-md">
-                      <div className="relative w-[110px] h-[55px]">
+                      <div className="relative w-[90px] h-[45px]">
                         <Image
                           src={p.logo}
                           alt="Project Logo"
@@ -168,7 +168,7 @@ export default function ProjectsSection() {
                 </div>
 
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 id={headingId} className="text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">
+                  <h3 id={headingId} className="text-xl font-semibold text-white transition-colors">
                     {p.title}
                   </h3>
 
