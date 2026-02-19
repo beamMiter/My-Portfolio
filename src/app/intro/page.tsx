@@ -244,13 +244,13 @@ export default function IntroWavePage() {
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px) and (max-width: 1024px)");
+    const mq = window.matchMedia("(min-width: 768px) and (max-width: 1366px)");
     const apply = () => setIsTablet(mq.matches);
     apply();
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
-  }, []);
-
+}, []);
+  
   return (
     <main
       className={`bg-[#0b0b0b] min-h-screen text-zinc-50 ${heroStyles.root}`}
