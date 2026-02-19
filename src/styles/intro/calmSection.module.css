@@ -99,29 +99,28 @@
   color: transparent;
 }
 
-/* grid layout */
 .grid {
   display: grid;
-  column-gap: 2.5rem; /* gap-x-10 */
-  row-gap: 2.5rem; /* gap-y-10 */
+  column-gap: 2.5rem;
+  row-gap: 2.5rem;
 }
 
 @media (min-width: 768px) {
   .grid {
-    row-gap: 3.5rem; /* md:gap-y-14 */
+    row-gap: 3.5rem;
     grid-template-columns: 1.35fr 1.1fr 0.9fr;
     align-items: center;
   }
 }
 
-/* left text column */
 .leftText {
   display: grid;
-  gap: 1rem; /* space-y-4 */
+  gap: 1rem;
+  order: 1;
 }
 @media (min-width: 1024px) {
   .leftText {
-    gap: 1.25rem; /* lg:space-y-5 */
+    gap: 1.25rem;
   }
 }
 
@@ -202,22 +201,24 @@
   overflow-wrap: break-word;
 }
 
-/* center "dashboard card" */
 .midWrap {
   position: relative;
   width: 100%;
-  max-width: 28rem; /* max-w-md */
+  max-width: 28rem;
   margin-inline: auto;
+  order: 2;
+}
+
+@media (min-width: 768px) {
+  .midWrap {
+    margin-inline: 0;
+    max-width: 100%;
+  }
 }
 
 @media (min-width: 1024px) {
   .midWrap {
-    max-width: 32rem; /* lg:max-w-lg */
-  }
-}
-@media (min-width: 768px) {
-  .midWrap {
-    margin-inline: 0;
+    max-width: 32rem;
   }
 }
 
@@ -335,16 +336,17 @@
   transform-origin: left;
 }
 
-/* right stats */
 .rightCol {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem; /* gap-8 */
+  gap: 2rem;
+  order: 3;
 }
+
 @media (min-width: 768px) {
   .rightCol {
     align-items: flex-end;
+    justify-content: space-between;
   }
 }
 
@@ -374,31 +376,34 @@
 .availText {
   color: rgb(161 161 170);
   font-size: clamp(12px, 1.05vw, 15px);
-  max-width: 20rem; /* max-w-xs */
-  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
+  max-width: 20rem;
+  word-break: break-word;
   overflow-wrap: break-word;
 }
+
 @media (min-width: 768px) {
   .availText {
-    margin-left: auto; /* md:ml-auto */
+    margin-left: auto;
+    text-align: right;
   }
 }
 
 .periodCard {
   width: 100%;
-  border-radius: 1rem; /* rounded-2xl */
-  border: 1px solid rgba(39, 39, 42, 0.8); /* zinc-800/80 */
-  background: rgba(24, 24, 27, 0.4); /* zinc-900/40 */
-  padding: 0.75rem 1rem; /* px-4 py-3 */
+  border-radius: 1rem;
+  border: 1px solid rgba(39, 39, 42, 0.8);
+  background: rgba(24, 24, 27, 0.4);
+  padding: 0.75rem 1rem;
   display: grid;
-  gap: 0.25rem; /* space-y-1 */
-  box-shadow: none;
+  gap: 0.25rem;
+  box-sizing: border-box;
 }
+
 @media (min-width: 768px) {
   .periodCard {
     text-align: right;
     margin-left: auto;
-    max-width: 20rem; /* md:max-w-xs */
+    max-width: 20rem;
   }
 }
 

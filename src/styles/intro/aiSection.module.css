@@ -50,18 +50,17 @@
   }
 }
 
-/* GRID */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3.5rem; /* gap-14 */
+  gap: 2.5rem;
   align-items: start;
 }
 
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: 1fr 1fr;
-    gap: 4rem; /* lg:gap-16 */
+    gap: 4rem;
   }
 }
 
@@ -189,26 +188,29 @@
   }
 }
 
-/* RIGHT COLUMN */
 .rightCol {
   width: 100%;
   color: rgb(244 244 245);
+  padding-left: 0;
 }
 
 @media (min-width: 1024px) {
   .rightCol {
-    padding-left: 2.5rem; /* lg:pl-10 */
+    padding-left: 2.5rem;
   }
 }
 
 .rightInner {
-  max-width: 24rem; /* max-w-sm */
+  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 3.5rem;
 }
+
 @media (min-width: 1024px) {
   .rightInner {
+    max-width: 28rem;
     margin-left: auto;
   }
 }
@@ -216,7 +218,7 @@
 .block {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .blockTitle {
@@ -231,10 +233,9 @@
   }
 }
 
-/* แก้ไขตรงนี้ - เพิ่ม word-break */
 .blockText {
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.85;
   color: rgb(212 212 216);
   word-break: break-word;
   overflow-wrap: break-word;
@@ -280,8 +281,8 @@
   color: rgb(212 212 216);
 }
 @media (min-width: 768px) {
-  .cardList {
-    font-size: 13px;
+  .blockText {
+    font-size: 14px;
   }
 }
 

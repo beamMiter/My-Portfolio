@@ -333,7 +333,7 @@ export default function IntroWavePage() {
                       <span
                         className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase"
                       >
-                        Developer
+                        Developer & Web Developer
                       </span>
                       <h1
                         className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight`}
@@ -1048,7 +1048,7 @@ export default function IntroWavePage() {
               }}
               className={aiStyles.rightCol}
             >
-              <div className={aiStyles.righโtInner}>
+              <div className={aiStyles.rightInner}>
                 {/* Section 1: Focus on Web Dev Workflow */}
                 <div className={aiStyles.block}>
                   <p className={`${aiStyles.blockTitle} font-mono-dev`}>

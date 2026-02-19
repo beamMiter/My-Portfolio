@@ -81,22 +81,22 @@
   color: rgb(113 113 122); /* text-zinc-500 */
 }
 
-/* main grid */
 .grid {
   display: grid;
   align-items: start;
-  gap: 3rem; /* gap-12 */
+  gap: 3rem;
 }
 
 @media (min-width: 768px) {
   .grid {
-    gap: 4rem; /* md:gap-16 */
+    gap: 4rem;
   }
 }
 
 @media (min-width: 1280px) {
   .grid {
     grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.05fr);
+    align-items: start;
   }
 }
 
@@ -255,28 +255,36 @@
   }
 }
 
-/* right column */
 .rightCol {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2rem; /* gap-8 */
+  gap: 2rem;
   color: rgb(244 244 245);
+  width: 100%;
 }
 
 @media (min-width: 768px) {
   .rightCol {
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .rightCol {
     align-items: flex-end;
-    gap: 2.5rem; /* md:gap-10 */
   }
 }
 
 .rightHead {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* space-y-2 */
+  gap: 0.5rem;
+  width: 100%;
 }
-@media (min-width: 768px) {
+
+@media (min-width: 1280px) {
   .rightHead {
     text-align: right;
   }
@@ -297,30 +305,24 @@
   color: rgb(113 113 122);
 }
 
-/* orbit area */
 .orbitWrap {
   width: 100%;
-  max-width: 24rem; /* max-w-sm */
-  margin-top: -40px; /* mt-[-40px] */
+  max-width: 100%;
+  margin-top: 0;
 }
+
 @media (min-width: 768px) {
   .orbitWrap {
-    max-width: 28rem; /* md:max-w-md */
-    margin-top: -50px; /* md:mt-[-50px] */
-    margin-left: auto; /* md:ml-auto */
+    max-width: 28rem;
+    margin-top: -20px;
   }
 }
 
-.orbitBox {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  max-height: 420px;
-  margin-inline: auto;
-}
-@media (min-width: 768px) {
-  .orbitBox {
-    aspect-ratio: 5 / 4;
+@media (min-width: 1280px) {
+  .orbitWrap {
+    max-width: 28rem;
+    margin-top: -50px;
+    margin-left: auto;
   }
 }
 
@@ -371,5 +373,20 @@
   .orbitXs {
     width: 36px;
     height: 36px;
+  }
+}
+
+.orbitBox {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 360px;
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .orbitBox {
+    aspect-ratio: 5 / 4;
+    max-height: 420px;
   }
 }
