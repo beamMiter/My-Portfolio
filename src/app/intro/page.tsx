@@ -136,7 +136,7 @@ function HoverWaveLabel({ hovered, isTablet }: { hovered: boolean; isTablet: boo
 
   return (
     <span
-      className={`${heroStyles.fontHeading} text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.03em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
+      className={`${heroStyles.fontHeading} text-2xl sm:text-3xl md:text-3xl lg:text-5xl tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
     >
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
@@ -150,7 +150,7 @@ function HoverWaveLabel({ hovered, isTablet }: { hovered: boolean; isTablet: boo
           <span
             key={index}
             className={`relative inline-block overflow-hidden h-[1.2em] ${
-              isWideChar ? "w-[1.35em]" : "w-[1.0em]"
+              isWideChar ? "w-[1.2em]" : "w-[0.85em]"
             }`}
           >
             <motion.span
@@ -244,13 +244,30 @@ export default function IntroWavePage() {
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px) and (max-width: 1366px)");
-    const apply = () => setIsTablet(mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-}, []);
-  
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    const isWide = window.innerWidth >= 768;
+    setIsTablet(isTouch && isWide);
+
+    const handler = () => {
+      const isTouch = window.matchMedia("(pointer: coarse)").matches;
+      const isWide = window.innerWidth >= 768;
+      setIsTablet(isTouch && isWide);
+    };
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+
+  useEffect(() => {
+    const checkTablet = () => {
+      const isTouch = navigator.maxTouchPoints > 0;
+      const w = window.innerWidth;
+      setIsTablet(isTouch && w >= 768);
+    };
+    checkTablet();
+    window.addEventListener("resize", checkTablet);
+    return () => window.removeEventListener("resize", checkTablet);
+  }, []);
+
   return (
     <main
       className={`bg-[#0b0b0b] min-h-screen text-zinc-50 ${heroStyles.root}`}
@@ -335,10 +352,8 @@ export default function IntroWavePage() {
                       </span>
                       <h1 className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight w-full`}>
                         <span className="text-white tracking-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-                            Hello
-                            <span className={liter.className}>,</span> I
-                            <span className={liter.className}>&apos;</span>m
-                          </span>
+                          Hello<span className={liter.className}>,</span>{" "}I<span className={liter.className}>{String.fromCharCode(8217)}</span>m
+                        </span>
                         <span
                           style={{ color: "var(--dev-accent)" }}
                           className="mt-1 tracking-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold break-words w-full"
@@ -403,7 +418,7 @@ export default function IntroWavePage() {
                         onHoverEnd={() => setBtnHovered(false)}
                         className={heroStyles.circleBtn}
                         data-cursor="link"
-                        style={{ overflow: "hidden" }}
+                        style={{ overflow: "hidden", position: "relative" }}
                       >
                         <motion.div
                           animate={
