@@ -58,14 +58,12 @@ import stackStyles from "@/styles/intro/stackSection.module.css";
 import aiStyles from "@/styles/intro/aiSection.module.css";
 import contactStyles from "@/styles/intro/contactSection.module.css";
 
-// ตั้งค่าฟอนต์ Liter
 const liter = Liter({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
 });
 
-// ตั้งค่าฟอนต์ Inter
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -131,15 +129,15 @@ function VerticalTicker({
   );
 }
 
-const TOP_LABEL = "VIEW PORTFOLIO";
-const BOTTOM_LABEL = "DEV PORTFOLIO";
-
-function HoverWaveLabel({ hovered }: { hovered: boolean }) {
+function HoverWaveLabel({ hovered, isTablet }: { hovered: boolean; isTablet: boolean }) {
+  const TOP_LABEL = isTablet ? "VIEW WORK" : "VIEW PORTFOLIO";
+  const BOTTOM_LABEL = isTablet ? "MY WORK" : "DEV PORTFOLIO";
   const maxLen = Math.max(TOP_LABEL.length, BOTTOM_LABEL.length);
 
   return (
     <span
-      className={`${heroStyles.fontHeading} text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.03em] uppercase font-semibold leading-none inline-flex items-center justify-center`}>
+      className={`${heroStyles.fontHeading} text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.03em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
+    >
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
         const bottomChar = BOTTOM_LABEL[index] ?? " ";
@@ -215,6 +213,7 @@ export default function IntroWavePage() {
   const [showContent, setShowContent] = useState(false);
   const [btnHovered, setBtnHovered] = useState(false);
   const [compactCTA, setCompactCTA] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   const { setShowLang } = useIntroUI();
 
@@ -242,6 +241,14 @@ export default function IntroWavePage() {
     apply();
     mq.addEventListener?.("change", apply);
     return () => mq.removeEventListener?.("change", apply);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px) and (max-width: 1024px)");
+    const apply = () => setIsTablet(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
   }, []);
 
   return (
@@ -323,15 +330,15 @@ export default function IntroWavePage() {
                 <div className="subpixel-antialiased transform-gpu">
                   <RevealLine delay={0.35}>
                     <div className="relative flex flex-col items-start justify-start mb-6 w-full">
-                      <span className="mb-4 block leading-none text-xs md:text-sm font-normal tracking-[0.2em] text-zinc-400 uppercase">
+                      <span className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase">
                         Developer & Web Developer
                       </span>
                       <h1 className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight w-full`}>
                         <span className="text-white tracking-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-                          Hello
-                          <span className={liter.className}>,</span> I
-                          <span className={liter.className}>’</span>m
-                        </span>
+                            Hello
+                            <span className={liter.className}>,</span> I
+                            <span className={liter.className}>&apos;</span>m
+                          </span>
                         <span
                           style={{ color: "var(--dev-accent)" }}
                           className="mt-1 tracking-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold break-words w-full"
@@ -385,7 +392,7 @@ export default function IntroWavePage() {
                         data-cursor="link"
                       >
                         <span className={heroStyles.hoverLabelScale}>
-                          <HoverWaveLabel hovered={btnHovered} />
+                          <HoverWaveLabel hovered={btnHovered} isTablet={isTablet} />
                         </span>
                       </button>
 
