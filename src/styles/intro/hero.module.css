@@ -198,12 +198,14 @@
   max-width: 44rem;
   color: #fff;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .rightCol {
     width: 65%;
     padding-left: 0.75rem;
+    overflow: visible;
   }
 }
 
@@ -211,6 +213,7 @@
   .rightCol {
     width: 62%;
     padding-left: 2rem;
+    overflow: visible;
   }
 }
 

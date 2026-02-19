@@ -139,8 +139,7 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
 
   return (
     <span
-      className={`${heroStyles.fontHeading} text-3xl sm:text-4xl md:text-5xl tracking-[0.05em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
-    >
+      className={`${heroStyles.fontHeading} text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.03em] uppercase font-semibold leading-none inline-flex items-center justify-center`}>
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
         const bottomChar = BOTTOM_LABEL[index] ?? " ";
@@ -342,9 +341,9 @@ export default function IntroWavePage() {
                           <span className={liter.className}>’</span>m
                         </span>
 
-                        <span
+                        <span 
                           style={{ color: "var(--dev-accent)" }}
-                          className="mt-1 tracking-[0.05em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold"
+                          className="mt-1 tracking-[0.02em] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold break-words" 
                         >
                           Techin Jetsribumrung
                         </span>
