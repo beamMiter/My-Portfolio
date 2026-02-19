@@ -15,28 +15,43 @@ const timeline: TimelineItem[] = [
     title: "Full Stack Developer",
     org: "Phrapokklao Hospital X Technology Group",
     body: [
-      "I am currently developing a hospital program as a solo full-stack developer, taking ownership of the full lifecycle from requirement discovery to deployment. The goal is to deliver software that fits real operational workflows, where correctness and stability matter as much as speed of delivery.",
-      "I design the database structure to keep records consistent and easy to maintain, implement backend APIs with clear business rules and predictable behavior, and build frontend interfaces that help staff complete tasks quickly with minimal friction. My approach emphasizes clean structure, readable code, and careful handling of edge cases so the system stays reliable in production.",
-      "Because I build the system end-to-end, I keep a strong connection between data models, API contracts, and UI behavior. This allows the product to evolve safely over time while remaining maintainable, testable, and aligned with real usage patterns in a hospital environment.",
+      "This period has been one of the most formative in terms of real-world engineering experience. Working directly with stakeholders, I practice receiving briefs, clarifying requirements, and translating operational needs into software decisions. The gap between what users ask for and what they actually need became something I learned to navigate carefully through conversation and iteration.",
+      "I deepened my understanding of collaborative development beyond basic version control. Working in a team environment taught me how to manage branching strategies properly, keep feature branches isolated, coordinate merges without breaking shared work, and maintain a codebase that multiple people can reason about and contribute to safely. Git became a workflow discipline rather than just a tool.",
+      "On the technical side, I expanded my skills in UX and UI design with a stronger focus on system usability, not just visual polish. I developed a deeper understanding of PHP and grew more comfortable with Laravel as a production framework. I also picked up DaisyUI paired with Vite, which improved how I approach component-driven frontend development and build tooling. Alongside these, I continued strengthening my ability to design backend systems with clear logic, predictable behavior, and database structures that reflect real workflows without unnecessary complexity.",
     ],
   },
   {
     period: "2025",
-    title: "Full Stack Developer (Intern)",
+    title: "Full Stack Developer",
     org: "Phrapokklao Hospital X Rambhai Barni Rajabhat University",
     body: [
-      "I completed my internship as a Full Stack Developer at Phrapokklao Hospital in Chanthaburi. Working in a real hospital context helped me understand practical constraints such as time pressure, user adoption, and the importance of data integrity in daily operations.",
-      "During the internship, I contributed across the stack by developing UI pages, implementing backend endpoints, and integrating database operations. I worked iteratively based on feedback from real users, refining flows and improving usability so staff could complete tasks faster and with fewer errors.",
-      "This experience strengthened my ability to translate user needs into stable features, ship improvements safely, and build systems that match real workflow requirements rather than only technical specifications.",
+      "I completed my internship as a Full Stack Developer at Phrapokklao Hospital in Chanthaburi. Working in a real hospital context helped me understand practical constraints such as time pressure, user adoption, and the importance of data integrity in daily operations. The early period was focused on understanding the codebase and the environment rather than shipping features, but I used that time to deepen my understanding of JavaScript, API parameter design, and how to structure relational databases in a way that reflects real operational relationships.",
+      "As I grew into the role, I contributed across the full stack. On the backend I worked with Node.js and Express, then expanded into TypeScript to improve type safety and long-term maintainability. I learned WebSocket integration for real-time features, designed MySQL schemas, and used Docker to create consistent environments for testing before deploying to the hospital server for medical staff to use in production. I worked iteratively based on feedback from real users, refining flows and improving usability so staff could complete tasks faster and with fewer errors.",
+      "I also built a Python utility to read and parse Thai national ID card data, integrating it into an internal hospital project to streamline patient identification workflows. Throughout the internship I worked closely with junior and senior developers, practiced receiving and breaking down requirements from stakeholders, and developed a clearer instinct for debugging, logic design, and building systems that hold up under real usage conditions.",
     ],
   },
   {
-    period: "2022 – 2024",
+    period: "2024",
     title: "B.Sc. Computer Science",
     org: "Rambhai Barni Rajabhat University",
     body: [
-      "I studied Computer Science at Rambhai Barni Rajabhat University in Chanthaburi, Thailand. My focus was building practical foundations that translate directly into real development work: programming fundamentals, system thinking, and database concepts.",
-      "Through coursework and projects, I practiced breaking down problems into maintainable components, modeling data correctly, and implementing end-to-end applications with clear structure. This foundation supports how I build production systems today: readable code, predictable behavior, and strong attention to correctness.",
+      "My final year expanded significantly into full-stack development. I learned Laravel as a backend framework and Next.js on the frontend, spending time understanding how APIs are designed, documented, and tested using Postman. I also returned to UI/UX Design with a more structured approach, focusing on component hierarchy, user flows, and how interface decisions affect real usability rather than just aesthetics. A major focus was database architecture: designing normalized schemas, understanding indexing, and modeling real-world relationships carefully. My capstone project tied everything together with a Laravel service acting as the backend API and a Next.js frontend consuming it, giving me my first complete full-stack system built from scratch.",
+    ],
+  },
+  {
+    period: "2023",
+    title: "B.Sc. Computer Science",
+    org: "Rambhai Barni Rajabhat University",
+    body: [
+      "My second year moved into mobile development using Dart and Flutter. I built an application that connected to a real database and displayed live data inside the app, handling data fetching, state management, and UI rendering together. Alongside Flutter, I studied SQL and MySQL in depth, learning how to write queries, design schemas, and think about data relationships in a structured way. I also began using Git and GitHub as part of my daily workflow, learning how to manage source control, track changes, and collaborate on code in a more organized and professional manner.",
+    ],
+  },
+  {
+    period: "2022",
+    title: "B.Sc. Computer Science",
+    org: "Rambhai Barni Rajabhat University",
+    body: [
+      "My first year covered the fundamentals of web development through HTML, CSS, and JavaScript, alongside an introduction to UI/UX Design. I built several small projects that taught me how browsers render content, how layout systems work, and how interactivity is wired through the DOM. The design courses introduced me to thinking about users first, wireframing, visual hierarchy, and how layout choices affect how people interact with a product.",
     ],
   },
 ];
@@ -45,7 +60,7 @@ const PROFILE = {
   name: "Techin Jetsribumrung",
   role: "Full Stack Developer",
   summary:
-    "I build software that supports real operational workflows. My focus is reliability, structured backend systems, and clear user interfaces that reduce friction in daily work.",
+    "I build internal software for hospitals and operational teams, focused on stable architecture, clean APIs, and interfaces that make daily work less complicated.",
   accent: "#3edc8a",
 };
 
@@ -76,7 +91,6 @@ export default function AboutSection() {
         </motion.p>
 
         <div className="mt-4 grid gap-10 md:grid-cols-[1.05fr_0.95fr] items-start">
-          
           <div>
             <h3 className="mt-2 text-[clamp(22px,3vw,34px)] font-medium text-white">
               Education & Experience
@@ -138,9 +152,7 @@ export default function AboutSection() {
             </p>
 
             <div className="mt-12">
-              <h3 className="text-sm font-medium text-white/40 mb-5">
-                Skills
-              </h3>
+              <h3 className="text-sm font-medium text-white/40 mb-5">Skills</h3>
 
               <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                 {SKILLS.map((skill, idx) => (
@@ -158,7 +170,6 @@ export default function AboutSection() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
