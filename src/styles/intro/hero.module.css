@@ -28,6 +28,7 @@
   overflow: hidden;
   transition: opacity 0.5s;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .heroBg {
@@ -120,6 +121,7 @@
   min-height: 100vh;
   min-height: 100dvh;
   align-items: center;
+  touch-action: pan-y;
 }
 
 .contentContainer {
