@@ -292,17 +292,17 @@ export default function IntroWavePage() {
             <div className={heroStyles.contentContainer}>
               <div className={heroStyles.leftCol}>
                 <motion.div
-                  initial={{ 
-                    scale: 0.06, 
-                    opacity: 0, 
+                  initial={{
+                    scale: 0.06,
+                    opacity: 0,
                     rotateZ: 0,
-                    x: 0 
+                    x: 0,
                   }}
-                  animate={{ 
-                    scale: 0.9, 
-                    opacity: 1, 
+                  animate={{
+                    scale: 0.9,
+                    opacity: 1,
                     rotateZ: 360,
-                    x: "var(--cube-x)" 
+                    x: "var(--cube-x)",
                   }}
                   transition={{
                     delay: 0.55,
@@ -330,9 +330,7 @@ export default function IntroWavePage() {
                 <div className="subpixel-antialiased transform-gpu">
                   <RevealLine delay={0.35}>
                     <div className="relative flex flex-col items-start justify-start mb-6">
-                      <span
-                        className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase"
-                      >
+                      <span className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase">
                         Developer & Web Developer
                       </span>
                       <h1
@@ -343,10 +341,10 @@ export default function IntroWavePage() {
                           <span className={liter.className}>,</span> I
                           <span className={liter.className}>’</span>m
                         </span>
-                        
-                        <span 
+
+                        <span
                           style={{ color: "var(--dev-accent)" }}
-                          className="mt-1 tracking-[0.05em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold" 
+                          className="mt-1 tracking-[0.05em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold"
                         >
                           Techin Jetsribumrung
                         </span>
@@ -356,24 +354,33 @@ export default function IntroWavePage() {
 
                   <div className={heroStyles.paragraphGroup}>
                     <RevealLine delay={0.7}>
-                      <p className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}>
-                        Designing high-performance internal platforms and 
-                        mission-critical software for hospitals and enterprise 
-                        organizations is where I focus my expertise in reliability and security.
+                      <p
+                        className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}
+                      >
+                        Designing high-performance internal platforms and
+                        mission-critical software for hospitals and enterprise
+                        organizations is where I focus my expertise in
+                        reliability and security.
                       </p>
                     </RevealLine>
                     <RevealLine delay={1.0}>
-                      <p className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}>
-                        My commitment lies in eliminating operational complexity 
-                        through intelligent automation and stable full-stack architecture 
-                        to ensure that your technical foundation supports sustainable growth.
+                      <p
+                        className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}
+                      >
+                        My commitment lies in eliminating operational complexity
+                        through intelligent automation and stable full-stack
+                        architecture to ensure that your technical foundation
+                        supports sustainable growth.
                       </p>
                     </RevealLine>
                     <RevealLine delay={1.3}>
-                      <p className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}>
-                        Each project is driven by the goal of delivering measurable 
-                        business impact by transforming complex technology into a 
-                        strategic advantage that empowers teams and streamlines core workflows.
+                      <p
+                        className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}
+                      >
+                        Each project is driven by the goal of delivering
+                        measurable business impact by transforming complex
+                        technology into a strategic advantage that empowers
+                        teams and streamlines core workflows.
                       </p>
                     </RevealLine>
                   </div>
@@ -405,8 +412,37 @@ export default function IntroWavePage() {
                         onHoverEnd={() => setBtnHovered(false)}
                         className={heroStyles.circleBtn}
                         data-cursor="link"
+                        style={{ overflow: "hidden" }}
                       >
-                        <ArrowUpRight className="w-6 h-6 text-zinc-900 transition-transform duration-300" />
+                        <motion.div
+                          animate={
+                            btnHovered
+                              ? { x: 18, y: -18, opacity: 0 }
+                              : { x: 0, y: 0, opacity: 1 }
+                          }
+                          transition={{
+                            duration: 0.22,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          style={{ position: "absolute" }}
+                        >
+                          <ArrowUpRight className="w-6 h-6 text-zinc-900" />
+                        </motion.div>
+
+                        <motion.div
+                          animate={
+                            btnHovered
+                              ? { x: 0, y: 0, opacity: 1 }
+                              : { x: -18, y: 18, opacity: 0 }
+                          }
+                          transition={{
+                            duration: 0.22,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          style={{ position: "absolute" }}
+                        >
+                          <ArrowUpRight className="w-6 h-6 text-zinc-900" />
+                        </motion.div>
                       </motion.button>
                     </div>
 
