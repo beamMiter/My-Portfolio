@@ -188,19 +188,13 @@ function HoverWaveLabel({ hovered }: { hovered: boolean }) {
   );
 }
 
-function RevealLine({
-  children,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-}) {
+function RevealLine({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 22 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden inline-block align-top"
+      className="relative overflow-hidden block w-full align-top"
     >
       <motion.div
         className="pointer-events-none absolute inset-0 bg-zinc-950"
@@ -209,7 +203,7 @@ function RevealLine({
         transition={{ delay, duration: 0.9, ease: [0.65, 0, 0.35, 1] }}
         style={{ transformOrigin: "left" }}
       />
-      <span className="relative inline-block">{children}</span>
+      <span className="relative block w-full">{children}</span>
     </motion.div>
   );
 }
@@ -328,22 +322,19 @@ export default function IntroWavePage() {
               <div className={`${heroStyles.rightCol} ${heroStyles.fontSans}`}>
                 <div className="subpixel-antialiased transform-gpu">
                   <RevealLine delay={0.35}>
-                    <div className="relative flex flex-col items-start justify-start mb-6">
-                      <span className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase">
+                    <div className="relative flex flex-col items-start justify-start mb-6 w-full">
+                      <span className="mb-4 block leading-none text-xs md:text-sm font-normal tracking-[0.2em] text-zinc-400 uppercase">
                         Developer & Web Developer
                       </span>
-                      <h1
-                        className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight`}
-                      >
+                      <h1 className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight w-full`}>
                         <span className="text-white tracking-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
                           Hello
                           <span className={liter.className}>,</span> I
                           <span className={liter.className}>’</span>m
                         </span>
-
-                        <span 
+                        <span
                           style={{ color: "var(--dev-accent)" }}
-                          className="mt-1 tracking-[0.02em] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold break-words" 
+                          className="mt-1 tracking-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold break-words w-full"
                         >
                           Techin Jetsribumrung
                         </span>
@@ -353,9 +344,7 @@ export default function IntroWavePage() {
 
                   <div className={heroStyles.paragraphGroup}>
                     <RevealLine delay={0.7}>
-                      <p
-                        className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}
-                      >
+                      <p className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}>
                         Designing high-performance internal platforms and
                         mission-critical software for hospitals and enterprise
                         organizations is where I focus my expertise in
@@ -363,9 +352,7 @@ export default function IntroWavePage() {
                       </p>
                     </RevealLine>
                     <RevealLine delay={1.0}>
-                      <p
-                        className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}
-                      >
+                      <p className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}>
                         My commitment lies in eliminating operational complexity
                         through intelligent automation and stable full-stack
                         architecture to ensure that your technical foundation
@@ -373,9 +360,7 @@ export default function IntroWavePage() {
                       </p>
                     </RevealLine>
                     <RevealLine delay={1.3}>
-                      <p
-                        className={`${heroStyles.pText} ${inter.className} text-lg leading-relaxed text-zinc-200`}
-                      >
+                      <p className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}>
                         Each project is driven by the goal of delivering
                         measurable business impact by transforming complex
                         technology into a strategic advantage that empowers
