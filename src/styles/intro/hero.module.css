@@ -73,7 +73,7 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (min-width: 769px) and (max-width: 1400px) {
   .heroBlob {
     inset-inline: -10%;
     bottom: -40%;
@@ -106,12 +106,10 @@
   z-index: 30;
   transform-origin: right;
   will-change: transform;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
 
 @media screen and (min-width: 768px) {
-  .stagePanel { width: 60%; }
+  .stagePanel { width: 62%; }
 }
 
 .contentShell {
@@ -159,7 +157,7 @@
   flex-shrink: 0;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1400px) {
   .leftCol {
     width: 35%;
     justify-content: center;
@@ -167,7 +165,7 @@
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1401px) {
   .leftCol {
     width: 38%;
     justify-content: flex-start;
@@ -183,13 +181,13 @@
   transform: translateZ(0);
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1400px) {
   .cubeWrap {
     --cube-x: -20px;
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1401px) {
   .cubeWrap {
     --cube-x: -150px;
   }
@@ -197,19 +195,13 @@
 
 .rightCol {
   width: 100%;
-  max-width: 44rem;
+  min-width: 0;
   color: #fff;
   box-sizing: border-box;
   overflow: visible;
 }
 
-@media screen and (max-width: 767px) {
-  .rightCol {
-    overflow: hidden;
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1400px) {
   .rightCol {
     width: 65%;
     padding-left: 0.75rem;
@@ -217,7 +209,7 @@
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1401px) {
   .rightCol {
     width: 62%;
     padding-left: 2rem;
@@ -244,7 +236,7 @@
   }
 }
 
-@media screen and (min-width: 431px) and (max-width: 1024px) {
+@media screen and (min-width: 431px) and (max-width: 1400px) {
   .heroTitle {
     font-size: clamp(34px, 4.5vw, 52px);
     white-space: normal;
@@ -289,13 +281,8 @@
   color: rgba(228, 228, 231, 0.9);
 }
 
-@media screen and (min-width: 768px) {
-  .pText { font-size: 16px; }
-}
-
-@media screen and (min-width: 1024px) {
-  .pText { font-size: 17px; }
-}
+@media screen and (min-width: 768px) { .pText { font-size: 16px; } }
+@media screen and (min-width: 1024px) { .pText { font-size: 17px; } }
 
 .ctaWrap {
   margin-top: 2rem;
@@ -315,12 +302,6 @@
   gap: 0.75rem;
   justify-content: flex-start;
   flex-wrap: nowrap;
-}
-
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-  .ctaDesktop {
-    gap: 0.75rem;
-  }
 }
 
 .ctaMobileBtn {
@@ -402,14 +383,13 @@
   transform: scale(1);
   -webkit-transform: scale(1);
   min-width: 0;
-  overflow: hidden;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1400px) {
   .hoverLabelScale {
-    transform: scale(0.75);
-    -webkit-transform: scale(0.75);
-    transform-origin: left center;
+    transform: none;
+    -webkit-transform: none;
+    overflow: visible;
   }
 }
 
@@ -460,24 +440,15 @@
 }
 
 @media screen and (min-width: 768px) {
-  .circleBtn {
-    width: 70px;
-    height: 70px;
-  }
+  .circleBtn { width: 70px; height: 70px; }
 }
 
 @media screen and (max-width: 640px) {
-  .circleBtn {
-    width: 56px;
-    height: 56px;
-  }
+  .circleBtn { width: 56px; height: 56px; }
 }
 
 @media screen and (min-width: 1025px) {
-  .circleBtn {
-    width: 70px;
-    height: 70px;
-  }
+  .circleBtn { width: 70px; height: 70px; }
 }
 
 .circleBtn:hover {

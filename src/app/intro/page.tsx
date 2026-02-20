@@ -155,16 +155,17 @@ function HoverWaveLabel({
 
   return (
     <span
-      className={`${heroStyles.fontHeading} text-2xl sm:text-3xl md:text-3xl lg:text-5xl tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
+      className={`${heroStyles.fontHeading} tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
+      style={{
+        fontSize: isTablet ? "1.875rem" : "clamp(1.5rem, 3.5vw, 3rem)",
+      }}
     >
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
         const bottomChar = BOTTOM_LABEL[index] ?? " ";
         const delay = index * 0.035;
-
         const isWideChar =
           ["W", "M"].includes(topChar) || ["W", "M"].includes(bottomChar);
-
         return (
           <span
             key={index}
@@ -184,7 +185,6 @@ function HoverWaveLabel({
             >
               {topChar === " " ? "\u00A0" : topChar}
             </motion.span>
-
             <motion.span
               initial={false}
               animate={
@@ -205,19 +205,13 @@ function HoverWaveLabel({
   );
 }
 
-function RevealLine({
-  children,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-}) {
+function RevealLine({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 22 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden block w-full align-top"
+      className="relative block w-full align-top"
     >
       <motion.div
         className="pointer-events-none absolute inset-0 bg-zinc-950"
@@ -269,23 +263,9 @@ export default function IntroWavePage() {
   }, []);
 
   useEffect(() => {
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
-    const isWide = window.innerWidth >= 768;
-    setIsTablet(isTouch && isWide);
-
-    const handler = () => {
-      const isTouch = window.matchMedia("(pointer: coarse)").matches;
-      const isWide = window.innerWidth >= 768;
-      setIsTablet(isTouch && isWide);
-    };
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
-  }, []);
-
-  useEffect(() => {
     const checkTablet = () => {
-      const isTouch = navigator.maxTouchPoints > 0;
       const w = window.innerWidth;
+      const isTouch = navigator.maxTouchPoints > 0;
       setIsTablet(isTouch && w >= 768);
     };
     checkTablet();
