@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { Liter, Inter } from "next/font/google"; // เพิ่ม Inter
+import { Liter } from "next/font/google";
+import localFont from "next/font/local";
 import {
   Code2,
   ServerCog,
@@ -64,8 +65,19 @@ const liter = Liter({
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = localFont({
+  src: [
+    {
+      path: "@/public/fonts/Inter-VariableFont_opsz,wght.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "@/public/fonts/Inter-Italic-VariableFont_opsz,wght.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
   display: "swap",
 });
 
