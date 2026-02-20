@@ -324,8 +324,8 @@ export default function IntroWavePage() {
         {showStage && (
           <motion.div
             className={heroStyles.stagePanel}
-            initial={{ x: "0%" }}
-            animate={{ x: "110%" }}
+            initial={{ x: "110%" }}
+            animate={{ x: "0%" }}
             transition={{ duration: 1.1, ease: [0.8, 0, 0.2, 1] }}
           />
         )}
