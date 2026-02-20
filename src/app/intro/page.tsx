@@ -79,6 +79,7 @@ const inter = localFont({
     },
   ],
   display: "swap",
+  adjustFontFallback: false,
 });
 
 const TITLES = ["Developer", "Full-stack Developer", "Software Engineer"];
