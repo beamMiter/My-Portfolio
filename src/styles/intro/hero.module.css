@@ -200,13 +200,20 @@
   max-width: 44rem;
   color: #fff;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
+}
+
+@media screen and (max-width: 767px) {
+  .rightCol {
+    overflow: hidden;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .rightCol span[style] {
-    word-break: break-word;
-    white-space: normal;
+  .rightCol {
+    width: 65%;
+    padding-left: 0.75rem;
+    overflow: visible;
   }
 }
 
