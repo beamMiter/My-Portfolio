@@ -204,10 +204,9 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .rightCol {
-    width: 65%;
-    padding-left: 0.75rem;
-    overflow: visible;
+  .rightCol span[style] {
+    word-break: break-word;
+    white-space: normal;
   }
 }
 
