@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
-/* app/globals.css */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-VariableFont_opsz,wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Italic-VariableFont_opsz,wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root{
   --ink:#09090b;
   --ink-2:#0f1113;
@@ -8,14 +23,12 @@
   --accent:#22d3ee;
   --accent2:#10b981;
   --muted:#aab0b6;
-
-  /* ค่าตำแหน่ง spotlight เริ่มต้น */
   --mx:50vw;
   --my:40vh;
 }
 
 html,body{
-  background:#09090b;   /* zinc-950 */
+  background:#09090b;  
   color:#e5e7eb;
   overscroll-behavior-y:none;
   scroll-behavior:smooth;
@@ -23,20 +36,14 @@ html,body{
   min-height:100%;
 }
 
-/* ===== พื้นหลัง stage + spotlight ===== */
 .bg-stage{
   position:fixed;
   inset:0;
   z-index:0;
   isolation:isolate;
   background:
-    /* [แก้ไข] เปลี่ยนสีฟ้า -> เป็นสีขาวจางๆ (Opacity 3%) เพื่อสร้างมิติ */
     radial-gradient(1200px 800px at 15% 5%, rgba(255,255,255,0.03), transparent 62%),
-    
-    /* [แก้ไข] ลบสีเขียวทิ้ง หรือเปลี่ยนเป็นสีขาวจางๆ (Opacity 2%) */
     radial-gradient(950px 650px at 85% 35%, rgba(255,255,255,0.02), transparent 62%),
-    
-    /* พื้นหลังหลัก Conic Gradient (Dark Zinc) */
     conic-gradient(
       from 180deg at 50% 50%,
       #09090b 0deg,
@@ -59,7 +66,6 @@ html,body{
   pointer-events:none;
 }
 
-/* เพดานมืด (mask) กันฮาโลใต้ Navbar ให้เนียน */
 .bg-stage::after{
   content:"";
   position:absolute; left:0; right:0; top:0; height:160px;
