@@ -375,7 +375,7 @@ export default function IntroWavePage() {
                         </span>
                         <span
                           style={{ color: "var(--dev-accent)" }}
-                          className="mt-1 tracking-wide text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold break-words w-full"
+                          className="mt-1 tracking-wide text-3xl sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl font-bold break-words w-full"
                         >
                           Techin Jetsribumrung
                         </span>
