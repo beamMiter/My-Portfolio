@@ -22,7 +22,7 @@ const contacts: ContactIcon[] = [
   {
     icon: Linkedin,
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/fenyb",
+    href: "https://www.linkedin.com/in/techin-jetsribumrung-9a4069364/",
   },
   {
     icon: Github,
@@ -37,20 +37,15 @@ const contacts: ContactIcon[] = [
   {
     icon: Briefcase,
     label: "Freelance",
-    href: "https://your-freelance-link.com", // อย่าลืมแก้ลิงก์จริง
+    href: "https://fastwork.co/user/welacode", 
   },
 ];
 
 export default function ContactSection() {
   return (
-    // แก้ไขตรงนี้: ลบ bg-[#101214] ออก
     <section id="contact" className="scroll-mt-28 py-20">
       <div className="mx-auto max-w-[900px] px-6 text-center">
         
-        {/* เพิ่มเส้นคั่นด้านบนให้เหมือน Footer (Optional: ถ้าอยากให้มีขอบเขตชัดเจน) */}
-        {/* <div className="h-px bg-white/15 mb-16 mx-auto max-w-xs" /> */}
-
-        {/* Header */}
         <p className="text-xs tracking-[0.3em] uppercase text-white/50">
           Get in Touch
         </p>
@@ -58,7 +53,6 @@ export default function ContactSection() {
           Contact <span className="text-white">Me</span>
         </h2>
 
-        {/* Icons only */}
         <div className="mt-12 flex items-center justify-center gap-8">
           {contacts.map(({ icon: Icon, label, href }) => (
             <a
@@ -72,7 +66,6 @@ export default function ContactSection() {
             >
               <Icon
                 size={22}
-                // สีเริ่มต้นขาวจางๆ (white/60) -> โฮเวอร์แล้วขาวจั๊วะ (white)
                 className="text-white/60 hover:text-white transition-colors"
               />
             </a>
