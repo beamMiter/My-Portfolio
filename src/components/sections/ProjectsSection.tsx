@@ -148,9 +148,11 @@ export default function ProjectsSection() {
                     src={p.image}
                     alt={p.title}
                     fill
-                    className="object-cover" // ลบ group-hover:scale-105 ออกแล้ว
+                    className="object-cover transition-opacity duration-700 opacity-0"
+                    onLoadingComplete={(image) => image.classList.remove("opacity-0")}
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-                    priority={i < 2}
+                    priority={i < 4} // เพิ่ม priority เป็น 4 รูปแรกเพื่อความเร็วในหน้าจอใหญ่
+                    quality={85}
                     placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
                   />

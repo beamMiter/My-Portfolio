@@ -69,11 +69,12 @@ export default function WelaCodePage() {
             alt="WelaCode visual"
             width={1920}
             height={1080}
-            className="h-auto w-full transition-opacity duration-500" // เพิ่ม Transition ให้ตอนรูปจริงมาแล้วไม่กระชาก
-            priority // สำคัญมากสำหรับรูปบนสุด
-            placeholder="blur" // เปิดโหมดเบลอ
-            blurDataURL={blurData} // รูปจิ๋วที่จะให้โชว์ก่อน
-            onLoadingComplete={(img) => img.classList.remove("opacity-0")} // ค่อยๆ เฟดเข้า
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
+            priority
+            quality={85}
+            placeholder="blur"
+            blurDataURL={blurData}
+            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
           />
         </div>
 
@@ -161,14 +162,22 @@ export default function WelaCodePage() {
             alt="WelaCode mockup 2"
             width={2200}
             height={1400}
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
+            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+            quality={85}
+            placeholder="blur"
+            blurDataURL={blurData}
           />
           <Image
             src="/images/projects/welacode-mockup3.webp"
             alt="WelaCode mockup 3"
             width={2200}
             height={1400}
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
+            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+            quality={85}
+            placeholder="blur"
+            blurDataURL={blurData}
           />
         </div>
 
