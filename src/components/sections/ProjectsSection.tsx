@@ -31,7 +31,7 @@ const projects: Project[] = [
   },
   {
     title: "Home Service",
-    image: "/images/projects/home-service.avif",
+    image: "/images/projects/home-service-mockup1.webp",
     tech: ["Flutter", "GoLang", "PostgreSQL"],
     href: "#",
   },
