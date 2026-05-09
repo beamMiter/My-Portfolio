@@ -45,7 +45,7 @@ export default function PpkAssetRepairPage() {
         {/* Hero - max-w-5xl */}
         <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5">
           <Image
-            src="/images/projects/ppk-repair.avif"
+            src="/images/projects/ppk-asset-repair-management-mockup1.webp"
             alt="PPK Asset Repair Management hero"
             width={1800}
             height={1000}
@@ -135,14 +135,14 @@ export default function PpkAssetRepairPage() {
         {/* Bottom images - ขยายให้ใหญ่ขึ้นแต่ยังเล็กกว่า hero */}
         <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2">
           <Image
-            src="/images/projects/ppk-repair1.avif"
+            src="/images/projects/ppk-asset-repair-management-mockup2.webp"
             alt="Repair screen 1"
             width={2200}
             height={1400}
             className="h-auto w-full"
           />
           <Image
-            src="/images/projects/ppk-repair2.avif"
+            src="/images/projects/ppk-asset-repair-management-mockup3.webp"
             alt="Repair screen 2"
             width={2200}
             height={1400}

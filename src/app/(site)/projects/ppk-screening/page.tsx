@@ -46,7 +46,7 @@ export default function PpkScreeningPage() {
         {/* Hero */}
         <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5 bg-zinc-900/50">
           <Image
-            src="/images/projects/ppk-screening.avif"
+            src="/images/projects/ppk-screening-mockup1.webp"
             alt="PPK Screening Referral hero"
             width={1800}
             height={1000}
@@ -140,7 +140,7 @@ export default function PpkScreeningPage() {
         {/* Bottom image */}
         <div className="mt-16 mx-auto max-w-4xl overflow-hidden rounded-lg bg-zinc-900/50">
           <Image
-            src="/images/projects/ppk-screening1.avif"
+            src="/images/projects/ppk-screening-mockup2.webp"
             alt="PPK referral summary screen"
             width={2200}
             height={1400}

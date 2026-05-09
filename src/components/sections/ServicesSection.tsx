@@ -13,7 +13,7 @@ const services: Service[] = [
   {
     iconSrc: "/images/api.png",
     title: "Web Development",
-    desc: "I've created a large-scale website with hundreds of thousands of users, as well as other websites like chatbot systems and live chat platforms for businesses and general users.",
+    desc: "I've created comprehensive web applications and large-scale systems, including chatbot platforms and interactive live chat solutions for businesses and general users.",
     alt: "Web Development",
   },
   {

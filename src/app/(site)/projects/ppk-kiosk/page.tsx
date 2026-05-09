@@ -54,7 +54,7 @@ export default function PpkKioskPage() {
         {/* Hero (thin edge) */}
         <div className="mt-10 mx-auto max-w-5xl overflow-hidden rounded-lg ring-1 ring-white/5 bg-zinc-900/50">
           <Image
-            src="/images/projects/ppk-kiosk.avif"
+            src="/images/projects/ppk-kiosk-mockup1.webp"
             alt="PPK Kiosk Queue System hero"
             width={1920}
             height={1080}
@@ -115,7 +115,7 @@ export default function PpkKioskPage() {
             <div className="overflow-hidden rounded-lg bg-zinc-900/50">
               <div className="relative aspect-[3/4] w-full">
                 <Image
-                  src="/images/projects/ppk-kiosk1.avif"
+                  src="/images/projects/demonstration-kiosk1.webp"
                   alt="PPK Kiosk vertical screen"
                   fill
                   className="object-cover transition-opacity duration-500"

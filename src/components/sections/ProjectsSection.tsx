@@ -17,14 +17,14 @@ type Project = {
 const projects: Project[] = [
   {
     title: "PPK Screening Recommendation",
-    image: "/images/projects/ppk-screening.avif",
+    image: "/images/projects/ppk-screening-mockup1.webp",
     tech: ["Next.js", "Laravel", "MySQL"],
     path: "/projects/ppk-screening",
     logo: "/images/aucc_logo.png",
   },
   {
     title: "PPK Kiosk Queue",
-    image: "/images/projects/ppk-kiosk.avif",
+    image: "/images/projects/ppk-kiosk-mockup1.webp",
     tech: ["Next.js", "Laravel", "Prisma", "MySQL"],
     path: "/projects/ppk-kiosk",
     logo: "/images/aucc_logo.png",
@@ -37,21 +37,21 @@ const projects: Project[] = [
   },
   {
     title: "PPK Asset Repair Management",
-    image: "/images/projects/ppk-repair.avif",
+    image: "/images/projects/ppk-asset-repair-management-mockup1.webp",
     tech: ["Laravel", "MySQL"],
     path: "/projects/ppk-asset-repair",
   },
   {
     title:
       "PPK PR Integrated Policy, Performance and Knowledge Governance for Public Relations",
-    image: "/images/projects/ppk-pr.avif",
+    image: "/images/projects/ppk-pr-integrated-policy-performance-and-knowledge-governance-for-public-relations1.webp",
     tech: ["Next.js", "Laravel", "MySQL", "n8n"],
     href: "#",
   },
   {
     title: "WelaCode",
-    image: "/images/projects/welacode.avif",
-    tech: ["Next.js"],
+    image: "/images/projects/welacode-mockup1.webp",
+    tech: ["Next.js", "Node.js", "Express", "MongoDB"],
     href: "/projects/welacode",
   },
 ];
@@ -66,7 +66,7 @@ function TechChip({ children, canHover = true }: { children: React.ReactNode; ca
       </span>
     );
   }
-  
+
   return (
     <span className="relative text-[13px] font-medium text-zinc-500 transition-all duration-300 group-hover:text-emerald-400 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-emerald-400 after:transition-all after:duration-300 group-hover:after:w-full">
       {children}
@@ -154,7 +154,7 @@ export default function ProjectsSection() {
                     placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
                   />
-                  
+
                   {p.logo && (
                     <div className="absolute top-4 right-4 z-20 drop-shadow-md">
                       <div className="relative w-[90px] h-[45px]">
@@ -167,7 +167,7 @@ export default function ProjectsSection() {
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
