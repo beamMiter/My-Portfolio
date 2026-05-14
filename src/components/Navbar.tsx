@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Github, Linkedin, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type LinkItem = { name: string; sectionId: string };
@@ -74,7 +74,8 @@ function NavInner({
             width={160}
             height={50}
             priority
-            className="h-28 w-auto object-contain"
+            className="h-28 w-auto object-contain transition-opacity duration-700 opacity-0"
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
         </Link>
 
@@ -87,14 +88,36 @@ function NavInner({
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <IconBtn label="LinkedIn" onClick={openLinkedIn}>
-            <Linkedin className="h-5 w-5" />
-          </IconBtn>
-
-          <IconBtn label="GitHub" onClick={openGit}>
-            <Github className="h-5 w-5" />
-          </IconBtn>
+        <div className="flex items-center gap-4 lg:gap-6">
+          <button
+            type="button"
+            aria-label="LinkedIn"
+            onClick={openLinkedIn}
+            className="transition-all duration-300 hover:scale-110"
+          >
+            <Image
+              src="/svg/linkedin.svg"
+              alt="LinkedIn"
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
+          </button>
+ 
+          <button
+            type="button"
+            aria-label="GitHub"
+            onClick={openGit}
+            className="transition-all duration-300 hover:scale-110"
+          >
+            <Image
+              src="/svg/github-svgrepo-com.svg"
+              alt="GitHub"
+              width={44}
+              height={44}
+              className="h-11 w-11"
+            />
+          </button>
 
           <button
             ref={menuBtnRef}

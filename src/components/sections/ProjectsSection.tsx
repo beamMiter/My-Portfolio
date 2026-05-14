@@ -43,8 +43,8 @@ const projects: Project[] = [
   },
   {
     title:
-      "PPK PR Integrated Policy, Performance and Knowledge Governance for Public Relations",
-    image: "/images/projects/ppk-pr-integrated-policy-performance-and-knowledge-governance-for-public-relations1.webp",
+      "PR Integrated Policy, Performance and Knowledge Governance for Public Relations",
+    image: "/images/projects/pr-integrated-policy-performance-and-knowledge-governance-for-public-relations1.webp",
     tech: ["Next.js", "Laravel", "MySQL", "n8n"],
     href: "#",
   },
@@ -149,7 +149,7 @@ export default function ProjectsSection() {
                     alt={p.title}
                     fill
                     className="object-cover transition-opacity duration-700 opacity-0"
-                    onLoadingComplete={(image) => image.classList.remove("opacity-0")}
+                    onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
                     priority={i < 4} // เพิ่ม priority เป็น 4 รูปแรกเพื่อความเร็วในหน้าจอใหญ่
                     quality={85}
@@ -164,7 +164,8 @@ export default function ProjectsSection() {
                           src={p.logo}
                           alt="Project Logo"
                           fill
-                          className="object-contain object-right-top opacity-100"
+                          className="object-contain object-right-top transition-opacity duration-700 opacity-0"
+                          onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
                         />
                       </div>
                     </div>

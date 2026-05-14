@@ -58,7 +58,7 @@ export default function WelaCodePage() {
         <header className="mt-16 text-center">
           <h1 className="text-[clamp(30px,5vw,54px)] font-semibold leading-tight">
             WelaCode{" "}
-            <span className="text-zinc-400">Full-Stack Web Application</span>
+            <span className="text-zinc-400">Web Service</span>
           </h1>
         </header>
 
@@ -74,7 +74,7 @@ export default function WelaCodePage() {
             quality={85}
             placeholder="blur"
             blurDataURL={blurData}
-            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
         </div>
 
@@ -117,34 +117,34 @@ export default function WelaCodePage() {
             <h3 className="text-lg font-medium tracking-wide text-zinc-100">
               What it does
             </h3>
- 
+
             <div className="mt-6 space-y-7 leading-relaxed text-zinc-300">
               <p>
                 User access is streamlined through Google Login integration,
                 ensuring a secure and frictionless entry point for clients to
                 manage their profiles and projects.
               </p>
- 
+
               <p>
                 The application includes a comprehensive shopping cart system,
                 allowing users to browse through service offerings, manage their
                 selections, and prepare for a structured checkout process.
               </p>
- 
+
               <p>
                 A built-in appointment system enables clients to schedule project
                 consultations directly through the platform. This facilitates
                 clear communication and initial planning for software initiatives
                 between the user and the development team.
               </p>
- 
+
               <p>
                 WelaCode features a secure payment gateway integration with Omise,
                 supporting both Credit Card and PromptPay transactions. This provides
                 a reliable and flexible financial experience for users during the
                 checkout workflow.
               </p>
- 
+
               <p>
                 The platform maintains active engagement through an automated email
                 notification system, sending personalized welcome messages,
@@ -163,7 +163,7 @@ export default function WelaCodePage() {
             width={2200}
             height={1400}
             className="h-auto w-full transition-opacity duration-700 opacity-0"
-            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
             quality={85}
             placeholder="blur"
             blurDataURL={blurData}
@@ -174,7 +174,7 @@ export default function WelaCodePage() {
             width={2200}
             height={1400}
             className="h-auto w-full transition-opacity duration-700 opacity-0"
-            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
             quality={85}
             placeholder="blur"
             blurDataURL={blurData}

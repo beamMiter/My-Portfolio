@@ -1,12 +1,6 @@
-// src/app/projects/ppk-asset-repair/page.tsx
-import type { Metadata } from "next";
-import Image from "next/image";
+"use client";
 
-export const metadata: Metadata = {
-  title: "PPK Asset Repair Management System Case Study",
-  description:
-    "Hospital repair and asset management system for reporting issues, triaging work, and tracking service history.",
-};
+import Image from "next/image";
 
 function TechStackClean({ items }: { items: string[] }) {
   return (
@@ -31,6 +25,8 @@ function TechStackClean({ items }: { items: string[] }) {
   );
 }
 
+const blurData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+ZNPQAIXwMwFByNxgAAAABJRU5ErkJggg==";
+
 export default function PpkAssetRepairPage() {
   return (
     <main className="min-h-screen text-white">
@@ -50,7 +46,10 @@ export default function PpkAssetRepairPage() {
             width={1800}
             height={1000}
             priority
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
+            placeholder="blur"
+            blurDataURL={blurData}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
         </div>
 
@@ -139,14 +138,20 @@ export default function PpkAssetRepairPage() {
             alt="Repair screen 1"
             width={2200}
             height={1400}
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
+            placeholder="blur"
+            blurDataURL={blurData}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
           <Image
             src="/images/projects/ppk-asset-repair-management-mockup3.webp"
             alt="Repair screen 2"
             width={2200}
             height={1400}
-            className="h-auto w-full"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
+            placeholder="blur"
+            blurDataURL={blurData}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
         </div>
 
@@ -156,8 +161,7 @@ export default function PpkAssetRepairPage() {
         {/* Tech Stack */}
         <TechStackClean items={["Laravel", "PHP", "MySQL", "Vite"]} />
 
-        {/* Final divider */}
-        <hr className="mt-16 border-white/10" />
+        <div className="h-20" />
       </div>
     </main>
   );
