@@ -58,11 +58,12 @@ export default function PpkKioskPage() {
             alt="PPK Kiosk Queue System hero"
             width={1920}
             height={1080}
-            className="h-auto w-full transition-opacity duration-500"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
             priority
             // เพิ่มเทคนิคโหลดไว
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
         </div>
 
@@ -118,11 +119,12 @@ export default function PpkKioskPage() {
                   src="/images/projects/demonstration-kiosk1.webp"
                   alt="PPK Kiosk vertical screen"
                   fill
-                  className="object-cover transition-opacity duration-500"
+                  className="object-cover transition-opacity duration-700 opacity-0"
                   sizes="(min-width:1024px) 420px, 100vw"
                   // เพิ่มเทคนิคโหลดไว
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
+                  onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
                 />
               </div>
             </div>
@@ -171,9 +173,8 @@ export default function PpkKioskPage() {
           items={["Next.js", "React", "TypeScript", "Prisma", "MySQL"]}
         />
 
-        {/* Bottom Divider + Conference Info */}
+        {/* Conference Info */}
         <div className="mt-16">
-          <hr className="border-white/10" />
           <div className="mt-4 flex justify-end">
             <p className="text-sm text-zinc-500 italic">
               Presented at <span className="text-zinc-300">AUCC Conference 2026</span>

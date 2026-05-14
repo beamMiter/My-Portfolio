@@ -62,16 +62,16 @@ function VerticalTicker({
         <motion.span
           key={items[i]}
           // แก้ไข: เอา absolute ออกเพื่อให้มันจัดตำแหน่งตาม flex ของตัวแม่
-          className="inline-block text-[#3edc8a] font-bold will-change-transform normal-case tracking-[0.01em] sm:tracking-[0.015em] lg:tracking-[0.02em]"
+          className="inline-block text-[#3edc8a] font-medium will-change-transform normal-case tracking-[0.01em] sm:tracking-[0.015em] lg:tracking-[0.02em]"
           initial={{ y: "100%" }}
-          animate={{ 
+          animate={{
             y: "0%",
             transition: {
               duration: 0.6,
               ease: [0.16, 1, 0.3, 1]
             }
           }}
-          exit={{ 
+          exit={{
             y: "-100%",
             transition: {
               duration: 0.4,
@@ -98,13 +98,12 @@ export default function HomePage() {
         <div className="mx-auto w-full max-w-[1400px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-14">
             <div className="max-w-[760px]">
-              <h1 className="mt-4 text-[clamp(40px,6.1vw,88px)] sm:text-[clamp(44px,6.2vw,88px)] font-bold leading-[1.1] sm:leading-[1.02] tracking-[-0.03em] text-white">
+              <h1 className="mt-4 text-[clamp(46px,7vw,100px)] sm:text-[clamp(50px,7.2vw,105px)] font-bold leading-[1.1] sm:leading-[1.02] tracking-wide text-white">
                 <span className="flex flex-col sm:flex-row sm:items-baseline">
                   <span className="whitespace-nowrap">
-                    Hello<span className={`${liter.className} font-normal`}>,</span> I
-                    <span className={`${liter.className} font-normal`}>’</span>m
+                    Hello<span className={liter.className}>,</span> I<span className={liter.className}>’</span>m
                   </span>
-                  <span className="sm:ml-4 flex items-baseline">
+                  <span className="sm:ml-5 flex items-baseline">
                     <VerticalTicker />
                   </span>
                 </span>

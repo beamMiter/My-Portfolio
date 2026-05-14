@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "JETSRI DEV LOG",
+  title: "JetSri - Dev",
   description: "Personal portfolio of Techin Jetsribumrung",
+  icons: {
+    icon: "/favicon-square.png",
+    shortcut: "/favicon-square.png",
+    apple: "/favicon-square.png",
+  },
 };
 
 export default function RootLayout({

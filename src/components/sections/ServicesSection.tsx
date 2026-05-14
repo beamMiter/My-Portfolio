@@ -11,19 +11,19 @@ type Service = {
 
 const services: Service[] = [
   {
-    iconSrc: "/images/api.png",
+    iconSrc: "/svg/development.svg",
     title: "Web Development",
     desc: "I've created comprehensive web applications and large-scale systems, including chatbot platforms and interactive live chat solutions for businesses and general users.",
     alt: "Web Development",
   },
   {
-    iconSrc: "/images/database.png",
+    iconSrc: "/svg/brain.svg",
     title: "Database & API Design",
     desc: "Architect efficient database schemas with optimized indexing, normalization strategies, and query performance tuning. Build robust RESTful and GraphQL APIs with proper authentication, rate limiting, and scalable backend architectures.",
     alt: "Database & API Design",
   },
   {
-    iconSrc: "/images/ux-design.png",
+    iconSrc: "/svg/compass.svg",
     title: "UX/UI Design",
     desc: "Design end-to-end user experiences from research, personas, and user flows to pixel-perfect interfaces with attention to typography, color theory, and visual hierarchy. Focus on usability testing and iterative improvements.",
     alt: "UX/UI Design",
@@ -54,7 +54,7 @@ export default function ServicesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-2xl bg-zinc-900/20 border border-white/5 backdrop-blur-sm px-8 py-10 min-h-[340px] hover:bg-zinc-900/40 transition-colors duration-300"
+              className="rounded-lg bg-zinc-900/40 border border-white/5 backdrop-blur-sm px-10 py-14 min-h-[420px] transition-all duration-300"
             >
               <div className="mb-6 flex items-center gap-4">
                 <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
@@ -63,8 +63,9 @@ export default function ServicesSection() {
                     alt={s.alt || s.title}
                     width={48}
                     height={48}
-                    className="object-contain"
+                    className="object-contain transition-opacity duration-700 opacity-0"
                     priority={i < 2}
+                    onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
                     style={{
                       filter:
                         "brightness(0) saturate(100%) invert(79%) sepia(27%) saturate(835%) hue-rotate(84deg) brightness(101%) contrast(92%)",
@@ -75,7 +76,7 @@ export default function ServicesSection() {
                   {s.title}
                 </h3>
               </div>
-              
+
               <p className="text-[15px] leading-relaxed text-zinc-400">
                 {s.desc}
               </p>

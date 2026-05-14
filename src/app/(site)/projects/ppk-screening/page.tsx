@@ -50,11 +50,12 @@ export default function PpkScreeningPage() {
             alt="PPK Screening Referral hero"
             width={1800}
             height={1000}
-            className="h-auto w-full transition-opacity duration-500"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
             priority
             // เทคนิคโหลดไว
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
         </div>
 
@@ -144,10 +145,11 @@ export default function PpkScreeningPage() {
             alt="PPK referral summary screen"
             width={2200}
             height={1400}
-            className="h-auto w-full transition-opacity duration-500"
+            className="h-auto w-full transition-opacity duration-700 opacity-0"
             // เทคนิคโหลดไว
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
+            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
           />
         </div>
 
@@ -158,9 +160,8 @@ export default function PpkScreeningPage() {
           items={["Next.js", "React", "TypeScript", "Laravel", "PHP", "MySQL"]}
         />
 
-        {/* Final divider + Conference Info */}
+        {/* Conference Info */}
         <div className="mt-16">
-          <hr className="border-white/10" />
           <div className="mt-4 flex justify-end">
             <p className="text-sm text-zinc-500 italic">
               Presented at <span className="text-zinc-300">AUCC Conference 2026</span>

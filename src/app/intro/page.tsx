@@ -169,9 +169,8 @@ function HoverWaveLabel({
         return (
           <span
             key={index}
-            className={`relative inline-block overflow-hidden h-[1.2em] ${
-              isWideChar ? "w-[1.2em]" : "w-[0.85em]"
-            }`}
+            className={`relative inline-block overflow-hidden h-[1.2em] ${isWideChar ? "w-[1.2em]" : "w-[0.85em]"
+              }`}
           >
             <motion.span
               initial={false}
@@ -242,11 +241,11 @@ export default function IntroWavePage() {
   }, []);
 
   useEffect(() => {
-    const stageTimer = setTimeout(() => setShowStage(true), 2800);
+    const stageTimer = setTimeout(() => setShowStage(true), 1200);
     const contentTimer = setTimeout(() => {
       setShowContent(true);
       setShowLang(false);
-    }, 3800);
+    }, 2200);
 
     return () => {
       clearTimeout(stageTimer);
@@ -708,7 +707,7 @@ export default function IntroWavePage() {
                       { name: "Docker", Icon: SiDocker },
                     ].map(({ name, Icon }) => (
                       <div key={name} className={stackStyles.iconItem}>
-                        <Icon className={stackStyles.iconLg} />
+                        <Icon className={stackStyles.iconLg} color="white" />
                         <span
                           className={`${stackStyles.iconLabel} font-mono-dev`}
                         >
@@ -820,7 +819,7 @@ export default function IntroWavePage() {
                       },
                       {
                         name: "nextjs",
-                        src: "/icons/nextjs.svg",
+                        src: "/next.svg",
                         top: "30%",
                         left: "50%",
                         delay: 0.08,
