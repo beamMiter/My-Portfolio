@@ -11,6 +11,15 @@ type TimelineItem = {
 
 const timeline: TimelineItem[] = [
   {
+    period: "2026",
+    title: "Full Stack Software Development",
+    org: "TechUp Bootcamp",
+    body: [
+      "I joined TechUp, an intensive bootcamp built around full stack software development, to firm up the fundamentals underneath the skills I had picked up on the job. A large part of the early weeks was deliberate review: Big O notation and reasoning about time and space complexity before committing to an approach, object-oriented design and where composition serves better than inheritance, and a broad pass over common algorithms and data structures — worked through by hand and in code until the patterns felt familiar rather than memorised.",
+      "The core of the program was building three full stack web applications end to end, each with its own data model, API layer, and frontend, shipped against real deadlines and put through mentor review. Around the engineering, the camp kept steady weight on the parts of the job that are not code: communicating trade-offs clearly, giving and taking code review, presenting technical decisions to a room, and using technical terms precisely so conversations with other engineers stay short and unambiguous.",
+    ],
+  },
+  {
     period: "2026 – Present",
     title: "Full Stack Developer",
     org: "Phrapokklao Hospital X Technology Group",

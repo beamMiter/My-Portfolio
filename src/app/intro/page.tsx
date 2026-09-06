@@ -14,15 +14,10 @@ import {
   Server,
   ShieldCheck,
   BrainCircuit,
-  Mail,
-  MapPin,
   Clock3,
   MessageCircle,
   FileText,
-  Phone,
   Globe,
-  Github,
-  Linkedin,
 } from "lucide-react";
 import {
   SiReact,
@@ -31,6 +26,8 @@ import {
   SiLaravel,
   SiGo,
   SiNodedotjs,
+  SiExpress,
+  SiSpringboot,
   SiDocker,
   SiPostgresql,
   SiMysql,
@@ -46,18 +43,19 @@ import {
   SiVuedotjs,
   SiJquery,
 } from "react-icons/si";
+import { FaJava } from "react-icons/fa";
 import Marquee from "react-fast-marquee";
 import { ICON_SRC_MAP, IconName } from "@/data/icons";
-import Wave from "react-wavify";
 import { useIntroUI } from "@/components/intro/IntroUIContext";
 
-import IntroCube from "@/components/intro/IntroCube";
+import PortfolioMosaic from "@/components/PortfolioMosaic";
+import IntroLaneReveal from "@/components/intro/IntroLaneReveal";
+import ContributionGrid from "@/components/intro/ContributionGrid";
 
 import heroStyles from "@/styles/intro/hero.module.css";
 import clamStyles from "@/styles/intro/calmSection.module.css";
 import stackStyles from "@/styles/intro/stackSection.module.css";
 import aiStyles from "@/styles/intro/aiSection.module.css";
-import contactStyles from "@/styles/intro/contactSection.module.css";
 
 const liter = Liter({
   subsets: ["latin"],
@@ -84,6 +82,19 @@ const inter = localFont({
 
 const TITLES = ["Developer", "Full-stack Developer", "Software Engineer"];
 const SWITCH_MS = 6500;
+
+/**
+ * One text-entrance pattern for sections 2–4: a quiet rise + fade, played
+ * once (no reverse, so nothing flickers when the reader stops mid-section).
+ * Each wrapper adds its own `transition` — same ease, a small `delay` to
+ * stagger the blocks within a section so it reads one beat at a time.
+ */
+const REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
+const revealUp = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.3 },
+} as const;
 
 function VerticalTicker({
   items = TITLES,
@@ -204,31 +215,8 @@ function HoverWaveLabel({
   );
 }
 
-function RevealLine({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 22 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-      className="relative block w-full align-top"
-    >
-      <motion.div
-        className="pointer-events-none absolute inset-0 bg-zinc-950"
-        initial={{ x: "0%" }}
-        animate={{ x: "103%" }}
-        transition={{ delay, duration: 0.9, ease: [0.65, 0, 0.35, 1] }}
-        style={{ transformOrigin: "left" }}
-      />
-      <span className="relative block w-full">{children}</span>
-    </motion.div>
-  );
-}
-
 export default function IntroWavePage() {
   const router = useRouter();
-  const [loaded, setLoaded] = useState(false);
-  const [showStage, setShowStage] = useState(false);
-  const [showContent, setShowContent] = useState(false);
   const [btnHovered, setBtnHovered] = useState(false);
   const [compactCTA, setCompactCTA] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
@@ -236,21 +224,7 @@ export default function IntroWavePage() {
   const { setShowLang } = useIntroUI();
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 30);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    const stageTimer = setTimeout(() => setShowStage(true), 1200);
-    const contentTimer = setTimeout(() => {
-      setShowContent(true);
-      setShowLang(false);
-    }, 2200);
-
-    return () => {
-      clearTimeout(stageTimer);
-      clearTimeout(contentTimer);
-    };
+    setShowLang(false);
   }, [setShowLang]);
 
   useEffect(() => {
@@ -274,19 +248,19 @@ export default function IntroWavePage() {
 
   return (
     <main
-      className={`bg-[#0b0b0b] min-h-screen text-zinc-50 ${heroStyles.root}`}
+      className={`bg-[#09090b] min-h-screen text-zinc-50 ${heroStyles.root}`}
       style={{ touchAction: "pan-y" }}
     >
-      <div
-        className={`${heroStyles.heroWrap} ${loaded ? "opacity-100" : "opacity-0"}`}
-      >
-        <div className={heroStyles.heroBg} />
+      <div className={heroStyles.heroWrap}>
+        <div className="absolute inset-0 z-0 bg-[var(--dev-ground)]" />
 
+        {/* second layer — the white stage slides in from the left once the
+            dark curtain has landed, then the grid shows on top of it */}
         <motion.div
-          className={heroStyles.heroBlob}
-          initial={{ y: "80%" }}
-          animate={{ y: "-10%" }}
-          transition={{ duration: 4.5, ease: [0.25, 1, 0.28, 1] }}
+          className={heroStyles.heroDome}
+          initial={{ x: "-100%", y: "-50%" }}
+          animate={{ x: "0%", y: "-50%" }}
+          transition={{ duration: 0.7, ease: [0.8, 0, 0.2, 1], delay: 0.8 }}
         />
 
         <div className={`${heroStyles.linesRow} ${heroStyles.lineRow}`}>
@@ -300,130 +274,110 @@ export default function IntroWavePage() {
           </div>
         </div>
 
-        {showStage && (
-          <motion.div
-            className={heroStyles.stagePanel}
-            initial={{ x: "110%" }}
-            animate={{ x: "0%" }}
-            transition={{ duration: 1.1, ease: [0.8, 0, 0.2, 1] }}
-          />
-        )}
+        {/* the curtain — dark stage panel pulled across from the right on load */}
+        <motion.div
+          className={heroStyles.stagePanel}
+          initial={{ x: "110%" }}
+          animate={{ x: "0%" }}
+          transition={{ duration: 1.1, ease: [0.8, 0, 0.2, 1] }}
+        />
 
-        {showContent && (
-          <div className={heroStyles.contentShell}>
+        <div className={heroStyles.contentShell}>
+          <IntroLaneReveal>
             <div className={heroStyles.contentContainer}>
               <div className={heroStyles.leftCol}>
-                <motion.div
-                  initial={{
-                    scale: 0.06,
-                    opacity: 0,
-                    rotateZ: 0,
-                    x: 0,
-                  }}
-                  animate={{
-                    scale: 0.9,
-                    opacity: 1,
-                    rotateZ: 360,
-                    x: "var(--cube-x)",
-                  }}
-                  transition={{
-                    delay: 0.55,
-                    duration: 1.4,
-                    ease: [0.18, 0.9, 0.2, 1],
-                  }}
-                  className={heroStyles.cubeWrap}
-                >
-                  <motion.div
-                    animate={{ rotateZ: 360 }}
-                    transition={{
-                      repeat: Infinity,
-                      repeatType: "loop",
-                      duration: 26,
-                      ease: "linear",
-                    }}
-                    style={{ display: "inline-block" }}
+                <div data-grid>
+                  <div
+                    className={heroStyles.cubeWrap}
+                    style={{ transform: "translateX(var(--cube-x))" }}
                   >
-                    <IntroCube />
-                  </motion.div>
-                </motion.div>
+                    {/* /test mosaic, shrunk down to replace the old Rubik cube */}
+                    <div
+                      className="w-full md:w-auto md:shrink-0"
+                      style={{ zoom: 0.9 } as React.CSSProperties}
+                    >
+                      <div className="w-full md:w-[672px]">
+                        <PortfolioMosaic embedded />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className={`${heroStyles.rightCol} ${heroStyles.fontSans}`}>
                 <div className="subpixel-antialiased transform-gpu">
-                  <RevealLine delay={0.35}>
-                    <div className="relative flex flex-col items-start justify-start mb-6 w-full">
-                      <span className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase">
-                        Developer & Web Developer
+                  <div className="relative flex flex-col items-start justify-start mb-6 w-full">
+                    <span
+                      data-stagger-row
+                      className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase"
+                    >
+                      Full-Stack Software & Mobile Dev
+                    </span>
+                    <h1
+                      className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight w-full`}
+                    >
+                      <span
+                        data-stagger-row
+                        className="text-white tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold"
+                      >
+                        Hello<span className={liter.className}>,</span> I
+                        <span className={liter.className}>
+                          {String.fromCharCode(8217)}
+                        </span>
+                        m
                       </span>
-                      <h1
-                        className={`${heroStyles.heroTitle} ${heroStyles.headline} font-sans flex flex-col leading-tight w-full`}
+                      <span
+                        data-stagger-row
+                        style={{ color: "var(--dev-accent)" }}
+                        className="mt-1 tracking-wide text-4xl sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl font-bold w-full"
                       >
-                        <span className="text-white tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-                          Hello<span className={liter.className}>,</span> I
-                          <span className={liter.className}>
-                            {String.fromCharCode(8217)}
-                          </span>
-                          m
-                        </span>
-                        <span
-                          style={{ color: "var(--dev-accent)" }}
-                          className="mt-1 tracking-wide text-4xl sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl font-bold w-full"
-                        >
-                          Techin Jetsribumrung
-                        </span>
-                      </h1>
-                    </div>
-                  </RevealLine>
-
-                  <div className={heroStyles.paragraphGroup}>
-                    <RevealLine delay={0.7}>
-                      <p
-                        className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}
-                      >
-                        Designing high-performance internal platforms and
-                        mission-critical software for hospitals and enterprise
-                        organizations is where I focus my expertise in
-                        reliability and security.
-                      </p>
-                    </RevealLine>
-                    <RevealLine delay={1.0}>
-                      <p
-                        className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}
-                      >
-                        My commitment lies in eliminating operational complexity
-                        through intelligent automation and stable full-stack
-                        architecture to ensure that your technical foundation
-                        supports sustainable growth.
-                      </p>
-                    </RevealLine>
-                    <RevealLine delay={1.3}>
-                      <p
-                        className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}
-                      >
-                        Each project is driven by the goal of delivering
-                        measurable business impact by transforming complex
-                        technology into a strategic advantage that empowers
-                        teams and streamlines core workflows.
-                      </p>
-                    </RevealLine>
+                        Techin Jetsribumrung
+                      </span>
+                    </h1>
                   </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.15, duration: 0.8, ease: "easeOut" }}
-                    className={heroStyles.ctaWrap}
+                  <div className="mt-6 grid max-w-2xl gap-4 md:mt-8">
+                    <p
+                      data-stagger-row
+                      className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}
+                    >
+                      Nobody picks the software they use at work — it gets{" "}
+                      <span className="text-zinc-100 font-medium">
+                        handed to them
+                      </span>
+                      . I build that kind: the{" "}
+                      <span className="text-zinc-100 font-medium">
+                        internal systems a team runs on every day
+                      </span>
+                      .
+                    </p>
+                  </div>
+
+                  <div
+                    data-stagger-row
+                    data-contrib
+                    className={heroStyles.contribSlot}
+                  >
+                    <ContributionGrid />
+                  </div>
+
+                  <div
+                    data-fade-up
+                    className="relative z-50 mt-8 w-full md:mt-12"
                   >
                     <div className={heroStyles.ctaDesktop}>
                       <button
                         type="button"
-                        className="select-none cursor-pointer hover:opacity-80 transition-opacity duration-300 flex items-center bg-transparent p-0 border-0"
+                        className="select-none cursor-pointer flex items-center bg-transparent p-0 border-0"
                         onMouseEnter={() => setBtnHovered(true)}
                         onMouseLeave={() => setBtnHovered(false)}
                         onClick={() => router.push("/home")}
                         data-cursor="link"
                       >
-                        <span className={heroStyles.hoverLabelScale}>
+                        <span
+                          data-split-in
+                          className={heroStyles.hoverLabelScale}
+                        >
                           <HoverWaveLabel
                             hovered={btnHovered}
                             isTablet={isTablet}
@@ -437,6 +391,7 @@ export default function IntroWavePage() {
                         onHoverStart={() => setBtnHovered(true)}
                         onHoverEnd={() => setBtnHovered(false)}
                         className={heroStyles.circleBtn}
+                        data-cta-icon
                         data-cursor="link"
                         style={{ overflow: "hidden", position: "relative" }}
                       >
@@ -485,21 +440,19 @@ export default function IntroWavePage() {
                         <ArrowUpRight className="w-5 h-5" />
                       </span>
                     </button>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          </IntroLaneReveal>
+        </div>
       </div>
 
       <section className={clamStyles.section}>
         <div className={clamStyles.inner}>
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.45 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            {...revealUp}
+            transition={{ duration: 0.7, ease: REVEAL_EASE }}
             className={clamStyles.head}
           >
             <div className={`${clamStyles.kickerRow} font-mono-dev`}>
@@ -519,25 +472,26 @@ export default function IntroWavePage() {
 
           <div className={clamStyles.grid}>
             <motion.div
-              initial={{ opacity: 0, x: -60, y: 20 }}
-              whileInView={{ opacity: 1, x: 0, y: 0 }}
-              viewport={{ once: false, amount: 0.4 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              {...revealUp}
+              transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.08 }}
               className={clamStyles.leftText}
             >
               <p className={clamStyles.p1}>
-                I build{" "}
+                Hospitals don&apos;t get to have a bad day. When a queue
+                system stalls or a referral form breaks, someone&apos;s care
+                gets delayed—so the{" "}
                 <span className={clamStyles.accentText}>internal software</span>{" "}
-                that teams use every day—clear UI, reliable APIs, and features
-                designed around real workflows.
+                behind it has to be boring in the best way: predictable,
+                legible, and always there.
               </p>
 
               <p className={clamStyles.p2}>
-                Many of my projects are for hospitals and government
-                units—dashboards, queue systems, referrals, and data-driven
-                tools that must remain{" "}
+                That&apos;s the world I build in—dashboards, queue systems,
+                referrals, and reporting tools that a nurse or an officer can
+                trust without thinking twice, because the moment they have to
+                think about the software, it&apos;s already failed them.{" "}
                 <span className={clamStyles.p2Strong}>
-                  stable and easy to maintain.
+                  Stable and easy to maintain isn&apos;t optional here.
                 </span>
               </p>
 
@@ -547,18 +501,17 @@ export default function IntroWavePage() {
                     CURRENT WORK
                   </p>
                   <p className={clamStyles.focusText}>
-                    Hospital internal systems: asset repair, referral flows,
-                    reporting dashboards, and workflow improvements.
+                    Asset repair systems, referral flows, and reporting
+                    dashboards for hospital teams who need fewer clicks, not
+                    more features.
                   </p>
                 </div>
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 70 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.5 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              {...revealUp}
+              transition={{ duration: 0.8, ease: REVEAL_EASE, delay: 0.12 }}
               className={clamStyles.midWrap}
             >
               <div className={clamStyles.card}>
@@ -612,17 +565,15 @@ export default function IntroWavePage() {
                   className={clamStyles.cardWipe}
                   initial={{ x: "0%" }}
                   whileInView={{ x: "105%" }}
-                  viewport={{ once: false, amount: 0.55 }}
+                  viewport={{ once: true, amount: 0.55 }}
                   transition={{ duration: 1.05, ease: [0.65, 0, 0.35, 1] }}
                 />
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 60, y: 20 }}
-              whileInView={{ opacity: 1, x: 0, y: 0 }}
-              viewport={{ once: false, amount: 0.4 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              {...revealUp}
+              transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.16 }}
               className={clamStyles.rightCol}
             >
               <div className={clamStyles.availBlock}>
@@ -630,8 +581,8 @@ export default function IntroWavePage() {
                   AVAILABLE
                 </p>
                 <p className={clamStyles.availText}>
-                  Open to software development work—web apps, internal tools,
-                  and systems that improve daily operations.
+                  Open to work like this—internal tools and systems where
+                  reliability matters more than novelty.
                 </p>
               </div>
 
@@ -643,8 +594,8 @@ export default function IntroWavePage() {
                   2025 — 2026
                 </p>
                 <p className={clamStyles.periodNote}>
-                  Based in Chanthaburi, Thailand — building systems that fit
-                  existing workflows and support real teams.
+                  Based in Chanthaburi, Thailand—building for teams who just
+                  need their tools to work.
                 </p>
               </div>
             </motion.div>
@@ -657,10 +608,8 @@ export default function IntroWavePage() {
 
         <div className={stackStyles.inner}>
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            {...revealUp}
+            transition={{ duration: 0.7, ease: REVEAL_EASE }}
           >
             <div className={`${stackStyles.topRow} font-mono-dev`}>
               <span className={stackStyles.topLeft}>
@@ -679,14 +628,14 @@ export default function IntroWavePage() {
                     DAILY TOOLING · HOW I PICK MY STACK
                   </p>
                   <p className={stackStyles.leadText}>
-                    I prefer a small, well–understood stack over chasing every
-                    new framework. These are the tools I actually reach for when
-                    building{" "}
+                    Software that has to run quietly for years can&apos;t be
+                    built on whatever&apos;s trending this month. I pick tools
+                    the same way I build the systems themselves—for what
+                    holds up, not what&apos;s new—reaching for{" "}
                     <span className={stackStyles.accentText}>
                       long–lived internal systems
                     </span>{" "}
-                    — things that have to survive years of change, not just a
-                    demo.
+                    that have to survive years of change, not just a demo.
                   </p>
                 </div>
 
@@ -718,19 +667,22 @@ export default function IntroWavePage() {
                   </div>
 
                   <p className={stackStyles.blockNote}>
-                    This is where I spend most of my time — frontend, APIs, and
-                    long–running internal web apps.
+                    The stack I actually open every morning—frontend, APIs,
+                    and the internal apps that have to keep running.
                   </p>
                 </div>
 
                 {/* BACKEND & DATA */}
                 <div className={stackStyles.block}>
                   <p className={`${stackStyles.blockTitle} font-mono-dev`}>
-                    BACKEND & DATA
+                    BACKEND & DATA BASE
                   </p>
 
                   <div className={stackStyles.iconRow}>
                     {[
+                      { name: "Java", Icon: FaJava },
+                      { name: "Spring Boot", Icon: SiSpringboot },
+                      { name: "Express", Icon: SiExpress },
                       { name: "PostgreSQL", Icon: SiPostgresql },
                       { name: "MySQL", Icon: SiMysql },
                       { name: "MongoDB", Icon: SiMongodb },
@@ -747,8 +699,9 @@ export default function IntroWavePage() {
                   </div>
 
                   <p className={stackStyles.blockNote}>
-                    Picked for stability first: easy backups, boring migrations,
-                    and good tooling on Linux servers.
+                    Node with Express for most services, Java and Spring Boot
+                    where a project calls for it—on databases picked for
+                    stability first: easy backups, boring migrations.
                   </p>
                 </div>
 
@@ -776,8 +729,8 @@ export default function IntroWavePage() {
                   </div>
 
                   <p className={stackStyles.blockNote}>
-                    Not the main stack, but useful when a project needs mobile,
-                    legacy integration, or a specific frontend style.
+                    Brought in when a project needs mobile reach, legacy
+                    integration, or has to speak to something already built.
                   </p>
                 </div>
               </div>
@@ -785,14 +738,8 @@ export default function IntroWavePage() {
               {/* RIGHT COLUMN */}
               <motion.div
                 className={stackStyles.rightCol}
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: false, amount: 0.4 }}
-                transition={{
-                  duration: 0.7,
-                  ease: [0.22, 1, 0.36, 1],
-                  delay: 0.05,
-                }}
+                {...revealUp}
+                transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.1 }}
               >
                 <div className={stackStyles.rightHead}>
                   <h2 className={`${stackStyles.rightTitle} font-heading-dev`}>
@@ -973,7 +920,7 @@ export default function IntroWavePage() {
                               ease: [0.22, 1, 0.36, 1],
                             },
                           }}
-                          viewport={{ once: false, amount: 0.4 }}
+                          viewport={{ once: true, amount: 0.4 }}
                           animate={{
                             y: [0, -6, 0],
                             x: [0, idx % 2 === 0 ? 4 : -4, 0],
@@ -1008,245 +955,88 @@ export default function IntroWavePage() {
 
         <div className={aiStyles.inner}>
           <div className={aiStyles.grid}>
-            {/* LEFT */}
+            {/* LEFT — the framing */}
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.4 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              {...revealUp}
+              transition={{ duration: 0.7, ease: REVEAL_EASE }}
               className={aiStyles.leftCol}
             >
               <div className={`${aiStyles.kicker} font-mono-dev`}>
-                AI · TOOLCHAIN · DAILY USE
+                PROCESS · HOW A BUILD GOES
               </div>
 
               <h2 className={`${aiStyles.title} font-heading-dev`}>
-                <span className={aiStyles.titleBlock}>
-                  HOW I{" "}
-                  <span className={aiStyles.accentText}>USE MULTIPLE AI</span>
+                FROM A VAGUE ASK{" "}
+                <span className={aiStyles.accentText}>
+                  TO A RUNNING SYSTEM
                 </span>
               </h2>
 
               <p className={aiStyles.desc}>
-                Each model in this stack plays a different role. I don&apos;t
-                treat AI as one big tool — I use them as specialists. Some focus
-                on code, some on reasoning, some on backend logic, and some on
-                polishing or refactoring existing work.
+                The brief is usually one sentence and a screenshot of a
+                spreadsheet. The work is turning that into something a team
+                logs into every morning without thinking about it. Same four
+                steps every time.
               </p>
-
-              <div className={aiStyles.aiList}>
-                {[
-                  {
-                    name: "ChatGPT",
-                    role: "Coding · Ideas · System Guidance",
-                    image: "/images/ai/Chatgpt.png",
-                    desc: "Main assistant for system design, generating backend/frontend code, technical brainstorming, and refining UI/UX copy.",
-                    needsInvert: true,
-                  },
-                  {
-                    name: "Gemini",
-                    role: "Logic · Math · Structured Thinking",
-                    image: "/images/ai/Gemini.png",
-                    desc: "Great when a problem needs strict step-by-step reasoning, mathematics, algorithms, or validating complex data flows.",
-                    needsInvert: false,
-                  },
-                  {
-                    name: "Claude",
-                    role: "Long-form Coding · Refactoring",
-                    image: "/images/ai/Claude.png",
-                    desc: "Best for large files and deep refactors: controllers, service layers, and long pieces of structured, maintainable code.",
-                    needsInvert: false,
-                  },
-                  {
-                    name: "Deepseek",
-                    role: "Backend · Logic · Statistics",
-                    image: "/images/ai/Deepseek.png",
-                    desc: "Backend-oriented work: query design, Go/Laravel optimization, and statistical reasoning.",
-                    needsInvert: false,
-                  },
-                  {
-                    name: "GitCopilot",
-                    role: "Inline Fixes · Refactor · Optimize",
-                    image: "/images/ai/Gitcopilot.png",
-                    desc: "Lives inside the editor: autocomplete, small fixes, refactors, and clean-up.",
-                    needsInvert: true,
-                  },
-                ].map((ai) => (
-                  <div key={ai.name} className={aiStyles.aiItem}>
-                    <img
-                      src={ai.image}
-                      alt={ai.name}
-                      className={aiStyles.aiImage}
-                      style={
-                        ai.needsInvert
-                          ? { filter: "brightness(0) invert(1)" }
-                          : {}
-                      }
-                    />
-
-                    <div className={aiStyles.aiContent}>
-                      <div className={aiStyles.aiHead}>
-                        <span className={aiStyles.aiName}>{ai.name}</span>
-                        <span className={`${aiStyles.aiRole} font-mono-dev`}>
-                          {ai.role}
-                        </span>
-                      </div>
-                      <p className={aiStyles.aiDesc}>{ai.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </motion.div>
 
-            {/* RIGHT */}
+            {/* RIGHT — the steps */}
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.4 }}
-              transition={{
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1],
-                delay: 0.05,
-              }}
+              {...revealUp}
+              transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.12 }}
               className={aiStyles.rightCol}
             >
               <div className={aiStyles.rightInner}>
-                {/* Section 1: Focus on Web Dev Workflow */}
                 <div className={aiStyles.block}>
                   <p className={`${aiStyles.blockTitle} font-mono-dev`}>
-                    AI-DRIVEN WEB DEVELOPMENT
+                    <span className={aiStyles.accentText}>01</span> UNDERSTAND
+                    THE REAL WORKFLOW
                   </p>
                   <p className={aiStyles.blockText}>
-                    In building modern web applications, I treat AI as a core
-                    development partner. From architecting complex system
-                    structures to writing scalable clean code, integrating AI
-                    allows me to accelerate the delivery of robust full-stack
-                    solutions while maintaining high engineering standards.
+                    Before any code, I sit with the people who&apos;ll use it
+                    and watch what they actually do—the workarounds, the
+                    double entry, the step everyone dreads. That&apos;s the
+                    spec, not the sentence I was handed.
                   </p>
                 </div>
 
-                {/* Section 2: Learning & Methodology (Replaced bullets with prose) */}
-                <div className={aiStyles.block}>
-                  <p className={`${aiStyles.cardTitle} font-mono-dev`}>
-                    LEARNING & COLLABORATION
-                  </p>
-                  <p className={aiStyles.blockText}>
-                    Beyond just code generation, I leverage AI to deconstruct
-                    new technologies and compare industry best practices. This
-                    collaborative approach focuses on understanding the
-                    &quot;why&quot; behind the logic, ensuring a
-                    human-in-the-loop process where AI offloads routine tasks
-                    and deepens my technical reasoning.
-                  </p>
-                </div>
-
-                {/* Section 3: Tool Specifics */}
                 <div className={aiStyles.block}>
                   <p className={`${aiStyles.blockTitle} font-mono-dev`}>
-                    MULTI-MODEL STRATEGY
+                    <span className={aiStyles.accentText}>02</span> PICK BORING,
+                    PROVEN TECH
                   </p>
                   <p className={aiStyles.blockText}>
-                    My workflow involves a strategic mix of models: ChatGPT for
-                    high-level architecture and database schema design, Gemini
-                    and Deepseek for backend logic and complex debugging, and
-                    Claude for long-form refactoring and polishing code
-                    readability.
+                    Postgres, a plain server, a framework I&apos;ve shipped
+                    before. Easy backups and dull migrations matter more than
+                    novelty on a system people depend on all day.
                   </p>
                 </div>
 
-                {/* Section 4: The Impact */}
                 <div className={aiStyles.block}>
-                  <p className={`${aiStyles.highlightTitle} font-mono-dev`}>
-                    WHY MULTI-AI WORKS BETTER
+                  <p className={`${aiStyles.blockTitle} font-mono-dev`}>
+                    <span className={aiStyles.accentText}>03</span> SHIP IN THIN
+                    SLICES
                   </p>
                   <p className={aiStyles.blockText}>
-                    No single model is a silver bullet. By combining different
-                    AI strengths, I achieve stronger logic, fewer mistakes, and
-                    significantly faster iteration cycles. This method empowers
-                    me to stay at the forefront of the ever-evolving web
-                    development landscape.
+                    One real workflow at a time, in front of users within a
+                    week or two. Feedback on something running beats feedback
+                    on a mockup.
+                  </p>
+                </div>
+
+                <div className={aiStyles.block}>
+                  <p className={`${aiStyles.blockTitle} font-mono-dev`}>
+                    <span className={aiStyles.accentText}>04</span> LEAVE IT
+                    MAINTAINABLE
+                  </p>
+                  <p className={aiStyles.blockText}>
+                    Readable code, decisions written down, and a handover so
+                    the next person—or me in six months—isn&apos;t
+                    reverse-engineering it.
                   </p>
                 </div>
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className={contactStyles.section}>
-        <div className={contactStyles.inner}>
-          {/* HEADER */}
-          <div className={contactStyles.header}>
-            <p className={`${contactStyles.kicker} font-mono-dev`}>CONTACT</p>
-
-            <h2 className={`${contactStyles.title} font-heading-dev`}>
-              Get in touch
-            </h2>
-
-            <p className={contactStyles.desc}>
-              If you are building custom internal systems, management tools, or
-              scalable operational platforms and need end-to-end implementation,
-              feel free to reach out.
-            </p>
-          </div>
-
-          {/* CONTACT GRID */}
-          <div className={contactStyles.grid}>
-            <div className={contactStyles.contactItem}>
-              <Mail className={contactStyles.icon} />
-              <div>
-                <p className={`${contactStyles.label} font-mono-dev`}>Email</p>
-                <p className={contactStyles.value}>
-                  jetsribumrungtechin@gmail.com
-                </p>
-              </div>
-            </div>
-
-            <div className={contactStyles.contactItem}>
-              <Phone className={contactStyles.icon} />
-              <div>
-                <p className={`${contactStyles.label} font-mono-dev`}>Phone</p>
-                <p className={contactStyles.value}>(+66) 095-9611-859</p>
-              </div>
-            </div>
-
-            <div className={contactStyles.contactItem}>
-              <MapPin className={contactStyles.icon} />
-              <div>
-                <p className={`${contactStyles.label} font-mono-dev`}>
-                  Location
-                </p>
-                <p className={contactStyles.value}>Chanthaburi, Thailand</p>
-              </div>
-            </div>
-          </div>
-
-          {/* LINKS */}
-          <div className={contactStyles.linksWrap}>
-            <p className={`${contactStyles.linksTitle} font-mono-dev`}>Links</p>
-
-            <div className={contactStyles.linksRow}>
-              <a
-                href="https://github.com/iMookatayou"
-                className={contactStyles.linkItem}
-              >
-                <Github className={contactStyles.linkIcon} />
-                GitHub
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/techin-jetsribumrung-9a4069364/"
-                className={contactStyles.linkItem}
-              >
-                <Linkedin className={contactStyles.linkIcon} />
-                LinkedIn
-              </a>
-            </div>
-          </div>
-
-          {/* FOOTER */}
-          <div className={`${contactStyles.footer} font-mono-dev`}>
-            © {new Date().getFullYear()} Techin Jetsribumrung
           </div>
         </div>
       </section>

@@ -6,6 +6,9 @@
   --font-mono-dev: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
   --dev-accent: #3edc8a;
+  /* one ground for the whole page — hero, curtain and every section below.
+     lives here on .root (the <main>), so it cascades to the section modules. */
+  --dev-ground: rgb(9 9 11);
 }
 
 .fontSans { font-family: var(--font-sans-dev); }
@@ -23,71 +26,65 @@
 
 .heroWrap {
   position: relative;
+  /* dark run below the content so the stage's bottom arc clears the hero and
+     shows in full, instead of section 2 slicing it flat. the stage is 130vh
+     centred on 50vh, so its bottom sits at 115vh — the tail carries the hero
+     past that. .heroBg / .stagePanel span the padding box, so it stays dark. */
+  --hero-tail: 20vh;
   min-height: 100vh;
   min-height: 100dvh;
+  padding-bottom: var(--hero-tail);
   overflow: hidden;
-  transition: opacity 0.5s;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
 }
 
-.heroBg {
-  position: absolute;
-  inset: 0;
-  background: #000;
-  z-index: 0;
-}
+/* the white stage: a half circle entering from the left edge — flat side
+   flush with the viewport, arc bulging right so the mosaic sits inside it.
 
-.heroBlob {
+   sized in vh on both axes (width = height / 2) so it stays a true half circle
+   instead of stretching with the viewport width.
+
+   centred on 50vh — the content's own centre line — not on 50% of .heroWrap,
+   which now includes the dark tail and would drag the stage down with it.
+
+   z-index sits ABOVE .stagePanel (30): the dark curtain is the first layer in,
+   the white stage lands on top of it. below 30 the arc slid under the curtain
+   and the curve got eaten, reading as a straight edge. content stays at 40.
+   the transform is owned by framer-motion so it can slide in — none here. */
+.heroDome {
   position: absolute;
   pointer-events: none;
-  inset-inline: -20%;
-  bottom: -45%;
-  height: 170%;
+  left: 0;
+  top: 50vh;
+  top: 50dvh;
+  /* width tracks the mosaic column's right edge — the centred container's left
+     gutter ((100vw - 72rem)/2, floored at 0) plus roughly the padding + left
+     column. it used to be 65vh, which has no relation to the layout: on a tall
+     or wide screen the arc bulged past the column and over the right-hand body
+     copy, and the light text sitting on the white dome read as white-on-white
+     (first letters of lines vanished). height stays 130vh so the bottom arc
+     still clears into the dark tail and section 2 doesn't move. */
+  width: calc(max(0px, (100vw - 72rem) / 2) + 36rem);
+  height: 130vh;
   background: #ffffff;
-  z-index: 10;
-  border-top-left-radius: 55% 45%;
-  border-top-right-radius: 55% 45%;
+  z-index: 35;
+  border-radius: 0 100% 100% 0 / 0 50% 50% 0;
   will-change: transform;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-@media screen and (max-width: 430px) {
-  .heroBlob {
-    inset-inline: -80%;
-    bottom: -15%;
-    height: 175%;
-    border-top-left-radius: 50% 30%;
-    border-top-right-radius: 50% 30%;
-  }
-}
-
-@media screen and (min-width: 431px) and (max-width: 768px) {
-  .heroBlob {
-    inset-inline: -40%;
-    bottom: -20%;
-    height: 170%;
-    border-top-left-radius: 50% 35%;
-    border-top-right-radius: 50% 35%;
-  }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1400px) {
-  .heroBlob {
-    inset-inline: -10%;
-    bottom: -40%;
-    height: 165%;
-    border-top-left-radius: 55% 45%;
-    border-top-right-radius: 55% 45%;
-  }
 }
 
 .linesRow {
   position: absolute;
   pointer-events: none;
   inset-inline: 0;
-  bottom: 14%;
+  /* fixed offset, not a %. at bottom:14% this row rode UP into the centred
+     mosaic on shorter viewports, and its faint dashes (z-index 20, above the
+     white blob but below the content) showed through the gaps between the
+     mosaic cards — reading as the cards being "sliced". a fixed distance from
+     the bottom edge keeps it clear of the content on any viewport height.
+     the tail offset keeps it measured from the content's bottom edge rather
+     than from the bottom of the dark tail. */
+  bottom: calc(var(--hero-tail, 0px) + 2.5rem);
   padding-inline: 2.5rem;
   z-index: 20;
 }
@@ -102,20 +99,26 @@
   inset-block: 0;
   right: 0;
   width: 100%;
-  background: rgb(9 9 11);
+  background: var(--dev-ground, rgb(9 9 11));
   z-index: 30;
   transform-origin: right;
   will-change: transform;
 }
 
 @media screen and (min-width: 768px) {
-  .stagePanel { width: 62%; }
+  .stagePanel { width: 56%; }
+}
+
+@media screen and (min-width: 1401px) {
+  .stagePanel { width: 53%; }
 }
 
 .contentShell {
   position: relative;
   z-index: 40;
   display: flex;
+  /* stays one viewport: the stage grows independently of this, so the hero
+     never gets longer and section 2 keeps its place */
   min-height: 100vh;
   min-height: 100dvh;
   align-items: center;
@@ -159,7 +162,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1400px) {
   .leftCol {
-    width: 35%;
+    width: 46%;
     justify-content: center;
     padding-right: 0;
   }
@@ -167,7 +170,7 @@
 
 @media screen and (min-width: 1401px) {
   .leftCol {
-    width: 38%;
+    width: 48%;
     justify-content: flex-start;
     padding-right: 1rem;
   }
@@ -181,15 +184,29 @@
   transform: translateZ(0);
 }
 
+/* below the two-column split the mosaic fills its column instead of a fixed 672px */
+@media screen and (max-width: 767px) {
+  .cubeWrap {
+    display: block;
+    width: 100%;
+  }
+
+  /* stacked content already runs well past one viewport, so the tail only has
+     to keep the arc off the section seam — not carve out a whole dead band */
+  .heroWrap {
+    --hero-tail: 8vh;
+  }
+}
+
 @media screen and (min-width: 768px) and (max-width: 1400px) {
   .cubeWrap {
-    --cube-x: -20px;
+    --cube-x: -64px;
   }
 }
 
 @media screen and (min-width: 1401px) {
   .cubeWrap {
-    --cube-x: -150px;
+    --cube-x: -180px;
   }
 }
 
@@ -264,17 +281,6 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-.paragraphGroup {
-  margin-top: 1.5rem;
-  max-width: 42rem;
-  display: grid;
-  gap: 1rem;
-}
-
-@media screen and (min-width: 768px) {
-  .paragraphGroup { margin-top: 2rem; }
-}
-
 .pText {
   font-size: 15px;
   line-height: 1.75;
@@ -284,16 +290,32 @@
 @media screen and (min-width: 768px) { .pText { font-size: 16px; } }
 @media screen and (min-width: 1024px) { .pText { font-size: 17px; } }
 
-.ctaWrap {
-  margin-top: 2rem;
-  width: 100%;
-  position: relative;
-  z-index: 50;
-  box-sizing: border-box;
+/* holds the contribution grid under the deck, and lets it run PAST the column
+   out to the viewport's right edge.
+
+   .contentContainer is centred with a 72rem cap, so the gap between this
+   column's right edge and the screen edge is the container's own padding plus
+   half of whatever the viewport has beyond 72rem — hence the max(): below
+   72rem there is no overflow to reclaim, only the padding.
+
+   the negative margin only widens this child; .rightCol's own width is
+   untouched, so the two-column split doesn't move. .heroWrap is
+   overflow:hidden, so none of this can produce a horizontal scrollbar. */
+.contribSlot {
+  --gutter: 1.25rem;
+  margin-top: 1.75rem;
+  margin-right: calc(-1 * (var(--gutter) + max(0px, 50vw - 36rem)));
 }
 
 @media screen and (min-width: 768px) {
-  .ctaWrap { margin-top: 3rem; }
+  .contribSlot {
+    --gutter: 2rem;
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .contribSlot { --gutter: 2.5rem; }
 }
 
 .ctaDesktop {
