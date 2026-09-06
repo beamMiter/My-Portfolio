@@ -1,0 +1,64 @@
+/* src/styles/intro/contribGrid.module.css
+   github-contribution-style square grid, sized to sit under the hero deck */
+
+.grid {
+  display: grid;
+  /* rows are the 7 days; cells fill DOWN each column then move right, the way
+     a contribution calendar reads. both templates are set so auto-flow:column
+     lands every cell in a fixed 7 x --weeks box rather than an implicit one. */
+  grid-template-columns: repeat(var(--weeks, 40), 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  gap: 2px;
+  /* fills whatever .contribSlot gives it — which reaches past the column and
+     out toward the viewport edge — but stops at a width that keeps the squares
+     at ~10px. without the cap the cells grow with the screen, so a wide
+     monitor turned them into chunky blocks.
+     43rem = 53 cells at 10px + 52 gaps at 3px. below that width it degrades
+     gracefully: cells just get smaller rather than being clipped. */
+  width: 100%;
+  max-width: 43rem;
+}
+
+@media screen and (min-width: 768px) {
+  /* larger cells want a proportionally larger gap or the grid reads as a slab */
+  .grid { gap: 3px; }
+}
+
+.cell {
+  /* square cells that scale with the container instead of a fixed px size */
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.055);
+  /* the real levels are applied a beat after the reveal clears; ease the
+     colour in rather than letting it snap */
+  transition: background-color 600ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+}
+
+/* accent at four strengths. the rgba literal is #3edc8a spelled out as a
+   fallback; color-mix keeps the ramp tied to the token where it's supported. */
+.cell[data-level="1"] {
+  background: rgba(62, 220, 138, 0.22);
+  background: color-mix(in srgb, var(--dev-accent, #3edc8a) 22%, transparent);
+}
+
+.cell[data-level="2"] {
+  background: rgba(62, 220, 138, 0.42);
+  background: color-mix(in srgb, var(--dev-accent, #3edc8a) 42%, transparent);
+}
+
+.cell[data-level="3"] {
+  background: rgba(62, 220, 138, 0.66);
+  background: color-mix(in srgb, var(--dev-accent, #3edc8a) 66%, transparent);
+}
+
+.cell[data-level="4"] {
+  background: rgba(62, 220, 138, 0.92);
+  background: color-mix(in srgb, var(--dev-accent, #3edc8a) 92%, transparent);
+}

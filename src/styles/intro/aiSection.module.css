@@ -1,24 +1,31 @@
 /* src/styles/intro/aiSection.module.css */
 
+/* no divider — last chapter. a bit of trailing scroll room so the last
+   block can sit clear of the viewport's bottom edge (and be pulled up
+   toward centre), without leaving a yawning empty band. */
 .section {
   position: relative;
-  background: #0f1115;
-  border-top: 1px solid rgb(24 24 27);
-  padding-block: 5rem; /* py-20 */
+  background: var(--dev-ground, rgb(9 9 11));
+  padding-top: 4rem;
+  padding-bottom: 26vh;
+  /* clip, not hidden: stops the x:±40 entrance animations spilling sideways
+     without turning the section into a scroll container. hidden is the
+     fallback. height is content-driven — no viewport-locked min-height. */
   overflow: hidden;
-  min-height: 105vh;
+  overflow: clip;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-block: 7rem; /* md:py-28 */
+    padding-top: 5.5rem;
+    padding-bottom: 32vh;
   }
 }
 
 .bg {
   position: absolute;
   inset: 0;
-  background: #0f1115;
+  background: var(--dev-ground, rgb(9 9 11));
   pointer-events: none;
 }
 
@@ -86,28 +93,26 @@
 .title {
   font-size: clamp(32px, 5.6vw, 82px);
   line-height: 1.05;
-  letter-spacing: -0.05em;
+  /* all-caps: was -0.05em, which ran the letters into each other */
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: rgb(244 244 245);
 }
 
 .accentText {
-  background: linear-gradient(120deg, #22c55e, #4ade80);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--dev-accent, #3edc8a);
   display: inline-block;
 }
 
 .desc {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
   color: rgb(212 212 216);
   margin-bottom: 2rem;
 }
 @media (min-width: 768px) {
   .desc {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -176,7 +181,7 @@
 
 /* แก้ไขตรงนี้ - เพิ่ม word-break เพื่อแก้ปัญหาคำติด */
 .aiDesc {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
   color: rgb(212 212 216);
   word-break: break-word;
@@ -184,7 +189,7 @@
 }
 @media (min-width: 768px) {
   .aiDesc {
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 
@@ -234,15 +239,15 @@
 }
 
 .blockText {
-  font-size: 13px;
-  line-height: 1.85;
+  font-size: 15px;
+  line-height: 1.8;
   color: rgb(212 212 216);
   word-break: break-word;
   overflow-wrap: break-word;
 }
 @media (min-width: 768px) {
   .blockText {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -280,11 +285,6 @@
   font-size: 12px;
   color: rgb(212 212 216);
 }
-@media (min-width: 768px) {
-  .blockText {
-    font-size: 14px;
-  }
-}
 
 .cardList li {
   word-break: break-word;
@@ -295,10 +295,11 @@
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #34d399; /* emerald-400 */
+  color: var(--dev-accent, #3edc8a);
 }
 @media (min-width: 768px) {
   .highlightTitle {
     font-size: 11px;
   }
 }
+

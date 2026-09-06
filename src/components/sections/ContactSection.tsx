@@ -27,7 +27,7 @@ const contacts: ContactIcon[] = [
   {
     icon: Github,
     label: "GitHub",
-    href: "https://github.com/iMookatayou",
+    href: "https://github.com/beamMiter",
   },
   {
     icon: Instagram,

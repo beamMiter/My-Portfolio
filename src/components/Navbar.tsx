@@ -228,7 +228,7 @@ export default function Navbar() {
     router.push('/intro');
   };
 
-  const openGit = () => window.open('https://github.com/iMookatayou', '_blank', 'noopener,noreferrer');
+  const openGit = () => window.open('https://github.com/beamMiter', '_blank', 'noopener,noreferrer');
 
   const openLinkedIn = () =>
     window.open('https://www.linkedin.com/in/techin-jetsribumrung-9a4069364/', '_blank', 'noopener,noreferrer');
