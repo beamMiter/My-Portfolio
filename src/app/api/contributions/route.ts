@@ -16,7 +16,9 @@ const USER = "beamMiter";
 const SOURCE = `https://github-contributions-api.jogruber.de/v4/${USER}?y=last`;
 const ONE_HOUR = 3600;
 
-export const revalidate = ONE_HOUR;
+// must be a plain literal — Next statically analyses segment-config exports and
+// rejects anything it can't read at build time (a `const` reference included)
+export const revalidate = 3600;
 
 type UpstreamDay = { date: string; count: number; level: number };
 type Upstream = {
