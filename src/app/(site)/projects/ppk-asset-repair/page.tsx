@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import ImageZoom from "@/components/projects/ImageZoom";
 
 function TechStackClean({ items }: { items: string[] }) {
   return (
@@ -131,28 +132,32 @@ export default function PpkAssetRepairPage() {
           </div>
         </section>
 
-        {/* Bottom images - ขยายให้ใหญ่ขึ้นแต่ยังเล็กกว่า hero */}
+        {/* Bottom images — click to view full size */}
         <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2">
-          <Image
-            src="/images/projects/ppk-asset-repair-management-mockup2.webp"
-            alt="Repair screen 1"
-            width={2200}
-            height={1400}
-            className="h-auto w-full transition-opacity duration-700 opacity-0"
-            placeholder="blur"
-            blurDataURL={blurData}
-            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-          />
-          <Image
-            src="/images/projects/ppk-asset-repair-management-mockup3.webp"
-            alt="Repair screen 2"
-            width={2200}
-            height={1400}
-            className="h-auto w-full transition-opacity duration-700 opacity-0"
-            placeholder="blur"
-            blurDataURL={blurData}
-            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-          />
+          <ImageZoom src="/images/projects/ppk-asset-repair-management-mockup2.webp" alt="Repair screen 1">
+            <Image
+              src="/images/projects/ppk-asset-repair-management-mockup2.webp"
+              alt="Repair screen 1"
+              width={2200}
+              height={1400}
+              className="h-auto w-full transition-opacity duration-700 opacity-0"
+              placeholder="blur"
+              blurDataURL={blurData}
+              onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+            />
+          </ImageZoom>
+          <ImageZoom src="/images/projects/ppk-asset-repair-management-mockup3.webp" alt="Repair screen 2">
+            <Image
+              src="/images/projects/ppk-asset-repair-management-mockup3.webp"
+              alt="Repair screen 2"
+              width={2200}
+              height={1400}
+              className="h-auto w-full transition-opacity duration-700 opacity-0"
+              placeholder="blur"
+              blurDataURL={blurData}
+              onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+            />
+          </ImageZoom>
         </div>
 
         {/* Divider before Tech */}

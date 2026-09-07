@@ -52,7 +52,7 @@ const projects: Project[] = [
   {
     title: "WelaCode",
     image: "/images/projects/welacode-mockup1.webp",
-    tech: ["Next.js", "Node.js", "Express", "PostgreSQL", "Railway"],
+    tech: ["Next.js", "Node.js", "Express", "Neon", "Railway"],
     href: "/projects/welacode",
   },
 ];
