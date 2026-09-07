@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
+import ImageZoom from "@/components/projects/ImageZoom";
 
 // Placeholder Base64 แบบจิ๋วเพื่อใช้ทำ Effect ตอนกำลังโหลด
 const BLUR_DATA_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
@@ -138,19 +139,21 @@ export default function PpkScreeningPage() {
           </div>
         </section>
 
-        {/* Bottom image */}
+        {/* Bottom image — click to view full size */}
         <div className="mt-16 mx-auto max-w-4xl overflow-hidden rounded-lg bg-zinc-900/50">
-          <Image
-            src="/images/projects/ppk-screening-mockup2.webp"
-            alt="PPK referral summary screen"
-            width={2200}
-            height={1400}
-            className="h-auto w-full transition-opacity duration-700 opacity-0"
-            // เทคนิคโหลดไว
-            placeholder="blur"
-            blurDataURL={BLUR_DATA_URL}
-            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-          />
+          <ImageZoom src="/images/projects/ppk-screening-mockup2.webp" alt="PPK referral summary screen">
+            <Image
+              src="/images/projects/ppk-screening-mockup2.webp"
+              alt="PPK referral summary screen"
+              width={2200}
+              height={1400}
+              className="h-auto w-full transition-opacity duration-700 opacity-0"
+              // เทคนิคโหลดไว
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
+              onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+            />
+          </ImageZoom>
         </div>
 
         <hr className="my-20 border-white/10" />

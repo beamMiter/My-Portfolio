@@ -3,6 +3,7 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
+import ImageZoom from "@/components/projects/ImageZoom";
 
 // Placeholder Base64 ขนาดจิ๋วเพื่อแสดงผลขณะรอโหลดรูปภาพจริง
 const BLUR_DATA_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
@@ -112,21 +113,23 @@ export default function PpkKioskPage() {
         {/* What it does + lower image */}
         <section className="mt-16">
           <div className="mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12 items-start">
-            {/* lower image (no edge) */}
+            {/* lower image (no edge) — click to view full size */}
             <div className="overflow-hidden rounded-lg bg-zinc-900/50">
-              <div className="relative aspect-[3/4] w-full">
-                <Image
-                  src="/images/projects/demonstration-kiosk1.webp"
-                  alt="PPK Kiosk vertical screen"
-                  fill
-                  className="object-cover transition-opacity duration-700 opacity-0"
-                  sizes="(min-width:1024px) 420px, 100vw"
-                  // เพิ่มเทคนิคโหลดไว
-                  placeholder="blur"
-                  blurDataURL={BLUR_DATA_URL}
-                  onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-                />
-              </div>
+              <ImageZoom src="/images/projects/demonstration-kiosk1.webp" alt="PPK Kiosk vertical screen">
+                <div className="relative aspect-[3/4] w-full">
+                  <Image
+                    src="/images/projects/demonstration-kiosk1.webp"
+                    alt="PPK Kiosk vertical screen"
+                    fill
+                    className="object-cover transition-opacity duration-700 opacity-0"
+                    sizes="(min-width:1024px) 420px, 100vw"
+                    // เพิ่มเทคนิคโหลดไว
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
+                    onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+                  />
+                </div>
+              </ImageZoom>
             </div>
 
             {/* text */}

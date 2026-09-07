@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import ImageZoom from "@/components/projects/ImageZoom";
 
 // หมายเหตุ: Metadata ต้องอยู่ใน Server Component หรือแยกไฟล์ 
 // ถ้าไฟล์นี้เป็น "use client" ให้ย้าย Metadata ออกไปไว้ที่ layout หรือไฟล์ page หลัก
@@ -96,8 +97,9 @@ export default function WelaCodePage() {
             <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
               The platform provides a complete solution for project management
               and service booking, featuring a seamless integration of modern
-              frontend technologies with a scalable Node.js and Express backend,
-              backed by a PostgreSQL database on Neon and deployed on Railway.
+              frontend technologies with a scalable Node.js and Express backend.
+              The frontend is deployed on Vercel, the server on Railway, backed
+              by a Neon database.
             </p>
 
             <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
@@ -139,7 +141,7 @@ export default function WelaCodePage() {
               </p>
 
               <p>
-                WelaCode features a secure payment gateway integration with Omise,
+                WelaCode features a secure payment gateway integration with Beam Checkout,
                 supporting both Credit Card and PromptPay transactions. This provides
                 a reliable and flexible financial experience for users during the
                 checkout workflow.
@@ -155,37 +157,41 @@ export default function WelaCodePage() {
           </div>
         </section>
 
-        {/* Bottom images */}
+        {/* Bottom images — click to view full size */}
         <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2">
-          <Image
-            src="/images/projects/welacode-mockup2.webp"
-            alt="WelaCode mockup 2"
-            width={2200}
-            height={1400}
-            className="h-auto w-full transition-opacity duration-700 opacity-0"
-            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-            quality={85}
-            placeholder="blur"
-            blurDataURL={blurData}
-          />
-          <Image
-            src="/images/projects/welacode-mockup3.webp"
-            alt="WelaCode mockup 3"
-            width={2200}
-            height={1400}
-            className="h-auto w-full transition-opacity duration-700 opacity-0"
-            onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-            quality={85}
-            placeholder="blur"
-            blurDataURL={blurData}
-          />
+          <ImageZoom src="/images/projects/welacode-mockup2.webp" alt="WelaCode mockup 2">
+            <Image
+              src="/images/projects/welacode-mockup2.webp"
+              alt="WelaCode mockup 2"
+              width={2200}
+              height={1400}
+              className="h-auto w-full transition-opacity duration-700 opacity-0"
+              onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+              quality={85}
+              placeholder="blur"
+              blurDataURL={blurData}
+            />
+          </ImageZoom>
+          <ImageZoom src="/images/projects/welacode-mockup3.webp" alt="WelaCode mockup 3">
+            <Image
+              src="/images/projects/welacode-mockup3.webp"
+              alt="WelaCode mockup 3"
+              width={2200}
+              height={1400}
+              className="h-auto w-full transition-opacity duration-700 opacity-0"
+              onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+              quality={85}
+              placeholder="blur"
+              blurDataURL={blurData}
+            />
+          </ImageZoom>
         </div>
 
         {/* Divider before Tech */}
         <hr className="my-20 border-white/10" />
 
         {/* Tech Stack */}
-        <TechStackClean items={["Next.js", "Node.js", "Express", "TypeScript", "PostgreSQL", "Neon", "Railway", "Omise"]} />
+        <TechStackClean items={["Next.js", "Node.js", "Express", "TypeScript", "Vercel", "Railway", "Neon", "Beam Checkout"]} />
 
         <div className="h-20" />
 
