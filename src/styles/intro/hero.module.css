@@ -191,6 +191,47 @@
     width: 100%;
   }
 
+  /* the dome's leaf curve and vh height are tuned for the side-by-side desktop
+     layout; on a narrow stacked screen it tapers oddly and bleeds behind the
+     text below. the white here comes from .leftCol instead — a plain
+     full-bleed panel that backs the whole grid and stops where it stops. */
+  .heroDome {
+    display: none;
+  }
+
+  /* the white grid panel should reach the very top of the hero: start the
+     content flush instead of vertically centred, and drop the top padding
+     that was leaving a dark strip above the white */
+  .contentShell {
+    align-items: flex-start;
+  }
+
+  /* drop the container's own inset on mobile so each column sets its own — the
+     white grid band goes edge to edge, the text keeps a margin. removing the
+     inline padding here (rather than negative-margining a flex item, which
+     fights align-items: center) is what actually lets the white reach both
+     screen edges. */
+  .contentContainer {
+    padding-top: 0;
+    padding-inline: 0;
+  }
+
+  .leftCol {
+    background: #ffffff;
+    /* now full-bleed; pad the grid itself back off the screen edges */
+    padding: 2rem 1.25rem 1.5rem;
+  }
+
+  .rightCol {
+    padding-inline: 1.25rem;
+  }
+
+  /* the contribution grid already bleeds off the right edge; on mobile take it
+     to the left edge as well so it runs the full width */
+  .contribSlot {
+    margin-left: calc(-1 * var(--gutter));
+  }
+
   /* stacked content already runs well past one viewport, so the tail only has
      to keep the arc off the section seam — not carve out a whole dead band */
   .heroWrap {
@@ -206,7 +247,13 @@
 
 @media screen and (min-width: 1401px) {
   .cubeWrap {
-    --cube-x: -180px;
+    /* keep the mosaic centred in the white dome as the viewport grows. the
+       dome's right edge sits at (100vw - 72rem)/2 + 36rem from the left and
+       the mosaic is ~605px wide, so half of the leftover white is
+       (100vw - 72rem)/4 - ~14px; minus the column's own ((100vw - 72rem)/2
+       + 40px) start offset that leaves this. it parks the mosaic's centre on
+       the middle of the white instead of letting it drift to the edge. */
+    --cube-x: calc((72rem - 100vw) / 4 - 54px);
   }
 }
 
