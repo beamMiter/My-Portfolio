@@ -97,7 +97,7 @@ export default function WelaCodePage() {
               The platform provides a complete solution for project management
               and service booking, featuring a seamless integration of modern
               frontend technologies with a scalable Node.js and Express backend,
-              utilizing MongoDB for flexible data management.
+              backed by a PostgreSQL database on Neon and deployed on Railway.
             </p>
 
             <p className="mt-7 text-sm md:text-base leading-relaxed text-zinc-300">
@@ -185,7 +185,7 @@ export default function WelaCodePage() {
         <hr className="my-20 border-white/10" />
 
         {/* Tech Stack */}
-        <TechStackClean items={["Next.js", "Node.js", "Express", "MongoDB", "TypeScript", "Omise"]} />
+        <TechStackClean items={["Next.js", "Node.js", "Express", "TypeScript", "PostgreSQL", "Neon", "Railway", "Omise"]} />
 
         <div className="h-20" />
 
