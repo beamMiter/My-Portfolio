@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import { Linkedin, Github, Mail } from 'lucide-react';
 
 /**
@@ -169,10 +169,22 @@ function TunnelCanvas({ shaded = false, className = "" }: { shaded?: boolean; cl
 
 const App = ({ embedded = false }: { embedded?: boolean }) => {
   // Base Classes (ใส่ค่า 6rem โดยตรงเพื่อให้ Tailwind ทำงานได้ถูกต้อง)
-  const squareBase = "bg-[#1c1c1c] rounded-[6rem] hover:scale-[1.02] transition-transform duration-300 border border-white/5";
+  /**
+   * One radius for every tile, so the corner stays the same fraction of the
+   * tile at any width instead of drifting per breakpoint.
+   *
+   * A tile is one of three columns, so it's ~28vw wide while the grid is
+   * stacked; 12.5vw is ~0.44 of that — the same fraction 6rem (96px) has on the
+   * ~218px desktop tile. From 768px up 12.5vw is already past 6rem, so the
+   * clamp pins it at exactly 6rem and desktop renders byte-identical to before.
+   * The 2rem floor keeps the corner sane on a very narrow phone.
+   */
+  const tileRadius = { "--tile-r": "clamp(2rem, 12.5vw, 6rem)" } as CSSProperties;
+
+  const squareBase = "bg-[#1c1c1c] rounded-[var(--tile-r)] hover:scale-[1.02] transition-transform duration-300 border border-white/5";
   const pillBase = "bg-[#1c1c1c] rounded-full hover:scale-[1.02] transition-transform duration-300 border border-white/5 overflow-hidden";
-  const iconOuterBase = "w-full h-full bg-[#1c1c1c] p-1 flex items-center justify-center group cursor-pointer hover:bg-[#252525] border border-white/5 transition-colors duration-300 rounded-[6rem]";
-  const iconInnerBase = "w-full h-full border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:border-white group-hover:bg-white/5 rounded-[6rem]";
+  const iconOuterBase = "w-full h-full bg-[#1c1c1c] p-1 flex items-center justify-center group cursor-pointer hover:bg-[#252525] border border-white/5 transition-colors duration-300 rounded-[var(--tile-r)]";
+  const iconInnerBase = "w-full h-full border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:border-white group-hover:bg-white/5 rounded-[var(--tile-r)]";
   const iconStyle = "w-5 h-5 md:w-7 md:h-7 text-white group-hover:text-white transition-colors duration-300";
 
   return (
@@ -183,21 +195,24 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
           : "min-h-screen bg-black text-white p-4 md:p-8 flex items-center justify-center font-sans overflow-hidden"
       }
     >
-      <div className="max-w-2xl w-full mx-auto grid grid-cols-1 md:grid-cols-3 gap-2">
-        
+      <div
+        style={tileRadius}
+        className="max-w-2xl w-full mx-auto grid grid-cols-3 gap-1.5 sm:gap-2"
+      >
+
         {/* Hire Me Pill */}
         <a
           href="/home#contact"
           aria-label="Hire me — go to contact"
           data-hover-expand
           className={`
-          md:col-start-1 md:row-start-1 md:row-span-2 h-32 md:h-auto
+          col-start-1 row-start-1 row-span-2 h-auto
           ${pillBase}
           rounded-br-none /* ขวาล่างคม */
           flex flex-col p-0 relative group cursor-pointer hover:bg-[#252525]
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60
         `}>
-          <div className="h-full w-auto aspect-square mx-auto md:mx-0 md:h-auto md:w-full bg-white rounded-full flex items-center justify-center p-0 relative z-10 shrink-0">
+          <div className="w-full aspect-square bg-white rounded-full flex items-center justify-center p-0 relative z-10 shrink-0">
              <span className="text-black font-extrabold text-sm md:text-base tracking-tight">HIRE ME!</span>
           </div>
           {/* transparent — lets the pill's own bg show, so hover lightens as one piece */}
@@ -208,16 +223,16 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
         <div
           data-hover-expand
           className={`
-          md:col-start-2 md:row-start-1
+          col-start-2 row-start-1
           aspect-square
           ${squareBase}
           rounded-br-none /* ขวาล่างคม */
           flex flex-col items-center justify-center p-2 hover:bg-[#252525]
         `}>
-          <span className="text-3xl md:text-4xl font-bold mb-0 leading-none">2</span>
-          <div className="text-center mt-2.5 leading-snug">
-            <span className="text-gray-300 text-sm font-normal block">Years</span>
-            <span className="text-gray-300 text-sm font-normal block">of Experience</span>
+          <span className="text-2xl sm:text-3xl md:text-4xl font-bold mb-0 leading-none">2</span>
+          <div className="text-center mt-1.5 sm:mt-2.5 leading-snug">
+            <span className="text-gray-300 text-[11px] sm:text-sm font-normal block">Years</span>
+            <span className="text-gray-300 text-[11px] sm:text-sm font-normal block">of Experience</span>
           </div>
         </div>
 
@@ -225,7 +240,7 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
         <div
           data-hover-expand
           className={`
-          md:col-start-3 md:row-start-1
+          col-start-3 row-start-1
           aspect-square
           ${squareBase}
           rounded-bl-none /* ซ้ายล่างคม */
@@ -245,7 +260,7 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
         <div
           data-hover-expand
           className={`
-          md:col-start-2 md:row-start-2
+          col-start-2 row-start-2
           aspect-square
           ${squareBase}
           /* กล่องนี้ ขวาบนคม (ดูดขึ้น) ที่เหลือมนตามเดิม */
@@ -263,10 +278,9 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
         <div
           data-hover-expand
           className={`
-          md:col-start-3 md:row-start-2 md:row-span-2 h-32 md:h-full
+          col-start-3 row-start-2 row-span-2 h-full
           bg-[#1c1c1c]
-          rounded-[6rem] /* ใส่ค่าตรงๆ */
-          rounded-tr-[6rem] rounded-br-[6rem]
+          rounded-[var(--tile-r)] /* same one radius as every other tile */
           rounded-tl-none rounded-bl-none /* ซ้ายคมตลอดแนว */
           hover:scale-[1.02] 
           transition-transform 
@@ -276,11 +290,11 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
           flex items-center justify-center relative group 
           hover:bg-[#252525]
         `}>
-          <div className="md:-rotate-90 whitespace-nowrap text-center">
-             <h2 className="text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-white leading-relaxed">
+          <div className="-rotate-90 whitespace-nowrap text-center">
+             <h2 className="text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-white leading-relaxed">
               FULLSTACK
             </h2>
-             <h2 className="text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-gray-400 leading-relaxed">
+             <h2 className="text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-gray-400 leading-relaxed">
               SOFTWARE DEVELOPMENT
             </h2>
           </div>
@@ -290,8 +304,8 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
         <div
           data-hover-expand
           className={`
-          md:col-start-1 md:row-start-3 md:col-span-2
-          aspect-[2/1] h-24 md:h-full
+          col-start-1 row-start-3 col-span-2
+          aspect-[2/1]
           ${pillBase}
           rounded-br-none /* ขวาล่างคม */
           flex items-center p-0 group cursor-pointer hover:bg-[#252525]
@@ -304,15 +318,15 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
              />
           </div>
           <div className="flex-1 flex items-center justify-center pr-4">
-            <span className="text-lg md:text-xl font-bold tracking-wide text-white">猫をなでて</span>
+            <span className="text-sm sm:text-lg md:text-xl font-bold tracking-wide text-white">猫をなでて</span>
           </div>
         </div>
 
         {/* Social Icons — hrefs mirror the Contact section.
             mobile: their own 3-across row; md+: md:contents drops this wrapper
             so each tile sits in its own grid cell again. */}
-        <div className="grid grid-cols-3 gap-2 md:contents">
-          <div className="md:col-start-1 md:row-start-4 aspect-square">
+        <div className="contents">
+          <div className="col-start-1 row-start-4 aspect-square">
              <a
                href="https://www.linkedin.com/in/techin-jetsribumrung-9a4069364/"
                target="_blank"
@@ -326,7 +340,7 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
              </a>
           </div>
 
-          <div className="md:col-start-2 md:row-start-4 aspect-square">
+          <div className="col-start-2 row-start-4 aspect-square">
              <a
                href="https://github.com/beamMiter"
                target="_blank"
@@ -341,7 +355,7 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
           </div>
 
           {/* Icon3 (Email) */}
-          <div className="md:col-start-3 md:row-start-4 aspect-square">
+          <div className="col-start-3 row-start-4 aspect-square">
              <a
                href="mailto:jetsribumrungtechin@gmail.com"
                aria-label="Email"
