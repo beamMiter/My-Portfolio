@@ -86,7 +86,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="scroll-mt-28 py-16 bg-[#0f1115] border-b border-white/5"
+      className="scroll-mt-28 py-16 bg-[#09090b] border-b border-white/5"
     >
       <div className="mx-auto max-w-[1200px] px-6">
         <motion.p
