@@ -1,7 +1,7 @@
 .section {
   position: relative;
   border-top: 1px solid rgb(24 24 27);
-  background: #0f1115;
+  background: var(--dev-ground, rgb(9 9 11));
   color: rgb(244 244 245);
   padding-block: 5rem;
 }
