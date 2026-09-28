@@ -769,90 +769,66 @@ export default function IntroWavePage() {
         <div className={aiStyles.bg} />
 
         <div className={aiStyles.inner}>
-          <div className={aiStyles.grid}>
-            {/* LEFT — the framing */}
-            <motion.div
-              {...revealUp}
-              transition={{ duration: 0.7, ease: REVEAL_EASE }}
-              className={aiStyles.leftCol}
-            >
-              <div className={`${aiStyles.kicker} font-mono-dev`}>
-                PROCESS · HOW A BUILD GOES
-              </div>
+          {/* the framing */}
+          <motion.div
+            {...revealUp}
+            transition={{ duration: 0.7, ease: REVEAL_EASE }}
+            className={aiStyles.leftCol}
+          >
+            <div className={`${aiStyles.kicker} font-mono-dev`}>
+              PROCESS · HOW A BUILD GOES
+            </div>
 
-              <h2 className={`${aiStyles.title} font-heading-dev`}>
-                FROM A VAGUE ASK{" "}
-                <span className={aiStyles.accentText}>
-                  TO A RUNNING SYSTEM
-                </span>
-              </h2>
+            <h2 className={`${aiStyles.title} font-heading-dev`}>
+              FROM A VAGUE ASK{" "}
+              <span className={aiStyles.accentText}>
+                TO A RUNNING SYSTEM
+              </span>
+            </h2>
 
-              <p className={aiStyles.desc}>
-                The brief is usually one sentence and a screenshot of a
-                spreadsheet. The work is turning that into something a team
-                logs into every morning without thinking about it. Same four
-                steps every time.
-              </p>
-            </motion.div>
+            <p className={aiStyles.desc}>
+              The brief is usually one sentence and a screenshot of a
+              spreadsheet. The work is turning that into something a team
+              logs into every morning without thinking about it. Same four
+              steps every time.
+            </p>
+          </motion.div>
 
-            {/* RIGHT — the steps */}
-            <motion.div
-              {...revealUp}
-              transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.12 }}
-              className={aiStyles.rightCol}
-            >
-              <div className={aiStyles.rightInner}>
-                <div className={aiStyles.block}>
-                  <p className={`${aiStyles.blockTitle} font-mono-dev`}>
-                    <span className={aiStyles.accentText}>01</span> UNDERSTAND
-                    THE REAL WORKFLOW
-                  </p>
-                  <p className={aiStyles.blockText}>
-                    Before any code, I sit with the people who&apos;ll use it
-                    and watch what they actually do—the workarounds, the
-                    double entry, the step everyone dreads. That&apos;s the
-                    spec, not the sentence I was handed.
-                  </p>
+          {/* the steps — one numbered column each, hairlines between */}
+          <motion.div
+            {...revealUp}
+            transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.12 }}
+            className={`${aiStyles.steps} ${inter.className}`}
+          >
+            <div className={aiStyles.stepsGrid}>
+              {[
+                {
+                  title: "Understand the Real Workflow",
+                  text: "Before any code, I sit with the people who'll use it and watch what they actually do—the workarounds, the double entry, the step everyone dreads. That's the spec, not the sentence I was handed.",
+                },
+                {
+                  title: "Pick Boring, Proven Tech",
+                  text: "Postgres, a plain server, a framework I've shipped before. Easy backups and dull migrations matter more than novelty on a system people depend on all day.",
+                },
+                {
+                  title: "Ship in Thin Slices",
+                  text: "One real workflow at a time, in front of users within a week or two. Feedback on something running beats feedback on a mockup.",
+                },
+                {
+                  title: "Leave It Maintainable",
+                  text: "Readable code, decisions written down, and a handover so the next person—or me in six months—isn't reverse-engineering it.",
+                },
+              ].map((step, i) => (
+                <div key={step.title} className={aiStyles.step}>
+                  <span className={aiStyles.stepNum}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className={aiStyles.stepTitle}>{step.title}</h3>
+                  <p className={aiStyles.stepText}>{step.text}</p>
                 </div>
-
-                <div className={aiStyles.block}>
-                  <p className={`${aiStyles.blockTitle} font-mono-dev`}>
-                    <span className={aiStyles.accentText}>02</span> PICK BORING,
-                    PROVEN TECH
-                  </p>
-                  <p className={aiStyles.blockText}>
-                    Postgres, a plain server, a framework I&apos;ve shipped
-                    before. Easy backups and dull migrations matter more than
-                    novelty on a system people depend on all day.
-                  </p>
-                </div>
-
-                <div className={aiStyles.block}>
-                  <p className={`${aiStyles.blockTitle} font-mono-dev`}>
-                    <span className={aiStyles.accentText}>03</span> SHIP IN THIN
-                    SLICES
-                  </p>
-                  <p className={aiStyles.blockText}>
-                    One real workflow at a time, in front of users within a
-                    week or two. Feedback on something running beats feedback
-                    on a mockup.
-                  </p>
-                </div>
-
-                <div className={aiStyles.block}>
-                  <p className={`${aiStyles.blockTitle} font-mono-dev`}>
-                    <span className={aiStyles.accentText}>04</span> LEAVE IT
-                    MAINTAINABLE
-                  </p>
-                  <p className={aiStyles.blockText}>
-                    Readable code, decisions written down, and a handover so
-                    the next person—or me in six months—isn&apos;t
-                    reverse-engineering it.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
     </main>

@@ -57,24 +57,17 @@
   }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-  align-items: start;
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-  }
-}
-
-/* LEFT COLUMN */
+/* FRAMING — kicker, title, intro; the strip sits under it. stacked on small
+   screens, laid out in one row from 1024px (see the block after .desc) */
 .leftCol {
   max-width: 40rem;
   color: rgb(244 244 245);
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  .leftCol {
+    margin-bottom: 2.5rem;
+  }
 }
 
 .kicker {
@@ -113,6 +106,35 @@
 @media (min-width: 768px) {
   .desc {
     font-size: 16px;
+  }
+}
+
+/* horizontal heading: kicker + title on the left, the intro beside it on the
+   right, sitting on the title's last line. the title is set smaller here than
+   when it stacks full width — it has to fit its column in two lines. */
+@media (min-width: 1024px) {
+  .leftCol {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    column-gap: 4rem;
+    align-items: end;
+    margin-bottom: 3.5rem;
+  }
+  .kicker {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .title {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: clamp(28px, 3.2vw, 68px);
+  }
+  .desc {
+    grid-column: 2;
+    grid-row: 2;
+    max-width: 30rem;
+    margin-bottom: 0.4rem;
   }
 }
 
@@ -193,61 +215,87 @@
   }
 }
 
-.rightCol {
-  width: 100%;
+/* PROCESS STRIP — one numbered column per step with hairlines between them,
+   no outer box. 1 column on a phone, 2 on a tablet, 4 from 1280px where they
+   have room. */
+.steps {
   color: rgb(244 244 245);
-  padding-left: 0;
 }
 
-@media (min-width: 1024px) {
-  .rightCol {
-    padding-left: 2.5rem;
+/* the 1px gap shows this background, so the dividers come for free at every
+   column count — no per-breakpoint border juggling */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: rgb(39 39 42);
+}
+
+@media (min-width: 768px) {
+  .stepsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1280px) {
+  .stepsGrid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.rightInner {
-  width: 100%;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
-}
-
-@media (min-width: 1024px) {
-  .rightInner {
-    max-width: 28rem;
-    margin-left: auto;
-  }
-}
-
-.block {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.blockTitle {
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgb(113 113 122);
+/* no box means nothing frames the first column, so it starts flush with the
+   heading above; the ones after a divider keep their inset */
+.step {
+  background: var(--dev-ground, rgb(9 9 11));
+  padding: 2rem 0 2.25rem;
 }
 @media (min-width: 768px) {
-  .blockTitle {
-    font-size: 11px;
+  .step {
+    padding: 2.5rem 2rem 2.75rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .step:nth-child(odd) {
+    padding-left: 0;
+  }
+}
+@media (min-width: 1280px) {
+  .step:first-child {
+    padding-left: 0;
+  }
+}
+@media (min-width: 1536px) {
+  .step {
+    padding-inline: 2.5rem;
   }
 }
 
-.blockText {
-  font-size: 15px;
-  line-height: 1.8;
+.stepNum {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
   color: rgb(212 212 216);
+}
+
+.stepTitle {
+  margin-top: 1.75rem;
+  font-size: clamp(18px, 1.35vw, 24px);
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgb(250 250 250);
+}
+
+.stepText {
+  margin-top: 1rem;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgb(161 161 170);
   word-break: break-word;
   overflow-wrap: break-word;
 }
-@media (min-width: 768px) {
-  .blockText {
-    font-size: 16px;
+@media (min-width: 1536px) {
+  .stepText {
+    font-size: 15px;
   }
 }
 
