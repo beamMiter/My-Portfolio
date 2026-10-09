@@ -214,7 +214,7 @@ export default function ProjectsSection() {
       aria-label="Projects"
     >
       <div className="mx-auto max-w-[1500px] px-8">
-        <p className="text-center text-xs uppercase tracking-[0.3em] text-white/45">
+        <p className="text-center text-[clamp(12px,1vw,15px)] uppercase tracking-[0.3em] text-white/45">
           MY PORTFOLIO
         </p>
         <h2 className="mt-3 text-center text-[clamp(26px,3.6vw,38px)] font-medium leading-snug tracking-[-0.015em] text-white">

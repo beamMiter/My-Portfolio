@@ -38,7 +38,7 @@ export default function ServicesSection() {
     >
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="text-center mb-12">
-          <p className="text-xs tracking-[0.3em] uppercase text-white/45">
+          <p className="text-[clamp(12px,1vw,15px)] tracking-[0.3em] uppercase text-white/45">
             My Services
           </p>
           <h2 className="mt-3 text-[clamp(26px,3.6vw,38px)] font-medium leading-snug tracking-[-0.015em] text-white">
