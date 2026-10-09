@@ -111,7 +111,7 @@ export default function HomePage() {
 
               <p className="mt-6 max-w-[62ch] text-[15px] md:text-[16px] leading-relaxed text-white/80">
                 I<span className={`${liter.className} font-normal`}>’</span>m a fresh graduate developer who enjoys building practical
-                and reliable software. I<span className={`${liter.className} font-normal`}>’</span>ve worked on real hospital projects<span className={`${liter.className} font-normal`}>,</span>
+                and reliable software. I<span className={`${liter.className} font-normal`}>’</span>ve worked on real hospital projects<span className={`${liter.className} font-normal`}>,</span>{" "}
                 building internal systems and workflow tools that reduce
                 manual steps and keep operations running smoothly.
               </p>
