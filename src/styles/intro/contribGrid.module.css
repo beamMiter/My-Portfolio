@@ -12,12 +12,14 @@
   gap: 2px;
   /* fills whatever .contribSlot gives it — which reaches past the column and
      out toward the viewport edge — but stops at a width that keeps the squares
-     at ~10px. without the cap the cells grow with the screen, so a wide
-     monitor turned them into chunky blocks.
-     43rem = 53 cells at 10px + 52 gaps at 3px. below that width it degrades
-     gracefully: cells just get smaller rather than being clipped. */
+     from ballooning into chunky blocks on a very wide screen. the cap used to
+     be a flat 43rem (cells pinned at ~10px past that point, same "stuck" issue
+     as the rest of the hero), so it's a vw-scaled clamp now instead — still
+     43rem at the widths this was tuned at, growing beyond it on a wider
+     screen. below the 43rem floor it degrades gracefully either way: cells
+     just get smaller rather than being clipped. */
   width: 100%;
-  max-width: 43rem;
+  max-width: clamp(43rem, 40vw, 49rem);
 }
 
 @media screen and (min-width: 768px) {

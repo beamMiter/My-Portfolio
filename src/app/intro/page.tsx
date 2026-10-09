@@ -169,7 +169,7 @@ function HoverWaveLabel({
     <span
       className={`${heroStyles.fontHeading} tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
       style={{
-        fontSize: isTablet ? "1.875rem" : "clamp(1.5rem, 3.5vw, 3rem)",
+        fontSize: isTablet ? "1.875rem" : "clamp(1.5rem, 3.5vw, 2.3rem)",
       }}
     >
       {Array.from({ length: maxLen }).map((_, index) => {
@@ -292,10 +292,12 @@ export default function IntroWavePage() {
                     className={heroStyles.cubeWrap}
                     style={{ transform: "translateX(var(--cube-x))" }}
                   >
-                    {/* /test mosaic, shrunk down to replace the old Rubik cube */}
+                    {/* /test mosaic, shrunk down to replace the old Rubik cube.
+                        the zoom itself lives in CSS (heroStyles.mosaicZoom), not
+                        here, so it can grow by breakpoint instead of being
+                        pinned to one fixed value regardless of screen size */}
                     <div
-                      className="w-full md:w-auto md:shrink-0"
-                      style={{ zoom: 0.9 } as React.CSSProperties}
+                      className={`w-full md:w-auto md:shrink-0 ${heroStyles.mosaicZoom}`}
                     >
                       <div className="w-full md:w-[672px]">
                         <PortfolioMosaic embedded />
@@ -310,7 +312,7 @@ export default function IntroWavePage() {
                   <div className="relative flex flex-col items-start justify-start mb-6 w-full">
                     <span
                       data-stagger-row
-                      className="mb-4 block leading-none text-sm md:text-base font-normal tracking-[0.2em] text-zinc-400 uppercase"
+                      className={`mb-4 block leading-none font-normal tracking-[0.2em] text-zinc-400 uppercase ${heroStyles.kicker}`}
                     >
                       Full-Stack Software & Mobile Dev
                     </span>
@@ -319,7 +321,7 @@ export default function IntroWavePage() {
                     >
                       <span
                         data-stagger-row
-                        className="text-white tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold"
+                        className={`text-white tracking-wide font-bold ${heroStyles.lineHello}`}
                       >
                         Hello<span className={liter.className}>,</span> I
                         <span className={liter.className}>
@@ -330,7 +332,7 @@ export default function IntroWavePage() {
                       <span
                         data-stagger-row
                         style={{ color: "var(--dev-accent)" }}
-                        className="mt-1 tracking-wide text-4xl sm:text-4xl md:text-3xl lg:text-5xl xl:text-6xl font-bold w-full"
+                        className={`mt-1 tracking-wide font-bold w-full ${heroStyles.lineName}`}
                       >
                         Techin Jetsribumrung
                       </span>
@@ -346,11 +348,10 @@ export default function IntroWavePage() {
                       <span className="text-zinc-100 font-medium">
                         handed to them
                       </span>
-                      . I build that kind: the{" "}
+                      {" "}I{" "}build that kind: the{" "}
                       <span className="text-zinc-100 font-medium">
                         internal systems a team runs on every day
                       </span>
-                      .
                     </p>
                   </div>
 
