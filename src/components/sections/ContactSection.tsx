@@ -46,7 +46,7 @@ export default function ContactSection() {
     <section id="contact" className="scroll-mt-28 py-20">
       <div className="mx-auto max-w-[900px] px-6 text-center">
         
-        <p className="text-xs tracking-[0.3em] uppercase text-white/50">
+        <p className="text-[clamp(12px,1vw,15px)] tracking-[0.3em] uppercase text-white/50">
           Get in Touch
         </p>
         <h2 className="mt-3 text-[clamp(26px,3.6vw,38px)] font-medium tracking-[-0.015em] text-white">

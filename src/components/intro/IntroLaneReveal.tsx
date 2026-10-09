@@ -19,16 +19,29 @@ gsap.registerPlugin(useGSAP);
  *    additionally held at opacity 0 until that rise starts, because its faint
  *    empty cells otherwise show a hairline of tips past the clip edge during
  *    the pre-roll hold.
- *  - [data-cta-icon]: the circle arrow button — its own late beat, fading in
- *    only after everything above has landed and the "VIEW PORTFOLIO" label has
- *    fully split in.
+ *  - [data-cta-icon]: the circle arrow button — its own late beat, rising into
+ *    place at the same speed as the [data-stagger-row] text (same duration +
+ *    ease), only after everything above has landed and the "VIEW PORTFOLIO"
+ *    label has fully split in. rise + fade, not rise + clip like the rows:
+ *    a clip-path sweep reveals a ROUND shape's top sliver first — mostly
+ *    border, barely any fill — which read as an outline arriving before the
+ *    button itself. a fade has no such edge case.
  *  - [data-grid]: scales up from further back + fades — comes forward from depth,
  *    nothing covering it.
  * Honours prefers-reduced-motion.
  */
 
 const CLIPPED = "inset(-40% -40% 100% -40%)";
-const OPEN = "inset(-40% -40% -40% -40%)";
+/* bottom overshoots further than the sides/top (-100% instead of -40%): the
+   clip and the yPercent slide run on the same tween, so a descender (g, y,
+   p…) — sitting at the very bottom of the row's box — is the last thing the
+   clip-bottom reaches as it sweeps down. with a -40% open target that crossing
+   only happened at ~83% of the tween, reading as the tail still sitting under
+   a dark edge for a beat after the rest of the letter had landed. pushing the
+   open target further down moves that crossing earlier (~67%) without
+   changing the settled look at all — clearProps on this tween strips the
+   clip-path back off once it completes either way. */
+const OPEN = "inset(-40% -40% -100% -40%)";
 
 export default function IntroLaneReveal({
   children,
@@ -70,8 +83,10 @@ export default function IntroLaneReveal({
       // pre-roll hold — keep the slot fully out until its rise starts
       if (contrib) gsap.set(contrib, { autoAlpha: 0 });
       // the circle button gets its own beat after the label, so it can't ride
-      // the wrapper fade — hold it out until then
-      if (ctaIcon) gsap.set(ctaIcon, { autoAlpha: 0 });
+      // the wrapper fade — hold it out until then, at the same starting
+      // offset as the rows (yPercent: 100) so the rise itself matches, but
+      // faded rather than clipped (see the doc comment above)
+      if (ctaIcon) gsap.set(ctaIcon, { yPercent: 100, autoAlpha: 0 });
       if (grid) {
         gsap.set(grid, { autoAlpha: 0, scale: 0.82, transformOrigin: "50% 50%" });
       }
@@ -149,9 +164,11 @@ export default function IntroLaneReveal({
         tl.to(
           ctaIcon,
           {
+            yPercent: 0,
             autoAlpha: 1,
-            duration: 0.35,
-            ease: "power2.out",
+            duration: 1.8,
+            ease: "power3.out",
+            clearProps: "transform",
           },
           2.8
         );

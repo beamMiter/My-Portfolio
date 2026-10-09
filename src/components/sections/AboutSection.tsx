@@ -94,7 +94,7 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
-          className="text-xs tracking-[0.3em] uppercase text-white/45"
+          className="text-[clamp(12px,1vw,15px)] tracking-[0.3em] uppercase text-white/45"
         >
           About
         </motion.p>

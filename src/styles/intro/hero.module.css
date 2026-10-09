@@ -63,14 +63,46 @@
      column. it used to be 65vh, which has no relation to the layout: on a tall
      or wide screen the arc bulged past the column and over the right-hand body
      copy, and the light text sitting on the white dome read as white-on-white
-     (first letters of lines vanished). height stays 130vh so the bottom arc
-     still clears into the dark tail and section 2 doesn't move. */
-  width: calc(max(0px, (100vw - 72rem) / 2) + 36rem);
+     (first letters of lines vanished). height stays 130vh, a true half circle,
+     so this must not be sized or shaped any other way — the mosaic's own size
+     is what adapts to it instead (see --mosaic-scale on .cubeWrap). the
+     "+ 24rem" is overridden wider at 1401px+ (below) — see that rule for why. */
+  width: calc(max(0px, (100vw - 72rem) / 2) + 24rem);
   height: 130vh;
   background: #ffffff;
   z-index: 35;
   border-radius: 0 100% 100% 0 / 0 50% 50% 0;
   will-change: transform;
+}
+
+/* at 1401px+, the dome needs to be wider than "+ 24rem" to clear the mosaic's
+   own top/bottom corner against the curve's true-half-circle taper (same
+   shape, same proportions — the mosaic is just centred on its one flat-full-
+   width point, and how far the mosaic's own height reaches from there into
+   the taper is what was clipping it) — just enough margin to clear it, not
+   the most the text column's own width can spare: pushed further, the gap
+   it opens up on the left (between the dome and where the text starts) and
+   the margin already sitting on the right (past "VIEW PORTFOLIO", built into
+   the 72rem container's own padding) started reading as two oversized empty
+   bands instead of one tucked-in curve.
+
+   "+ 34rem" (not the "+ 32rem" this was first tuned to) because --mosaic-scale
+   grows with width alone (see .cubeWrap) with nothing checking it against the
+   window's actual height — on a wide-but-short window the mosaic can end up
+   both wider AND taller than a narrower window gets, while the dome's own
+   curve only has as much vertical room as the window's height gives it
+   regardless of how wide it is. 34rem was checked against real width/height
+   pairs for common displays (a 1536-wide window at ~760px tall was the
+   closest call) rather than just the one window this was tuned at. .rightCol's
+   declared 68% still gets flex-shrunk the same way it always has (the
+   column's own width share doesn't change, just its start position), so its
+   real width shrinks by the same amount the gap grows (3.5rem to 11rem =
+   +120px), and the paragraph / "VIEW PORTFOLIO" label are sized to still fit
+   in what's left (see .pText and HoverWaveLabel's cap in page.tsx). */
+@media screen and (min-width: 1401px) {
+  .heroDome {
+    width: calc(max(0px, (100vw - 72rem) / 2) + 34rem);
+  }
 }
 
 .linesRow {
@@ -152,6 +184,18 @@
   .contentContainer { padding-inline: 2.5rem; }
 }
 
+/* pushes .rightCol just far enough right that .heroDome (see its own 1401px+
+   rule) can grow enough to clear the mosaic, without bleeding into the text
+   column — .rightCol's declared 68% still gets flex-shrunk the same way it
+   always has (its share of the row doesn't change, just where the row
+   starts), so its real width shrinks by the same amount this grows (3.5rem
+   to 11rem = +120px); the paragraph and "VIEW PORTFOLIO" label are sized to
+   still fit in what's left (see .pText and HoverWaveLabel's cap in
+   page.tsx). */
+@media screen and (min-width: 1401px) {
+  .contentContainer { gap: 11rem; }
+}
+
 .leftCol {
   width: 100%;
   display: flex;
@@ -162,15 +206,15 @@
 
 @media screen and (min-width: 768px) and (max-width: 1400px) {
   .leftCol {
-    width: 46%;
-    justify-content: center;
+    width: 32%;
+    justify-content: flex-start;
     padding-right: 0;
   }
 }
 
 @media screen and (min-width: 1401px) {
   .leftCol {
-    width: 48%;
+    width: 32%;
     justify-content: flex-start;
     padding-right: 1rem;
   }
@@ -182,6 +226,42 @@
   --cube-x: 0px;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+}
+
+/* the mosaic's own size. a plain JS-set zoom can't respond to viewport width,
+   which is why it used to stay the same fixed size no matter how wide the
+   window got. --mosaic-scale (set on .cubeWrap, inherited down to here) is a
+   straight vw-based clamp so it keeps growing continuously with the screen
+   instead of jumping between a few fixed stops — same idea as .lineHello /
+   .lineName / .pText.
+
+   this base value (0.9) is the one that actually reaches mobile (below's
+   768-1400px and 1401px+ rules both override it, and below 768px .heroDome
+   is display:none — no curve to taper into, so none of this file's
+   containment math applies there at all; it was the original, pre-this-file
+   fixed JS zoom value, kept as the mobile default rather than inheriting
+   whatever a desktop breakpoint happens to need). */
+.mosaicZoom {
+  zoom: 0.9;
+}
+
+/* 0.43, not 0.5: below 1152px the container isn't capped yet, so .heroDome
+   gets no gutter contribution and stays pinned at its base "24rem" width —
+   there's no spare width to grow it into here (unlike the 1401px+ band,
+   which has room to push .rightCol over and widen the dome, see that
+   block), so this has to be small enough on its own to clear the curve's
+   taper at the mosaic's own height. checked against a short-but-still-
+   real window in this band (1000x713) where 0.5 was visibly poking a
+   card's corner past the curve. this band's .leftCol is only 32% wide too,
+   so a bigger mosaic doesn't fit next to the dome without clipping off the
+   left edge either — 0.43 (no further shift, see .cubeWrap below) is what
+   actually fits down to 768px. */
+@media screen and (min-width: 768px) and (max-width: 1400px) {
+  .mosaicZoom { zoom: 0.43; }
+}
+
+@media screen and (min-width: 1401px) {
+  .mosaicZoom { zoom: var(--mosaic-scale); }
 }
 
 /* below the two-column split the mosaic fills its column instead of a fixed 672px */
@@ -241,19 +321,44 @@
 
 @media screen and (min-width: 768px) and (max-width: 1400px) {
   .cubeWrap {
-    --cube-x: -64px;
+    /* left-aligned (see .leftCol above), no further shift needed: at 0.5
+       zoom the mosaic already clears the dome's curve from .leftCol's own
+       edge, even at this band's narrowest (768px, where the container isn't
+       capped yet and there's no gutter to spare). */
+    --cube-x: 0px;
   }
 }
 
 @media screen and (min-width: 1401px) {
   .cubeWrap {
-    /* keep the mosaic centred in the white dome as the viewport grows. the
-       dome's right edge sits at (100vw - 72rem)/2 + 36rem from the left and
-       the mosaic is ~605px wide, so half of the leftover white is
-       (100vw - 72rem)/4 - ~14px; minus the column's own ((100vw - 72rem)/2
-       + 40px) start offset that leaves this. it parks the mosaic's centre on
-       the middle of the white instead of letting it drift to the edge. */
-    --cube-x: calc((72rem - 100vw) / 4 - 54px);
+    /* --mosaic-scale-w: 0.65 at 1470px, climbing to 0.9 by ~2290px — grows
+       with how much WIDTH the window has, same idea as .lineHello / .lineName
+       / .pText. this is a pure width read, deliberately — a height-aware cap
+       sat here before (shrinking the mosaic on a short-but-wide window so its
+       own top/bottom corner stayed clear of .heroDome's curve, which tapers
+       with height, not width), but it read as the mosaic just being smaller
+       than it should be. sizing is fixed to width alone again; a short window
+       is back to being the one case this doesn't guarantee containment for.
+
+       --cube-x centres the mosaic on .heroDome's own midpoint rather than
+       holding a fixed margin off its right edge: a fixed margin only kept
+       the mosaic's RIGHT edge tracking the dome as the dome grew, so a
+       widening dome just opened up empty white on the LEFT of the mosaic
+       instead of the mosaic using it. centred, growth on both sides of it
+       scales with the dome instead of piling up on one side.
+
+       dome's centre is at (gutter + 544px)/2 (.heroDome is "gutter + 34rem"
+       wide at this breakpoint, pinned to left:0); .leftCol's own left edge
+       is at (gutter + 40px). solving leftCol_left + cube-x + 672px·scale/2 =
+       dome_centre for cube-x leaves a -gutter/2 term, which is why this
+       calc reaches for 100vw directly instead of only going through
+       --mosaic-scale. */
+    --mosaic-scale-w: clamp(0.65, calc(0.184 + 0.000317 * (100vw / 1px)), 0.9);
+    --mosaic-scale: var(--mosaic-scale-w);
+    --cube-x: calc(
+      232px - 336px * var(--mosaic-scale) -
+      (max(0px, (100vw - 72rem) / 2) / 2)
+    );
   }
 }
 
@@ -267,7 +372,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1400px) {
   .rightCol {
-    width: 65%;
+    width: 68%;
     padding-left: 0.75rem;
     overflow: visible;
   }
@@ -275,7 +380,7 @@
 
 @media screen and (min-width: 1401px) {
   .rightCol {
-    width: 62%;
+    width: 68%;
     padding-left: 2rem;
     overflow: visible;
   }
@@ -289,6 +394,32 @@
   line-height: 1.08;
   font-size: clamp(40px, 5vw, 60px);
   white-space: nowrap;
+}
+
+/* the two lines' own sizes — Tailwind's text-4xl..text-7xl classes used to set
+   these directly, which is why they stopped growing past their last
+   breakpoint (lg/xl) no matter how much wider the screen got after that.
+   a straight vw-based clamp keeps them climbing instead, same as the mosaic
+   and the dome now do. */
+.lineHello {
+  font-size: clamp(36px, 4.9vw, 110px);
+}
+
+.lineName {
+  /* floor matches the 36px this replaced (Tailwind's text-4xl, the value
+     below the old "sm" breakpoint) rather than the ~30px the formula alone
+     would reach at true mobile widths — the old classes had a dip to 30px
+     one breakpoint later (768-1023px, "md:text-3xl"), which a single smooth
+     curve can't reproduce, but mobile itself shouldn't end up smaller than
+     it was before. */
+  font-size: clamp(36px, 4.1vw, 95px);
+}
+
+.kicker {
+  /* floor matches the 14px this replaced (Tailwind's text-sm, the value
+     below the old "md" breakpoint) rather than the ~13px the formula alone
+     would reach at true mobile widths. */
+  font-size: clamp(14px, 1.09vw, 19px);
 }
 
 @media screen and (max-width: 430px) {
@@ -328,14 +459,16 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* same reasoning as .lineHello/.lineName above — a flat 17px past 1024px
+   read as "stuck" once the heading next to it kept growing past its own old
+   cap. the paragraph sits in a max-w-2xl (672px) box that doesn't grow with
+   the viewport, so the cap has to stay at the old 17px rather than climbing
+   further — past that, the same two sentences need a third line. */
 .pText {
-  font-size: 15px;
+  font-size: clamp(16px, 1.16vw, 18px);
   line-height: 1.75;
   color: rgba(228, 228, 231, 0.9);
 }
-
-@media screen and (min-width: 768px) { .pText { font-size: 16px; } }
-@media screen and (min-width: 1024px) { .pText { font-size: 17px; } }
 
 /* holds the contribution grid under the deck, and lets it run PAST the column
    out to the viewport's right edge.
