@@ -459,11 +459,10 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* same reasoning as .lineHello/.lineName above — a flat 17px past 1024px
-   read as "stuck" once the heading next to it kept growing past its own old
-   cap. */
+/* same size as .kicker ("Full-Stack Software & Mobile Dev") — keep the two
+   in step if either changes. */
 .pText {
-  font-size: clamp(16px, 1.16vw, 18px);
+  font-size: clamp(14px, 1.09vw, 19px);
   line-height: 1.75;
   color: rgba(228, 228, 231, 0.9);
 }
@@ -473,8 +472,8 @@
    em, so it holds at every font size the clamp above reaches. past 1401px the
    column is a fixed ~521px while the font keeps growing, so the paragraph runs
    past it into the free space on the right instead of wrapping to a third
-   line. below 920px there isn't 32em of room on screen at 16px. re-measure if
-   the copy changes. */
+   line. left off below 920px — at the narrowest two-column widths 32em would
+   run off the screen. re-measure if the copy changes. */
 @media screen and (min-width: 920px) {
   .pText { min-width: 32em; }
 }
