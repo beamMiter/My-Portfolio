@@ -260,6 +260,18 @@
   .mosaicZoom { zoom: 0.43; }
 }
 
+/* 768–1023px: the dome's flat 24rem reached past where the text column starts
+   (by up to 50px at 768px), so the first letters of every line sat on the
+   white — "Hello"'s H and "VIEW"'s V vanished. here the dome follows the text
+   column's start instead (32vw + ~75px in this band) and stops ~20px short of
+   it, and the mosaic shrinks with it to stay inside the curve: 0.43 at the
+   full 24rem dome, scaled down in step (its right edge kept at the same 0.836
+   of the dome's width as at 768px before). */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .heroDome { width: min(24rem, calc(32vw + 55px)); }
+  .mosaicZoom { zoom: min(0.43, calc(0.0208 + 0.000398 * (100vw / 1px))); }
+}
+
 @media screen and (min-width: 1401px) {
   .mosaicZoom { zoom: var(--mosaic-scale); }
 }
@@ -440,6 +452,58 @@
   }
 }
 
+/* 1024–1400px: ramps from where the 768–1023 band hands over (mosaic 0.43,
+   left-aligned in a 24rem dome) into the 1401px+ layout, instead of holding
+   that small, left-hugging mosaic all the way to 1400 and then jumping 51%
+   bigger at 1401 with the dome, column gap and text start all jumping with
+   it. every value below runs linearly across the band and lands on its
+   1401px+ value at 1400. */
+@media screen and (min-width: 1024px) and (max-width: 1400px) {
+  .contentContainer { gap: calc(3.5rem + (100vw - 1024px) * 0.3191489); }
+  .rightCol { padding-left: calc(0.75rem + (100vw - 1024px) * 0.0531915); }
+  .cubeWrap {
+    --ramp: calc((100vw / 1px - 1024) / 376);
+    /* short windows: the ramp's bigger mosaic gets tall enough for its
+       far-right card corners to cross the dome's curve (the curve narrows
+       toward its top and bottom, and the dome's height follows vh). this is
+       the exact largest zoom that keeps those corners — 307.9 / ±423.25
+       unscaled px from the mosaic's centre — inside the half-ellipse
+       (rx = dome width, ry = 65vh) with a 1.5% margin, at the mosaic's real
+       position on the ramp. it only binds on windows up to ~715px tall;
+       anything taller keeps the plain ramp value. all plain numbers (px). */
+    --g: max(0, (100vw / 1px - 1152) / 2);
+    --dn: calc(0.4255319 * (100vw / 1px) - 51.745 + var(--g));
+    --ca: calc((336 * (1 - var(--ramp)) + 307.9) / var(--dn));
+    --cb: calc((var(--g) + 40 + var(--ramp) * (192 + 80 * var(--ramp) - var(--g) / 2 - 40)) / var(--dn));
+    --cq: calc(651.15 / (100vh / 1px));
+    --ck: calc(var(--ca) * var(--ca) + var(--cq) * var(--cq));
+    --mosaic-scale: min(
+      calc(0.43 + 0.22 * var(--ramp)),
+      calc((sqrt(var(--ca) * var(--ca) * var(--cb) * var(--cb) - var(--ck) * (var(--cb) * var(--cb) - 0.985)) - var(--ca) * var(--cb)) / var(--ck))
+    );
+    /* eases from left-aligned (0) into the 1401px+ centring on the dome's
+       midpoint — same solve as there, with the dome's half-width ramping */
+    --cube-x: calc(var(--ramp) * (192px + 80px * var(--ramp) - 336px * var(--mosaic-scale) - max(0px, (100vw - 72rem) / 2) / 2 - 40px));
+  }
+  .mosaicZoom { zoom: var(--mosaic-scale); }
+  /* the column narrows as the gap grows, so the name no longer always fits
+     in it — same as 1401px+, let it run on into the free space instead of
+     wrapping */
+  .heroTitle { white-space: nowrap; flex-wrap: nowrap; }
+}
+
+/* the dome's width across the same ramp: gutter + 24rem + (100vw - 1024px) *
+   160/376. written as two flat linear pieces that meet at 1152px (where the
+   gutter starts) — the single max() + vw form segfaults lightningcss (Next's
+   CSS compiler) and takes the dev server down with it. */
+@media screen and (min-width: 1024px) and (max-width: 1151px) {
+  .heroDome { width: calc(42.55319vw - 51.745px); }
+}
+
+@media screen and (min-width: 1152px) and (max-width: 1400px) {
+  .heroDome { width: calc(92.55319vw - 627.745px); }
+}
+
 .tickerWrap {
   margin-left: 0.35em;
   color: var(--dev-accent);
@@ -459,15 +523,27 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* same reasoning as .lineHello/.lineName above — a flat 17px past 1024px
-   read as "stuck" once the heading next to it kept growing past its own old
-   cap. the paragraph sits in a max-w-2xl (672px) box that doesn't grow with
-   the viewport, so the cap has to stay at the old 17px rather than climbing
-   further — past that, the same two sentences need a third line. */
+/* set like .kicker ("Full-Stack Software & Mobile Dev") — same font, weight
+   and colour (text-zinc-400 in the markup), differing only in case. size is
+   the kicker's own clamp x 1.34 so it reads as the same size: the kicker is
+   all caps, and 1.34 = its cap height over this line's x-height (11.06px /
+   8.26px, measured), so lowercase here stands as tall as its capitals. not its
+   letter-spacing: that makes the copy ~45% longer and it no longer fits in
+   two lines on most laptops. */
 .pText {
-  font-size: clamp(16px, 1.16vw, 18px);
+  font-size: calc(clamp(14px, 1.09vw, 19px) * 1.34);
   line-height: 1.75;
-  color: rgba(228, 228, 231, 0.9);
+}
+
+/* never more than two lines on a laptop/desktop. the current copy needs 31em
+   of line length to fit in two (measured; 32em leaves a margin) — sized in
+   em, so it holds at every font size the clamp above reaches. past 1401px the
+   column is a fixed ~521px while the font keeps growing, so the paragraph runs
+   past it into the free space on the right instead of wrapping to a third
+   line. left off below 1060px — narrower than that, 32em at this size would
+   run off the screen. re-measure if the copy changes. */
+@media screen and (min-width: 1060px) {
+  .pText { min-width: 32em; }
 }
 
 /* holds the contribution grid under the deck, and lets it run PAST the column
@@ -501,7 +577,7 @@
 .ctaDesktop {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   justify-content: flex-start;
   flex-wrap: nowrap;
 }
@@ -609,6 +685,21 @@
   }
 }
 
+/* the "VIEW PORTFOLIO" label's own size — same vw-growth problem as
+   .circleBtn just below: the inline clamp this replaced topped out by
+   ~1051px viewport width and stayed that size on every screen wider than a
+   small laptop. picks growth back up past 1401px, same seam as the button
+   and the mosaic/heading. */
+.ctaLabel {
+  font-size: clamp(1.5rem, 3.5vw, 2.3rem);
+}
+
+@media screen and (min-width: 1401px) {
+  .ctaLabel {
+    font-size: clamp(2.3rem, 2.36vw, 3.4rem);
+  }
+}
+
 .plainLabel {
   font-family: var(--font-heading-dev);
   font-weight: 600;
@@ -624,8 +715,12 @@
 
 .circleBtn {
   flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
+  /* grows with vw instead of jumping straight to a flat 70px and staying
+     there forever — same idea as .lineHello / .lineName / .pText. reaches the
+     old 70px by ~875px viewport width, then holds until the 1401px rule below
+     picks growth back up. */
+  width: clamp(52px, 8vw, 70px);
+  height: clamp(52px, 8vw, 70px);
   border-radius: 9999px;
   background: rgb(250 250 250);
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -641,16 +736,19 @@
   overflow: hidden;
 }
 
-@media screen and (min-width: 768px) {
-  .circleBtn { width: 70px; height: 70px; }
-}
-
 @media screen and (max-width: 640px) {
   .circleBtn { width: 56px; height: 56px; }
 }
 
-@media screen and (min-width: 1025px) {
-  .circleBtn { width: 70px; height: 70px; }
+/* without this, the button is flat at 70px from 768px all the way out to a
+   4K monitor, while the heading and mosaic right next to it keep climbing —
+   it starts reading as "stuck". floor matches what the clamp above has
+   already reached by 1401px, so there's no visible jump at the seam. */
+@media screen and (min-width: 1401px) {
+  .circleBtn {
+    width: clamp(70px, 4.2vw, 104px);
+    height: clamp(70px, 4.2vw, 104px);
+  }
 }
 
 .circleBtn:hover {

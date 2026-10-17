@@ -167,10 +167,10 @@ function HoverWaveLabel({
 
   return (
     <span
-      className={`${heroStyles.fontHeading} tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
-      style={{
-        fontSize: isTablet ? "1.875rem" : "clamp(1.5rem, 3.5vw, 2.3rem)",
-      }}
+      className={`${heroStyles.fontHeading} tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center ${
+        isTablet ? "" : heroStyles.ctaLabel
+      }`}
+      style={isTablet ? { fontSize: "1.875rem" } : undefined}
     >
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
@@ -330,7 +330,7 @@ export default function IntroWavePage() {
                         m
                       </span>
                       <span
-                        data-stagger-row
+                        data-rise-fade
                         style={{ color: "var(--dev-accent)" }}
                         className={`mt-1 tracking-wide font-bold w-full ${heroStyles.lineName}`}
                       >
@@ -342,16 +342,12 @@ export default function IntroWavePage() {
                   <div className="mt-6 grid max-w-2xl gap-4 md:mt-8">
                     <p
                       data-stagger-row
-                      className={`${heroStyles.pText} ${inter.className} leading-relaxed text-zinc-200`}
+                      className={`${heroStyles.pText} leading-relaxed text-zinc-400`}
                     >
                       Nobody picks the software they use at work — it gets{" "}
-                      <span className="text-zinc-100 font-medium">
-                        handed to them
-                      </span>
+                      handed to them
                       {" "}I{" "}build that kind: the{" "}
-                      <span className="text-zinc-100 font-medium">
-                        internal systems a team runs on every day
-                      </span>
+                      internal systems a team runs on every day
                     </p>
                   </div>
 
