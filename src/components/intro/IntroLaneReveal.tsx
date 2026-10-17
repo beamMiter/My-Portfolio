@@ -19,18 +19,10 @@ gsap.registerPlugin(useGSAP);
  *    additionally held at opacity 0 until that rise starts, because its faint
  *    empty cells otherwise show a hairline of tips past the clip edge during
  *    the pre-roll hold.
- *  - [data-cta-icon]: the circle arrow button — its own beat, only after the
- *    "VIEW PORTFOLIO" label has fully split in, matched in speed to the OTHER
- *    solo late beats ([data-fade-up]'s 0.25s, the label's own 0.3s-per-letter
- *    split) rather than to the [data-stagger-row] text's 1.8s. that 1.8s only
- *    reads as one cohesive "wave" while it's riding alongside the grid and
- *    the row text moving together at the same time — used alone, well after
- *    everything else has already landed, the same duration just reads as a
- *    slow drift, out of step with the label sitting right next to it. rise +
- *    fade, not rise + clip like the rows: a clip-path sweep reveals a ROUND
- *    shape's top sliver first — mostly border, barely any fill — which read
- *    as an outline arriving before the button itself. a fade has no such
- *    edge case.
+ *  - [data-rise-fade]: same rise as [data-stagger-row] (same distance,
+ *    duration, ease and start), but faded in instead of clip-masked — the
+ *    mask's hard bottom edge sliced through the name line's letters and
+ *    descenders mid-rise, reading as a black band laid over it.
  *  - [data-grid]: scales up from further back + fades — comes forward from depth,
  *    nothing covering it.
  * Honours prefers-reduced-motion.
@@ -61,10 +53,10 @@ export default function IntroLaneReveal({
       if (!el) return;
 
       const rows = gsap.utils.toArray<HTMLElement>("[data-stagger-row]", el);
+      const riseFades = gsap.utils.toArray<HTMLElement>("[data-rise-fade]", el);
       const fadeUps = gsap.utils.toArray<HTMLElement>("[data-fade-up]", el);
       const grid = el.querySelector<HTMLElement>("[data-grid]");
       const contrib = el.querySelector<HTMLElement>("[data-contrib]");
-      const ctaIcon = el.querySelector<HTMLElement>("[data-cta-icon]");
       // the "VIEW PORTFOLIO" label — HoverWaveLabel renders one <span> per char
       const splitChars = gsap.utils.toArray<HTMLElement>(
         "[data-split-in] > span > span",
@@ -82,16 +74,12 @@ export default function IntroLaneReveal({
       }
 
       gsap.set(rows, { yPercent: 100, clipPath: CLIPPED });
+      gsap.set(riseFades, { yPercent: 100, autoAlpha: 0 });
       gsap.set(fadeUps, { autoAlpha: 0 });
       gsap.set(splitChars, { autoAlpha: 0, yPercent: 90 });
       // faint empty cells were peeking a hairline past the clip during the
       // pre-roll hold — keep the slot fully out until its rise starts
       if (contrib) gsap.set(contrib, { autoAlpha: 0 });
-      // the circle button gets its own beat after the label, so it can't ride
-      // the wrapper fade — hold it out until then, at the same starting
-      // offset as the rows (yPercent: 100) so the rise itself matches, but
-      // faded rather than clipped (see the doc comment above)
-      if (ctaIcon) gsap.set(ctaIcon, { yPercent: 100, autoAlpha: 0 });
       if (grid) {
         gsap.set(grid, { autoAlpha: 0, scale: 0.82, transformOrigin: "50% 50%" });
       }
@@ -127,6 +115,19 @@ export default function IntroLaneReveal({
         },
         0.35
       );
+      if (riseFades.length) {
+        tl.to(
+          riseFades,
+          {
+            yPercent: 0,
+            autoAlpha: 1,
+            duration: 1.8,
+            ease: "power3.out",
+            clearProps: "transform",
+          },
+          0.35
+        );
+      }
 
       // the grid slot fades up in step with that rise, so opacity 0 covers the
       // hold and the first frames while the clip is still near-shut
@@ -139,9 +140,8 @@ export default function IntroLaneReveal({
       }
 
       // the CTA comes in just as the rows above settle (power3.out has them
-      // visually done well before their 2.15 mark), in three quick beats: the
-      // wrapper appears, "VIEW PORTFOLIO" splits in, and only once the label is
-      // fully in does the circle arrow fade up.
+      // visually done well before their 2.15 mark): the wrapper appears, then
+      // "VIEW PORTFOLIO" splits in.
       tl.to(
         fadeUps,
         {
@@ -163,19 +163,6 @@ export default function IntroLaneReveal({
             clearProps: "transform,opacity,visibility",
           },
           2.05
-        );
-      }
-      if (ctaIcon) {
-        tl.to(
-          ctaIcon,
-          {
-            yPercent: 0,
-            autoAlpha: 1,
-            duration: 0.4,
-            ease: "power3.out",
-            clearProps: "transform",
-          },
-          2.75
         );
       }
     },

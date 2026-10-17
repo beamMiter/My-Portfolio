@@ -330,7 +330,7 @@ export default function IntroWavePage() {
                         m
                       </span>
                       <span
-                        data-stagger-row
+                        data-rise-fade
                         style={{ color: "var(--dev-accent)" }}
                         className={`mt-1 tracking-wide font-bold w-full ${heroStyles.lineName}`}
                       >
@@ -393,7 +393,6 @@ export default function IntroWavePage() {
                         onHoverStart={() => setBtnHovered(true)}
                         onHoverEnd={() => setBtnHovered(false)}
                         className={heroStyles.circleBtn}
-                        data-cta-icon
                         data-cursor="link"
                         style={{ overflow: "hidden", position: "relative" }}
                       >
