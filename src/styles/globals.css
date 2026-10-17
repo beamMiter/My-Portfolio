@@ -11,6 +11,13 @@
   --my:40vh;
 }
 
+/* the browser's own scrollbar track was the one strip on the page that wasn't
+   the #09090b ground (it drew a grey bar down the right edge) — track takes
+   the ground colour, thumb stays visible */
+html{
+  scrollbar-color:#3f3f46 #09090b;
+}
+
 html,body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
