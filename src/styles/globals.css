@@ -21,7 +21,15 @@ html{
 html,body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background:#09090b;  
+  /* the gradient is there on purpose, and paints no differently from plain
+     #09090b. Chrome rasters a tile that is nothing but one flat colour as a
+     "solid colour" tile, and on a Mac those reach the screen by another route
+     than tiles with something in them — on an external monitor the same
+     #09090b came out as two shades, (10,10,10) vs (7,6,11) in a screenshot,
+     split along tile edges below the content and shifting while scrolling or
+     animating. a gradient (99% → 100% of the one colour) isn't flat, so every
+     tile goes the textured route; the pixels stay exactly #09090b. */
+  background:linear-gradient(rgb(9 9 11 / .99), rgb(9 9 11)) #09090b;
   color:#e5e7eb;
   overscroll-behavior-y:none;
   scroll-behavior:smooth;

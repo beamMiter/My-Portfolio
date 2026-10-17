@@ -249,14 +249,12 @@ export default function IntroWavePage() {
 
   return (
     <main
-      className={`bg-[#09090b] min-h-screen text-zinc-50 ${heroStyles.root}`}
+      className={`min-h-screen text-zinc-50 ${heroStyles.root}`}
       style={{ touchAction: "pan-y" }}
     >
       <div className={heroStyles.heroWrap}>
-        <div className="absolute inset-0 z-0 bg-[var(--dev-ground)]" />
-
-        {/* second layer — the white stage slides in from the left once the
-            dark curtain has landed, then the grid shows on top of it */}
+        {/* the white stage slides in from the left, then the grid shows on
+            top of it */}
         <motion.div
           className={heroStyles.heroDome}
           initial={{ x: "-100%", y: "-50%" }}
@@ -274,14 +272,6 @@ export default function IntroWavePage() {
             ))}
           </div>
         </div>
-
-        {/* the curtain — dark stage panel pulled across from the right on load */}
-        <motion.div
-          className={heroStyles.stagePanel}
-          initial={{ x: "110%" }}
-          animate={{ x: "0%" }}
-          transition={{ duration: 1.1, ease: [0.8, 0, 0.2, 1] }}
-        />
 
         <div className={heroStyles.contentShell}>
           <IntroLaneReveal>
@@ -602,8 +592,6 @@ export default function IntroWavePage() {
       </section>
 
       <section className={stackStyles.section}>
-        <div className={stackStyles.bg} />
-
         <div className={stackStyles.inner}>
           <motion.div
             {...revealUp}
@@ -763,8 +751,6 @@ export default function IntroWavePage() {
       </section>
 
       <section className={aiStyles.section}>
-        <div className={aiStyles.bg} />
-
         <div className={aiStyles.inner}>
           {/* the framing */}
           <motion.div
