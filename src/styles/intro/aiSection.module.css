@@ -103,7 +103,11 @@
 
 /* horizontal heading: kicker + title on the left, the intro beside it on the
    right, sitting on the title's last line. the title is set smaller here than
-   when it stacks full width — it has to fit its column in two lines. */
+   when it stacks full width — it has to fit its column in two lines.
+   the intro hugs the right edge, in line with the steps grid's: up to ~1440px
+   its column is no wider than its 30rem cap so it fills it anyway, but on a
+   wide screen the column outgrows the cap and the intro was left floating at
+   the column's start, lined up with nothing. */
 @media (min-width: 1024px) {
   .leftCol {
     max-width: none;
@@ -125,6 +129,7 @@
   .desc {
     grid-column: 2;
     grid-row: 2;
+    justify-self: end;
     max-width: 30rem;
     margin-bottom: 0.4rem;
   }
