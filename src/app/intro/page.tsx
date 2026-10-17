@@ -342,16 +342,12 @@ export default function IntroWavePage() {
                   <div className="mt-6 grid max-w-2xl gap-4 md:mt-8">
                     <p
                       data-stagger-row
-                      className={`${heroStyles.pText} leading-relaxed text-zinc-200`}
+                      className={`${heroStyles.pText} leading-relaxed text-zinc-400`}
                     >
                       Nobody picks the software they use at work — it gets{" "}
-                      <span className="text-zinc-100 font-medium">
-                        handed to them
-                      </span>
+                      handed to them
                       {" "}I{" "}build that kind: the{" "}
-                      <span className="text-zinc-100 font-medium">
-                        internal systems a team runs on every day
-                      </span>
+                      internal systems a team runs on every day
                     </p>
                   </div>
 
