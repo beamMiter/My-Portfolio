@@ -9,7 +9,7 @@ import { markIntroRevealDone, resetIntroReveal } from "./introRevealSignal";
 gsap.registerPlugin(useGSAP);
 
 /**
- * Intro reveal — plays once on mount, after the curtain (stage panel) has passed.
+ * Intro reveal — plays once on mount, after the white stage has slid in.
  *  - [data-stagger-row]: rises up out of its own line, all at once (clip-masked).
  *  - [data-fade-up]: fades in place, NO clip mask and NO y-travel — for things
  *    whose shadow or hover transform would get cut by a clip (the CTA), and
@@ -95,8 +95,7 @@ export default function IntroLaneReveal({
       }
       show();
 
-      // start once both backdrops are in: the dark curtain (~1.1s) and the
-      // white stage that slides in over it (0.8s + 0.7s = lands at 1.5s)
+      // start once the white stage has slid in (0.8s + 0.7s = lands at 1.5s)
       const tl = gsap.timeline({ delay: 1.5, onComplete: markIntroRevealDone });
       // grid leads — it sets the stage
       if (grid) {

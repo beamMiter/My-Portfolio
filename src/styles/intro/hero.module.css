@@ -6,7 +6,7 @@
   --font-mono-dev: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
   --dev-accent: #3edc8a;
-  /* one ground for the whole page — hero, curtain and every section below.
+  /* one ground for the whole page — hero and every section below.
      lives here on .root (the <main>), so it cascades to the section modules. */
   --dev-ground: rgb(9 9 11);
 }
@@ -29,7 +29,7 @@
   /* dark run below the content so the stage's bottom arc clears the hero and
      shows in full, instead of section 2 slicing it flat. the stage is 130vh
      centred on 50vh, so its bottom sits at 115vh — the tail carries the hero
-     past that. .heroBg / .stagePanel span the padding box, so it stays dark. */
+     past that. the ground layer spans the padding box, so it stays dark. */
   --hero-tail: 20vh;
   min-height: 100vh;
   min-height: 100dvh;
@@ -48,9 +48,7 @@
    centred on 50vh — the content's own centre line — not on 50% of .heroWrap,
    which now includes the dark tail and would drag the stage down with it.
 
-   z-index sits ABOVE .stagePanel (30): the dark curtain is the first layer in,
-   the white stage lands on top of it. below 30 the arc slid under the curtain
-   and the curve got eaten, reading as a straight edge. content stays at 40.
+   z-index 35: above the dashes (.linesRow, 20), below the content (40).
    the transform is owned by framer-motion so it can slide in — none here. */
 .heroDome {
   position: absolute;
@@ -119,30 +117,26 @@
   bottom: calc(var(--hero-tail, 0px) + 2.5rem);
   padding-inline: 2.5rem;
   z-index: 20;
+  /* the dashes used to be covered on the right by a dark curtain panel slid
+     in on load. once the hero ground became the same rgb(9 9 11), that panel
+     was a second ground stacked on the first, on its own GPU layer and only
+     53-56% wide — on a wide screen, or scrolling fast right after load, it
+     was seen as a second black laid over the first. it's gone; these clips
+     keep the dashes to the same part they always showed in (none of it
+     below 768px). */
+  display: none;
 }
 
 @media screen and (min-width: 768px) {
-  .linesRow { padding-inline: 5rem; }
-}
-
-.stagePanel {
-  position: absolute;
-  pointer-events: none;
-  inset-block: 0;
-  right: 0;
-  width: 100%;
-  background: var(--dev-ground, rgb(9 9 11));
-  z-index: 30;
-  transform-origin: right;
-  will-change: transform;
-}
-
-@media screen and (min-width: 768px) {
-  .stagePanel { width: 56%; }
+  .linesRow {
+    display: block;
+    padding-inline: 5rem;
+    clip-path: inset(0 56% 0 0);
+  }
 }
 
 @media screen and (min-width: 1401px) {
-  .stagePanel { width: 53%; }
+  .linesRow { clip-path: inset(0 53% 0 0); }
 }
 
 .contentShell {
