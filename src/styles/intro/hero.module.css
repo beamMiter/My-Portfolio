@@ -459,12 +459,15 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* set like .kicker ("Full-Stack Software & Mobile Dev") — same font, size,
-   weight and colour (text-zinc-400 in the markup), differing only in case;
-   keep the two in step if either changes. not its letter-spacing: that makes
-   the copy ~45% longer and it no longer fits in two lines on most laptops. */
+/* set like .kicker ("Full-Stack Software & Mobile Dev") — same font, weight
+   and colour (text-zinc-400 in the markup), differing only in case. size is
+   the kicker's own clamp x 1.34 so it reads as the same size: the kicker is
+   all caps, and 1.34 = its cap height over this line's x-height (11.06px /
+   8.26px, measured), so lowercase here stands as tall as its capitals. not its
+   letter-spacing: that makes the copy ~45% longer and it no longer fits in
+   two lines on most laptops. */
 .pText {
-  font-size: clamp(14px, 1.09vw, 19px);
+  font-size: calc(clamp(14px, 1.09vw, 19px) * 1.34);
   line-height: 1.75;
 }
 
@@ -473,9 +476,9 @@
    em, so it holds at every font size the clamp above reaches. past 1401px the
    column is a fixed ~521px while the font keeps growing, so the paragraph runs
    past it into the free space on the right instead of wrapping to a third
-   line. left off below 920px — narrower than that, 32em would run off the
-   screen. re-measure if the copy changes. */
-@media screen and (min-width: 920px) {
+   line. left off below 1060px — narrower than that, 32em at this size would
+   run off the screen. re-measure if the copy changes. */
+@media screen and (min-width: 1060px) {
   .pText { min-width: 32em; }
 }
 
