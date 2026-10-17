@@ -393,6 +393,7 @@ export default function IntroWavePage() {
                         onHoverStart={() => setBtnHovered(true)}
                         onHoverEnd={() => setBtnHovered(false)}
                         className={heroStyles.circleBtn}
+                        data-cta-icon
                         data-cursor="link"
                         style={{ overflow: "hidden", position: "relative" }}
                       >

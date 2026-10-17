@@ -23,6 +23,9 @@ gsap.registerPlugin(useGSAP);
  *    duration, ease and start), but faded in instead of clip-masked — the
  *    mask's hard bottom edge sliced through the name line's letters and
  *    descenders mid-rise, reading as a black band laid over it.
+ *  - [data-cta-icon]: the circle arrow button — joins the end of the
+ *    "VIEW PORTFOLIO" letter wave as one more item in the same stagger, so it
+ *    rises in right after the last letter with the exact same motion.
  *  - [data-grid]: scales up from further back + fades — comes forward from depth,
  *    nothing covering it.
  * Honours prefers-reduced-motion.
@@ -57,11 +60,14 @@ export default function IntroLaneReveal({
       const fadeUps = gsap.utils.toArray<HTMLElement>("[data-fade-up]", el);
       const grid = el.querySelector<HTMLElement>("[data-grid]");
       const contrib = el.querySelector<HTMLElement>("[data-contrib]");
+      const ctaIcon = el.querySelector<HTMLElement>("[data-cta-icon]");
       // the "VIEW PORTFOLIO" label — HoverWaveLabel renders one <span> per char
+      // — with the circle button tacked on as the wave's last item
       const splitChars = gsap.utils.toArray<HTMLElement>(
         "[data-split-in] > span > span",
         el
       );
+      if (ctaIcon) splitChars.push(ctaIcon);
 
       const show = () => gsap.set(el, { visibility: "visible" });
 
@@ -77,6 +83,10 @@ export default function IntroLaneReveal({
       gsap.set(riseFades, { yPercent: 100, autoAlpha: 0 });
       gsap.set(fadeUps, { autoAlpha: 0 });
       gsap.set(splitChars, { autoAlpha: 0, yPercent: 90 });
+      // .circleBtn's CSS transform transition (there for its hover scale)
+      // would chase every frame of the rise and trail behind the letters —
+      // off for the wave, handed back by clearProps once it lands
+      if (ctaIcon) gsap.set(ctaIcon, { transition: "none" });
       // faint empty cells were peeking a hairline past the clip during the
       // pre-roll hold — keep the slot fully out until its rise starts
       if (contrib) gsap.set(contrib, { autoAlpha: 0 });
@@ -141,7 +151,7 @@ export default function IntroLaneReveal({
 
       // the CTA comes in just as the rows above settle (power3.out has them
       // visually done well before their 2.15 mark): the wrapper appears, then
-      // "VIEW PORTFOLIO" splits in.
+      // "VIEW PORTFOLIO" splits in, the circle button last in the same wave.
       tl.to(
         fadeUps,
         {
@@ -160,7 +170,7 @@ export default function IntroLaneReveal({
             duration: 0.3,
             ease: "power3.out",
             stagger: 0.026,
-            clearProps: "transform,opacity,visibility",
+            clearProps: "transform,opacity,visibility,transition",
           },
           2.05
         );
