@@ -167,10 +167,10 @@ function HoverWaveLabel({
 
   return (
     <span
-      className={`${heroStyles.fontHeading} tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center`}
-      style={{
-        fontSize: isTablet ? "1.875rem" : "clamp(1.5rem, 3.5vw, 2.3rem)",
-      }}
+      className={`${heroStyles.fontHeading} tracking-[0.01em] uppercase font-semibold leading-none inline-flex items-center justify-center ${
+        isTablet ? "" : heroStyles.ctaLabel
+      }`}
+      style={isTablet ? { fontSize: "1.875rem" } : undefined}
     >
       {Array.from({ length: maxLen }).map((_, index) => {
         const topChar = TOP_LABEL[index] ?? " ";
