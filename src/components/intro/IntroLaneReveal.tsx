@@ -19,13 +19,18 @@ gsap.registerPlugin(useGSAP);
  *    additionally held at opacity 0 until that rise starts, because its faint
  *    empty cells otherwise show a hairline of tips past the clip edge during
  *    the pre-roll hold.
- *  - [data-cta-icon]: the circle arrow button — its own late beat, rising into
- *    place at the same speed as the [data-stagger-row] text (same duration +
- *    ease), only after everything above has landed and the "VIEW PORTFOLIO"
- *    label has fully split in. rise + fade, not rise + clip like the rows:
- *    a clip-path sweep reveals a ROUND shape's top sliver first — mostly
- *    border, barely any fill — which read as an outline arriving before the
- *    button itself. a fade has no such edge case.
+ *  - [data-cta-icon]: the circle arrow button — its own beat, only after the
+ *    "VIEW PORTFOLIO" label has fully split in, matched in speed to the OTHER
+ *    solo late beats ([data-fade-up]'s 0.25s, the label's own 0.3s-per-letter
+ *    split) rather than to the [data-stagger-row] text's 1.8s. that 1.8s only
+ *    reads as one cohesive "wave" while it's riding alongside the grid and
+ *    the row text moving together at the same time — used alone, well after
+ *    everything else has already landed, the same duration just reads as a
+ *    slow drift, out of step with the label sitting right next to it. rise +
+ *    fade, not rise + clip like the rows: a clip-path sweep reveals a ROUND
+ *    shape's top sliver first — mostly border, barely any fill — which read
+ *    as an outline arriving before the button itself. a fade has no such
+ *    edge case.
  *  - [data-grid]: scales up from further back + fades — comes forward from depth,
  *    nothing covering it.
  * Honours prefers-reduced-motion.
@@ -166,11 +171,11 @@ export default function IntroLaneReveal({
           {
             yPercent: 0,
             autoAlpha: 1,
-            duration: 1.8,
+            duration: 0.4,
             ease: "power3.out",
             clearProps: "transform",
           },
-          2.8
+          2.75
         );
       }
     },
