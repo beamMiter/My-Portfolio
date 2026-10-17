@@ -5,7 +5,6 @@
    toward centre), without leaving a yawning empty band. */
 .section {
   position: relative;
-  background: var(--dev-ground, rgb(9 9 11));
   padding-top: 4rem;
   padding-bottom: 26vh;
   /* clip, not hidden: stops the x:±40 entrance animations spilling sideways
@@ -20,13 +19,6 @@
     padding-top: 5.5rem;
     padding-bottom: 32vh;
   }
-}
-
-.bg {
-  position: absolute;
-  inset: 0;
-  background: var(--dev-ground, rgb(9 9 11));
-  pointer-events: none;
 }
 
 .inner {

@@ -249,12 +249,10 @@ export default function IntroWavePage() {
 
   return (
     <main
-      className={`bg-[#09090b] min-h-screen text-zinc-50 ${heroStyles.root}`}
+      className={`min-h-screen text-zinc-50 ${heroStyles.root}`}
       style={{ touchAction: "pan-y" }}
     >
       <div className={heroStyles.heroWrap}>
-        <div className="absolute inset-0 z-0 bg-[var(--dev-ground)]" />
-
         {/* the white stage slides in from the left, then the grid shows on
             top of it */}
         <motion.div
@@ -594,8 +592,6 @@ export default function IntroWavePage() {
       </section>
 
       <section className={stackStyles.section}>
-        <div className={stackStyles.bg} />
-
         <div className={stackStyles.inner}>
           <motion.div
             {...revealUp}
@@ -755,8 +751,6 @@ export default function IntroWavePage() {
       </section>
 
       <section className={aiStyles.section}>
-        <div className={aiStyles.bg} />
-
         <div className={aiStyles.inner}>
           {/* the framing */}
           <motion.div

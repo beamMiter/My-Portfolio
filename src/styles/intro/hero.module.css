@@ -6,8 +6,10 @@
   --font-mono-dev: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
   --dev-accent: #3edc8a;
-  /* one ground for the whole page — hero and every section below.
-     lives here on .root (the <main>), so it cascades to the section modules. */
+  /* the page paints no ground of its own: html/body (globals.css) is the one
+     background, same as /home, and nothing is stacked on it — no layout,
+     <main>, hero or section backgrounds. this is that colour for what still
+     has to paint it itself (the AI steps' cells, which mask the divider grid). */
   --dev-ground: rgb(9 9 11);
 }
 
@@ -29,7 +31,7 @@
   /* dark run below the content so the stage's bottom arc clears the hero and
      shows in full, instead of section 2 slicing it flat. the stage is 130vh
      centred on 50vh, so its bottom sits at 115vh — the tail carries the hero
-     past that. the ground layer spans the padding box, so it stays dark. */
+     past that. the tail paints nothing — the body background shows through. */
   --hero-tail: 20vh;
   min-height: 100vh;
   min-height: 100dvh;
