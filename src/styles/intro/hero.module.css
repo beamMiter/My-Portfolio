@@ -452,32 +452,56 @@
   }
 }
 
-/* 1232–1400px: ramps from the 768–1400 layout into the 1401px+ one instead of
-   switching at 1401. the mosaic used to hold at 0.43 all the way to 1400 and
-   then jump 51% bigger, with the dome, column gap and text start all jumping
-   with it — so this range read as a small mosaic in a big white dome next to
-   a long, heavy text block. 1232 is where the container caps at 72rem and
-   extra width starts becoming free margin; across the band every value below
-   runs linearly from its 768–1400 value to its 1401px+ value, landing on it
-   at 1400. (starting the ramp lower runs the paragraph off-screen.) */
-@media screen and (min-width: 1232px) and (max-width: 1400px) {
-  .contentContainer { gap: calc(3.5rem + (100vw - 1232px) * 0.7142857); }
-  .rightCol { padding-left: calc(0.75rem + (100vw - 1232px) * 0.1190476); }
-  /* = gutter + 24rem + (100vw - 1232px) * 160/168, flattened: the gutter is
-     always positive in this band, and the unflattened max() + vw form
-     segfaults lightningcss (Next's CSS compiler), killing the dev server. */
-  .heroDome { width: calc(145.2381vw - 1365.333px); }
+/* 1024–1400px: ramps from where the 768–1023 band hands over (mosaic 0.43,
+   left-aligned in a 24rem dome) into the 1401px+ layout, instead of holding
+   that small, left-hugging mosaic all the way to 1400 and then jumping 51%
+   bigger at 1401 with the dome, column gap and text start all jumping with
+   it. every value below runs linearly across the band and lands on its
+   1401px+ value at 1400. */
+@media screen and (min-width: 1024px) and (max-width: 1400px) {
+  .contentContainer { gap: calc(3.5rem + (100vw - 1024px) * 0.3191489); }
+  .rightCol { padding-left: calc(0.75rem + (100vw - 1024px) * 0.0531915); }
   .cubeWrap {
-    --ramp: calc((100vw / 1px - 1232) / 168);
-    --mosaic-scale: calc(0.43 + 0.22 * var(--ramp));
+    --ramp: calc((100vw / 1px - 1024) / 376);
+    /* short windows: the ramp's bigger mosaic gets tall enough for its
+       far-right card corners to cross the dome's curve (the curve narrows
+       toward its top and bottom, and the dome's height follows vh). this is
+       the exact largest zoom that keeps those corners — 307.9 / ±423.25
+       unscaled px from the mosaic's centre — inside the half-ellipse
+       (rx = dome width, ry = 65vh) with a 1.5% margin, at the mosaic's real
+       position on the ramp. it only binds on windows up to ~715px tall;
+       anything taller keeps the plain ramp value. all plain numbers (px). */
+    --g: max(0, (100vw / 1px - 1152) / 2);
+    --dn: calc(0.4255319 * (100vw / 1px) - 51.745 + var(--g));
+    --ca: calc((336 * (1 - var(--ramp)) + 307.9) / var(--dn));
+    --cb: calc((var(--g) + 40 + var(--ramp) * (192 + 80 * var(--ramp) - var(--g) / 2 - 40)) / var(--dn));
+    --cq: calc(651.15 / (100vh / 1px));
+    --ck: calc(var(--ca) * var(--ca) + var(--cq) * var(--cq));
+    --mosaic-scale: min(
+      calc(0.43 + 0.22 * var(--ramp)),
+      calc((sqrt(var(--ca) * var(--ca) * var(--cb) * var(--cb) - var(--ck) * (var(--cb) * var(--cb) - 0.985)) - var(--ca) * var(--cb)) / var(--ck))
+    );
     /* eases from left-aligned (0) into the 1401px+ centring on the dome's
        midpoint — same solve as there, with the dome's half-width ramping */
     --cube-x: calc(var(--ramp) * (192px + 80px * var(--ramp) - 336px * var(--mosaic-scale) - max(0px, (100vw - 72rem) / 2) / 2 - 40px));
   }
   .mosaicZoom { zoom: var(--mosaic-scale); }
-  /* the column narrows here, and from ~1340px the name no longer fits in it —
-     same as 1401px+, let it run on into the free space instead of wrapping */
+  /* the column narrows as the gap grows, so the name no longer always fits
+     in it — same as 1401px+, let it run on into the free space instead of
+     wrapping */
   .heroTitle { white-space: nowrap; flex-wrap: nowrap; }
+}
+
+/* the dome's width across the same ramp: gutter + 24rem + (100vw - 1024px) *
+   160/376. written as two flat linear pieces that meet at 1152px (where the
+   gutter starts) — the single max() + vw form segfaults lightningcss (Next's
+   CSS compiler) and takes the dev server down with it. */
+@media screen and (min-width: 1024px) and (max-width: 1151px) {
+  .heroDome { width: calc(42.55319vw - 51.745px); }
+}
+
+@media screen and (min-width: 1152px) and (max-width: 1400px) {
+  .heroDome { width: calc(92.55319vw - 627.745px); }
 }
 
 .tickerWrap {
