@@ -249,7 +249,7 @@ export default function IntroWavePage() {
 
   return (
     <main
-      className={`bg-[var(--dev-ground)] min-h-screen text-zinc-50 ${heroStyles.root}`}
+      className={`bg-[#09090b] min-h-screen text-zinc-50 ${heroStyles.root}`}
       style={{ touchAction: "pan-y" }}
     >
       <div className={heroStyles.heroWrap}>
