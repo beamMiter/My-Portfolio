@@ -452,6 +452,34 @@
   }
 }
 
+/* 1232–1400px: ramps from the 768–1400 layout into the 1401px+ one instead of
+   switching at 1401. the mosaic used to hold at 0.43 all the way to 1400 and
+   then jump 51% bigger, with the dome, column gap and text start all jumping
+   with it — so this range read as a small mosaic in a big white dome next to
+   a long, heavy text block. 1232 is where the container caps at 72rem and
+   extra width starts becoming free margin; across the band every value below
+   runs linearly from its 768–1400 value to its 1401px+ value, landing on it
+   at 1400. (starting the ramp lower runs the paragraph off-screen.) */
+@media screen and (min-width: 1232px) and (max-width: 1400px) {
+  .contentContainer { gap: calc(3.5rem + (100vw - 1232px) * 0.7142857); }
+  .rightCol { padding-left: calc(0.75rem + (100vw - 1232px) * 0.1190476); }
+  /* = gutter + 24rem + (100vw - 1232px) * 160/168, flattened: the gutter is
+     always positive in this band, and the unflattened max() + vw form
+     segfaults lightningcss (Next's CSS compiler), killing the dev server. */
+  .heroDome { width: calc(145.2381vw - 1365.333px); }
+  .cubeWrap {
+    --ramp: calc((100vw / 1px - 1232) / 168);
+    --mosaic-scale: calc(0.43 + 0.22 * var(--ramp));
+    /* eases from left-aligned (0) into the 1401px+ centring on the dome's
+       midpoint — same solve as there, with the dome's half-width ramping */
+    --cube-x: calc(var(--ramp) * (192px + 80px * var(--ramp) - 336px * var(--mosaic-scale) - max(0px, (100vw - 72rem) / 2) / 2 - 40px));
+  }
+  .mosaicZoom { zoom: var(--mosaic-scale); }
+  /* the column narrows here, and from ~1340px the name no longer fits in it —
+     same as 1401px+, let it run on into the free space instead of wrapping */
+  .heroTitle { white-space: nowrap; flex-wrap: nowrap; }
+}
+
 .tickerWrap {
   margin-left: 0.35em;
   color: var(--dev-accent);
