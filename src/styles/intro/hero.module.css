@@ -8,7 +8,18 @@
   --dev-accent: #3edc8a;
   /* one ground for the whole page — hero and every section below.
      lives here on .root (the <main>), so it cascades to the section modules. */
-  --dev-ground: rgb(9 9 11);
+  --dev-ground: rgb(0 0 0);
+}
+
+/* html/body and the scrollbar track sit outside .root and are #09090b
+   site-wide (globals.css) — on this page they take the same ground, so no
+   second shade shows behind or beside it */
+:global(html):has(.root) {
+  background: rgb(0 0 0);
+  scrollbar-color: #3f3f46 rgb(0 0 0);
+}
+:global(body):has(.root) {
+  background: rgb(0 0 0);
 }
 
 .fontSans { font-family: var(--font-sans-dev); }

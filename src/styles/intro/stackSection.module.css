@@ -4,7 +4,7 @@
    padding matches on both edges so every seam below the hero is equal. */
 .section {
   position: relative;
-  background: var(--dev-ground, rgb(9 9 11));
+  background: var(--dev-ground, rgb(0 0 0));
   padding-block: 4rem;
   /* clip, not hidden: stops the x:±60 entrance animations spilling sideways
      without turning the section into a scroll container. hidden is the
@@ -23,7 +23,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: var(--dev-ground, rgb(9 9 11));
+  background: var(--dev-ground, rgb(0 0 0));
 }
 
 .inner {

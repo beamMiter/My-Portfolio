@@ -11,7 +11,7 @@
      can't leave an unexplained band of dead space at the bottom. */
   overflow: hidden;
   overflow: clip;
-  background: var(--dev-ground, rgb(9 9 11));
+  background: var(--dev-ground, rgb(0 0 0));
   padding-top: 5rem;
   padding-bottom: 4rem;
 }
@@ -238,7 +238,7 @@
   overflow: hidden;
   border-radius: 1.9rem;
   border: 1px solid rgba(63, 63, 70, 0.7); /* zinc-700/70 */
-  background: rgb(9 9 11); /* zinc-950 */
+  background: var(--dev-ground, rgb(0 0 0));
 }
 
 .cardTopbar {
@@ -342,7 +342,7 @@
   pointer-events: none;
   position: absolute;
   inset: 0;
-  background: rgb(9 9 11);
+  background: var(--dev-ground, rgb(0 0 0));
   transform-origin: left;
 }
 
