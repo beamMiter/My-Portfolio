@@ -260,6 +260,18 @@
   .mosaicZoom { zoom: 0.43; }
 }
 
+/* 768–1023px: the dome's flat 24rem reached past where the text column starts
+   (by up to 50px at 768px), so the first letters of every line sat on the
+   white — "Hello"'s H and "VIEW"'s V vanished. here the dome follows the text
+   column's start instead (32vw + ~75px in this band) and stops ~20px short of
+   it, and the mosaic shrinks with it to stay inside the curve: 0.43 at the
+   full 24rem dome, scaled down in step (its right edge kept at the same 0.836
+   of the dome's width as at 768px before). */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .heroDome { width: min(24rem, calc(32vw + 55px)); }
+  .mosaicZoom { zoom: min(0.43, calc(0.0208 + 0.000398 * (100vw / 1px))); }
+}
+
 @media screen and (min-width: 1401px) {
   .mosaicZoom { zoom: var(--mosaic-scale); }
 }
