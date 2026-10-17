@@ -167,9 +167,9 @@ export default function IntroLaneReveal({
           {
             autoAlpha: 1,
             yPercent: 0,
-            duration: 0.3,
+            duration: 0.45,
             ease: "power3.out",
-            stagger: 0.026,
+            stagger: 0.04,
             clearProps: "transform,opacity,visibility,transition",
           },
           2.05
