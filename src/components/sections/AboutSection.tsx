@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 type TimelineItem = {
   period: string;
@@ -138,15 +137,9 @@ export default function AboutSection() {
       className="scroll-mt-28 py-16 bg-[#09090b] border-b border-white/5"
     >
       <div className="mx-auto max-w-[1200px] px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="text-[clamp(12px,1vw,15px)] tracking-[0.3em] uppercase text-white/45"
-        >
+        <p className="text-[clamp(12px,1vw,15px)] tracking-[0.3em] uppercase text-white/45">
           About
-        </motion.p>
+        </p>
 
         <div className="mt-4 grid gap-10 md:grid-cols-[1.05fr_0.95fr] items-start">
           <div>
@@ -240,17 +233,10 @@ export default function AboutSection() {
               <h3 className="text-sm font-medium text-white/40 mb-5">Skills</h3>
 
               <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                {SKILLS.map((skill, idx) => (
-                  <motion.div
-                    key={skill}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: idx * 0.05 }}
-                    className="text-[14px] text-white"
-                  >
+                {SKILLS.map((skill) => (
+                  <div key={skill} className="text-[14px] text-white">
                     {skill}
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
