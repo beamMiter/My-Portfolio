@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ExternalLink } from "lucide-react";
@@ -68,13 +68,20 @@ const ordered = [...projects].sort(
   (a, b) => Number(isOpenable(b)) - Number(isOpenable(a))
 );
 
-/** three copies so the strip can wrap seamlessly in either direction */
-const COPIES = 3;
-const loopItems = Array.from({ length: COPIES }, () => ordered).flat();
+/** three copies so the strip can wrap seamlessly in either direction — more once
+ *  the screen is wider than one set, see `fit` below */
+const MIN_COPIES = 3;
+
+/** distance from a card to the same card in the next copy (cards + gaps) */
+const setWidth = (el: HTMLElement) => {
+  const a = el.children[0] as HTMLElement | undefined;
+  const b = el.children[projects.length] as HTMLElement | undefined;
+  return a && b ? b.offsetLeft - a.offsetLeft : 0;
+};
 
 /** marquee speed in px per second — time-based, so it runs the same on a
  *  60Hz and a 120Hz screen */
-const SPEED = 45;
+const SPEED = 60;
 
 const BLUR_DATA_URL =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
@@ -117,10 +124,10 @@ function hasValidHref(href?: string) {
  * It's a real scroll container rather than a CSS ticker, so the reader can take
  * over at any time: hovering stops the run, and from there it can be dragged,
  * flicked, trackpad-scrolled or swiped, then it picks the run back up on the
- * way out. The list is rendered three times and scrollLeft is parked inside the
- * middle copy, so crossing a seam jumps by exactly one set's width and is
- * invisible — it loops forever both ways. No dots, arrows or labels: the motion
- * and the faded edges are the only cue.
+ * way out. The list is rendered three times (more on a screen wider than one
+ * set) and scrollLeft is parked inside the middle copy, so crossing a seam jumps
+ * by exactly one set's width and is invisible — it loops forever both ways. No
+ * dots, arrows or labels: the motion and the faded edges are the only cue.
  */
 export default function ProjectsSection() {
   const router = useRouter();
@@ -128,6 +135,11 @@ export default function ProjectsSection() {
   const paused = useRef(false);
   const ready = useRef(false);
   const drag = useRef({ on: false, startX: 0, startLeft: 0, moved: false });
+  const [copies, setCopies] = useState(MIN_COPIES);
+  const loopItems = useMemo(
+    () => Array.from({ length: copies }, () => ordered).flat(),
+    [copies]
+  );
 
   const openProject = (p: Project) => {
     if (p.path) {
@@ -143,39 +155,73 @@ export default function ProjectsSection() {
     const el = scroller.current;
     if (!el) return;
 
-    const setWidth = () => {
-      const a = el.children[0] as HTMLElement | undefined;
-      const b = el.children[projects.length] as HTMLElement | undefined;
-      return a && b ? b.offsetLeft - a.offsetLeft : 0;
+    // the viewport sits in [1 set, 2 sets) of the strip and must be able to get
+    // to 2 sets, so the strip needs 2 sets + a screen's width. with a fixed three
+    // copies a screen wider than one set (~2240px) hit the end of the scroll
+    // range first, never reached the wrap point, and froze there for good.
+    const fit = () => {
+      const w = setWidth(el);
+      if (w > 0) {
+        setCopies(Math.max(MIN_COPIES, Math.ceil(el.clientWidth / w) + 2));
+      }
     };
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf = 0;
     let last = performance.now();
+
+    // scrollLeft only holds whole pixels. adding SPEED * dt to what it reads back
+    // loses the fraction every frame: 0.75px rounded up to 1 (33% too fast at
+    // 60Hz), 0.375px rounded down to nothing (dead still at 120Hz and up). so the
+    // real position is kept here and scrollLeft is only where it gets drawn.
+    let pos = 0;
+    let written = 0;
 
     const frame = (now: number) => {
       // clamp so a backgrounded tab doesn't resume with one huge jump
       const dt = Math.min(now - last, 50) / 1000;
       last = now;
 
-      const w = setWidth();
+      const w = setWidth(el);
       if (w > 0) {
         if (!ready.current) {
-          el.scrollLeft = w;
+          pos = w;
+          el.scrollLeft = pos;
+          written = el.scrollLeft;
           ready.current = true;
         }
-        if (!paused.current && !drag.current.on && !reduce) {
-          el.scrollLeft += SPEED * dt;
+        // not where we left it: a drag, wheel, swipe or key moved it. carry on
+        // from there, and write nothing this frame so a fling isn't fought
+        const moved = el.scrollLeft !== written;
+        if (moved) {
+          pos = el.scrollLeft;
+          written = pos;
         }
+
+        const run = !moved && !paused.current && !drag.current.on && !reduce;
+        if (run) pos += SPEED * dt;
+
         // keep the viewport parked inside the middle copy
-        if (el.scrollLeft >= w * 2) el.scrollLeft -= w;
-        else if (el.scrollLeft < w * 0.5) el.scrollLeft += w;
+        let wrapped = true;
+        if (pos >= w * 2) pos -= w;
+        else if (pos < w * 0.5) pos += w;
+        else wrapped = false;
+
+        if (run || wrapped) {
+          el.scrollLeft = pos;
+          written = el.scrollLeft;
+        }
       }
       raf = requestAnimationFrame(frame);
     };
 
     raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
   }, []);
 
   // no setPointerCapture here — capturing on pointerdown retargets pointerup to
