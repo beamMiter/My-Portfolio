@@ -334,10 +334,8 @@ export default function IntroWavePage() {
                       data-stagger-row
                       className={`${heroStyles.pText} leading-relaxed text-zinc-400`}
                     >
-                      Nobody picks the software they use at work — it gets{" "}
-                      handed to them
-                      {" "}I{" "}build that kind: the{" "}
-                      internal systems a team runs on every day
+                      I build the internal systems a team never gets to pick but still opens
+                      every morning and runs on all day without a second thought
                     </p>
                   </div>
 
