@@ -79,14 +79,22 @@ export default function IntroLaneReveal({
         return;
       }
 
+      // .circleBtn's CSS transform transition (there for its hover scale)
+      // would chase every frame of the rise and trail behind the letters —
+      // off for the wave, handed back by clearProps once it lands.
+      // it has to go off BEFORE any transform is set: a revert undoes these
+      // sets in reverse order, so this way the transform is stripped while the
+      // transition is still off. the other way round the strip was itself
+      // transitioned, and a reveal re-run straight after (StrictMode does
+      // run → cleanup → run on a client-side visit) read the half-gone
+      // translate(0%, 90%) as y: 63px — stacked on its own yPercent, the
+      // button rose twice as far and then slid the last 63px up after the
+      // letters had landed.
+      if (ctaIcon) gsap.set(ctaIcon, { transition: "none" });
       gsap.set(rows, { yPercent: 100, clipPath: CLIPPED });
       gsap.set(riseFades, { yPercent: 100, autoAlpha: 0 });
       gsap.set(fadeUps, { autoAlpha: 0 });
       gsap.set(splitChars, { autoAlpha: 0, yPercent: 90 });
-      // .circleBtn's CSS transform transition (there for its hover scale)
-      // would chase every frame of the rise and trail behind the letters —
-      // off for the wave, handed back by clearProps once it lands
-      if (ctaIcon) gsap.set(ctaIcon, { transition: "none" });
       // faint empty cells were peeking a hairline past the clip during the
       // pre-roll hold — keep the slot fully out until its rise starts
       if (contrib) gsap.set(contrib, { autoAlpha: 0 });
