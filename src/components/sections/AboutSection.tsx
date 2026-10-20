@@ -1,12 +1,18 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 type TimelineItem = {
   period: string;
   title: string;
   org: string;
-  body: string[];
+  /** the story of the period in a sentence or two */
+  lead: string;
+  /** what came out of it — short lines, optionally tagged (a year) */
+  points: { tag?: string; text: string }[];
+  certificate?: { src: string; label: string };
 };
 
 const timeline: TimelineItem[] = [
@@ -14,53 +20,59 @@ const timeline: TimelineItem[] = [
     period: "2026",
     title: "Full Stack Software Development",
     org: "TechUp Bootcamp",
-    body: [
-      "I joined TechUp, an intensive bootcamp built around full stack software development, to firm up the fundamentals underneath the skills I had picked up on the job. A large part of the early weeks was deliberate review: Big O notation and reasoning about time and space complexity before committing to an approach, object-oriented design and where composition serves better than inheritance, and a broad pass over common algorithms and data structures — worked through by hand and in code until the patterns felt familiar rather than memorised.",
-      "The core of the program was building three full stack web applications end to end, each with its own data model, API layer, and frontend, shipped against real deadlines and put through mentor review. Around the engineering, the camp kept steady weight on the parts of the job that are not code: communicating trade-offs clearly, giving and taking code review, presenting technical decisions to a room, and using technical terms precisely so conversations with other engineers stay short and unambiguous.",
+    lead: "An intensive full stack bootcamp, taken to firm up the fundamentals underneath what I had picked up on the job, and to build with a team, end to end, against real deadlines.",
+    points: [
+      { text: "Big O and time/space complexity, worked out before committing to an approach" },
+      { text: "Object-oriented design, and where composition serves better than inheritance" },
+      { text: "Common algorithms and data structures, by hand and in code" },
+      { text: "Three full stack web apps, each with its own data model, API and frontend, through mentor review" },
+      { text: "Code review, presenting technical decisions, and precise technical language" },
     ],
   },
   {
     period: "2026 – Present",
     title: "Full Stack Developer",
     org: "Phrapokklao Hospital X Technology Group",
-    body: [
-      "This period has been one of the most formative in terms of real-world engineering experience. Working directly with stakeholders, I practice receiving briefs, clarifying requirements, and translating operational needs into software decisions. The gap between what users ask for and what they actually need became something I learned to navigate carefully through conversation and iteration.",
-      "I deepened my understanding of collaborative development beyond basic version control. Working in a team environment taught me how to manage branching strategies properly, keep feature branches isolated, coordinate merges without breaking shared work, and maintain a codebase that multiple people can reason about and contribute to safely. Git became a workflow discipline rather than just a tool.",
-      "On the technical side, I expanded my skills in UX and UI design with a stronger focus on system usability, not just visual polish. I developed a deeper understanding of PHP and grew more comfortable with Laravel as a production framework. I also picked up DaisyUI paired with Vite, which improved how I approach component-driven frontend development and build tooling. Alongside these, I continued strengthening my ability to design backend systems with clear logic, predictable behavior, and database structures that reflect real workflows without unnecessary complexity.",
+    lead: "Building internal systems with the hospital's own staff: taking briefs straight from the people who will use the software, and turning what they ask for into what they actually need.",
+    points: [
+      { text: "Clarifying requirements with stakeholders through conversation and iteration" },
+      { text: "Team Git workflow: isolated feature branches, merges that don't break shared work" },
+      { text: "UX and UI with the focus on usability, not just visual polish" },
+      { text: "PHP and Laravel in production; DaisyUI with Vite on the frontend" },
+      { text: "Backend logic and database structures that mirror real workflows" },
     ],
   },
   {
     period: "2025",
     title: "Full Stack Developer",
     org: "Phrapokklao Hospital X Rambhai Barni Rajabhat University",
-    body: [
-      "I completed my internship as a Full Stack Developer at Phrapokklao Hospital in Chanthaburi. Working in a real hospital context helped me understand practical constraints such as time pressure, user adoption, and the importance of data integrity in daily operations. The early period was focused on understanding the codebase and the environment rather than shipping features, but I used that time to deepen my understanding of JavaScript, API parameter design, and how to structure relational databases in a way that reflects real operational relationships.",
-      "As I grew into the role, I contributed across the full stack. On the backend I worked with Node.js and Express, then expanded into TypeScript to improve type safety and long-term maintainability. I learned WebSocket integration for real-time features, designed MySQL schemas, and used Docker to create consistent environments for testing before deploying to the hospital server for medical staff to use in production. I worked iteratively based on feedback from real users, refining flows and improving usability so staff could complete tasks faster and with fewer errors.",
-      "I also built a Python utility to read and parse Thai national ID card data, integrating it into an internal hospital project to streamline patient identification workflows. Throughout the internship I worked closely with junior and senior developers, practiced receiving and breaking down requirements from stakeholders, and developed a clearer instinct for debugging, logic design, and building systems that hold up under real usage conditions.",
+    lead: "My internship at Phrapokklao Hospital in Chanthaburi: first learning the codebase and what a hospital demands of software, then shipping across the full stack to medical staff in production.",
+    points: [
+      { text: "Node.js and Express, then TypeScript for type safety and long-term maintainability" },
+      { text: "WebSocket for real-time features, and MySQL schema design" },
+      { text: "Docker for consistent test environments before deploying to the hospital server" },
+      { text: "A Python utility that reads Thai national ID cards, built into patient identification" },
+      { text: "Iterating on feedback from real users so staff finish tasks faster, with fewer errors" },
     ],
   },
   {
-    period: "2024",
+    period: "2022 – 2024",
     title: "B.Sc. Computer Science",
     org: "Rambhai Barni Rajabhat University",
-    body: [
-      "My final year expanded significantly into full-stack development. I learned Laravel as a backend framework and Next.js on the frontend, spending time understanding how APIs are designed, documented, and tested using Postman. I also returned to UI/UX Design with a more structured approach, focusing on component hierarchy, user flows, and how interface decisions affect real usability rather than just aesthetics. A major focus was database architecture: designing normalized schemas, understanding indexing, and modeling real-world relationships carefully. My capstone project tied everything together with a Laravel service acting as the backend API and a Next.js frontend consuming it, giving me my first complete full-stack system built from scratch.",
-    ],
-  },
-  {
-    period: "2023",
-    title: "B.Sc. Computer Science",
-    org: "Rambhai Barni Rajabhat University",
-    body: [
-      "My second year moved into mobile development using Dart and Flutter. I built an application that connected to a real database and displayed live data inside the app, handling data fetching, state management, and UI rendering together. Alongside Flutter, I studied SQL and MySQL in depth, learning how to write queries, design schemas, and think about data relationships in a structured way. I also began using Git and GitHub as part of my daily workflow, learning how to manage source control, track changes, and collaborate on code in a more organized and professional manner.",
-    ],
-  },
-  {
-    period: "2022",
-    title: "B.Sc. Computer Science",
-    org: "Rambhai Barni Rajabhat University",
-    body: [
-      "My first year covered the fundamentals of web development through HTML, CSS, and JavaScript, alongside an introduction to UI/UX Design. I built several small projects that taught me how browsers render content, how layout systems work, and how interactivity is wired through the DOM. The design courses introduced me to thinking about users first, wireframing, visual hierarchy, and how layout choices affect how people interact with a product.",
+    lead: "From the basics of the web to my first complete full stack system, built from scratch.",
+    points: [
+      {
+        tag: "2024",
+        text: "Laravel and Next.js, API design and testing with Postman, normalized schemas and indexing. Capstone: a Laravel API with a Next.js frontend",
+      },
+      {
+        tag: "2023",
+        text: "Flutter and Dart on a live database, SQL and MySQL in depth, Git and GitHub every day",
+      },
+      {
+        tag: "2022",
+        text: "HTML, CSS and JavaScript, how browsers render and lay out a page, and UI/UX basics: wireframes and visual hierarchy",
+      },
     ],
   },
 ];
@@ -81,6 +93,43 @@ const SKILLS = [
   "Docker & Containerization",
   "Workflow Automation",
 ];
+
+/**
+ * A certificate scan, opening full size in a new tab. Until the file is in
+ * public/, development shows a marked empty frame where it will sit and
+ * production shows nothing.
+ */
+function Certificate({ src, label }: { src: string; label: string }) {
+  const [missing, setMissing] = useState(false);
+
+  if (missing) {
+    if (process.env.NODE_ENV === "production") return null;
+    return (
+      <div className="flex aspect-[1.414/1] w-full max-w-[360px] flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-white/15 text-center">
+        <span className="text-sm text-white/60">{label}</span>
+        <span className="text-[12px] text-white/35">public{src}</span>
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href={src}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="relative block aspect-[1.414/1] w-full max-w-[360px] overflow-hidden rounded-xl border border-white/10 bg-zinc-900/30 transition-colors hover:border-white/25"
+    >
+      <Image
+        src={src}
+        alt={label}
+        fill
+        sizes="360px"
+        className="object-contain"
+        onError={() => setMissing(true)}
+      />
+    </a>
+  );
+}
 
 export default function AboutSection() {
   return (
@@ -129,16 +178,41 @@ export default function AboutSection() {
                         [{item.org}]
                       </div>
 
-                      <div className="mt-4 space-y-4 max-w-[80ch]">
-                        {item.body.map((p, i) => (
-                          <p
-                            key={i}
-                            className="text-[14.5px] leading-7 text-white"
-                          >
-                            {p}
-                          </p>
-                        ))}
-                      </div>
+                      <p className="mt-4 max-w-[80ch] text-[14.5px] leading-7 text-white">
+                        {item.lead}
+                      </p>
+
+                      <ul className="mt-4 max-w-[80ch] space-y-2">
+                        {item.points.map((pt, i) =>
+                          pt.tag ? (
+                            <li
+                              key={i}
+                              className="grid grid-cols-[3rem_1fr] gap-x-3 text-[14.5px] leading-7 text-white/75"
+                            >
+                              <span className="text-[12px] leading-7 text-white/55">
+                                {pt.tag}
+                              </span>
+                              <span>{pt.text}</span>
+                            </li>
+                          ) : (
+                            <li
+                              key={i}
+                              className="relative pl-5 text-[14.5px] leading-7 text-white/75 before:absolute before:left-0 before:top-[14px] before:h-px before:w-2.5 before:bg-[#3edc8a]/70"
+                            >
+                              {pt.text}
+                            </li>
+                          )
+                        )}
+                      </ul>
+
+                      {item.certificate && (
+                        <div className="mt-6">
+                          <Certificate
+                            src={item.certificate.src}
+                            label={item.certificate.label}
+                          />
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))}
@@ -146,7 +220,9 @@ export default function AboutSection() {
             </div>
           </div>
 
-          <div>
+          {/* stays in view while the timeline scrolls past, so the column
+              doesn't run out after the skills and leave the rest of it bare */}
+          <div className="md:sticky md:top-28">
             <h2 className="text-[clamp(32px,4vw,48px)] font-light text-white leading-tight">
               I&apos;m{" "}
               <span style={{ color: PROFILE.accent }} className="font-medium">
