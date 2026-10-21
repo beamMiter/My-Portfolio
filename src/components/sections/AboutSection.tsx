@@ -2,96 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
-type TimelineItem = {
-  period: string;
-  title: string;
-  org: string;
-  /** the story of the period in a sentence or two */
-  lead: string;
-  /** what came out of it — short lines, optionally tagged (a year) */
-  points: { tag?: string; text: string }[];
-  certificate?: { src: string; label: string };
-};
-
-const timeline: TimelineItem[] = [
-  {
-    period: "2026",
-    title: "Full Stack Software Development",
-    org: "TechUp Bootcamp",
-    lead: "An intensive full stack bootcamp, taken to firm up the fundamentals underneath what I had picked up on the job, and to build with a team, end to end, against real deadlines.",
-    points: [
-      { text: "Big O and time/space complexity, worked out before committing to an approach" },
-      { text: "Object-oriented design, and where composition serves better than inheritance" },
-      { text: "Common algorithms and data structures, by hand and in code" },
-      { text: "Three full stack web apps, each with its own data model, API and frontend, through mentor review" },
-      { text: "Code review, presenting technical decisions, and precise technical language" },
-    ],
-  },
-  {
-    period: "2026 – Present",
-    title: "Full Stack Developer",
-    org: "Phrapokklao Hospital X Technology Group",
-    lead: "Building internal systems with the hospital's own staff: taking briefs straight from the people who will use the software, and turning what they ask for into what they actually need.",
-    points: [
-      { text: "Clarifying requirements with stakeholders through conversation and iteration" },
-      { text: "Team Git workflow: isolated feature branches, merges that don't break shared work" },
-      { text: "UX and UI with the focus on usability, not just visual polish" },
-      { text: "PHP and Laravel in production; DaisyUI with Vite on the frontend" },
-      { text: "Backend logic and database structures that mirror real workflows" },
-    ],
-  },
-  {
-    period: "2025",
-    title: "Full Stack Developer",
-    org: "Phrapokklao Hospital X Rambhai Barni Rajabhat University",
-    lead: "My internship at Phrapokklao Hospital in Chanthaburi: first learning the codebase and what a hospital demands of software, then shipping across the full stack to medical staff in production.",
-    points: [
-      { text: "Node.js and Express, then TypeScript for type safety and long-term maintainability" },
-      { text: "WebSocket for real-time features, and MySQL schema design" },
-      { text: "Docker for consistent test environments before deploying to the hospital server" },
-      { text: "A Python utility that reads Thai national ID cards, built into patient identification" },
-      { text: "Iterating on feedback from real users so staff finish tasks faster, with fewer errors" },
-    ],
-  },
-  {
-    period: "2022 – 2024",
-    title: "B.Sc. Computer Science",
-    org: "Rambhai Barni Rajabhat University",
-    lead: "From the basics of the web to my first complete full stack system, built from scratch.",
-    points: [
-      {
-        tag: "2024",
-        text: "Laravel and Next.js, API design and testing with Postman, normalized schemas and indexing. Capstone: a Laravel API with a Next.js frontend",
-      },
-      {
-        tag: "2023",
-        text: "Flutter and Dart on a live database, SQL and MySQL in depth, Git and GitHub every day",
-      },
-      {
-        tag: "2022",
-        text: "HTML, CSS and JavaScript, how browsers render and lay out a page, and UI/UX basics: wireframes and visual hierarchy",
-      },
-    ],
-  },
-];
-
-const PROFILE = {
-  name: "Techin Jetsribumrung",
-  role: "Full Stack Developer",
-  summary:
-    "I build internal software for hospitals and operational teams, focused on stable architecture, clean APIs, and interfaces that make daily work less complicated.",
-  accent: "#3edc8a",
-};
-
-const SKILLS = [
-  "Web Application Development",
-  "Mobile Application Development",
-  "API & Backend Architecture",
-  "Database Design",
-  "Docker & Containerization",
-  "Workflow Automation",
-];
+import { PROFILE, SKILLS, timeline } from "@/data/profile";
+import DownloadPdfButton from "@/components/cv/DownloadPdfButton";
 
 /**
  * A certificate scan, opening full size in a new tab. Until the file is in
@@ -228,6 +140,16 @@ export default function AboutSection() {
             <p className="mt-6 text-white leading-7 max-w-[60ch]">
               {PROFILE.summary}
             </p>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <DownloadPdfButton kind="cv" label="Request CV" />
+              <a
+                href="#contact"
+                className="inline-flex h-12 min-w-[150px] items-center justify-center rounded-[6px] border border-white px-7 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090b]"
+              >
+                Hire Me!
+              </a>
+            </div>
 
             <div className="mt-12">
               <h3 className="text-sm font-medium text-white/40 mb-5">Skills</h3>
