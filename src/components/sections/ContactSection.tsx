@@ -22,7 +22,7 @@ const contacts: ContactIcon[] = [
   {
     icon: Linkedin,
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/techin-jetsribumrung-9a4069364/",
+    href: "https://www.linkedin.com/in/techin-jetsribumrung",
   },
   {
     icon: Github,

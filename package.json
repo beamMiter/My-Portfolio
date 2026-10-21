@@ -11,6 +11,7 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@next/font": "^14.2.15",
+    "@react-pdf/renderer": "^4.9.0",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
     "clsx": "^2.1.1",

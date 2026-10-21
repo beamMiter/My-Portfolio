@@ -328,7 +328,7 @@ const App = ({ embedded = false }: { embedded?: boolean }) => {
         <div className="contents">
           <div className="col-start-1 row-start-4 aspect-square">
              <a
-               href="https://www.linkedin.com/in/techin-jetsribumrung-9a4069364/"
+               href="https://www.linkedin.com/in/techin-jetsribumrung"
                target="_blank"
                rel="noopener noreferrer"
                aria-label="LinkedIn"
