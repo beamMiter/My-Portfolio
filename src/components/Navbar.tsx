@@ -231,7 +231,7 @@ export default function Navbar() {
   const openGit = () => window.open('https://github.com/beamMiter', '_blank', 'noopener,noreferrer');
 
   const openLinkedIn = () =>
-    window.open('https://www.linkedin.com/in/techin-jetsribumrung-9a4069364/', '_blank', 'noopener,noreferrer');
+    window.open('https://www.linkedin.com/in/techin-jetsribumrung', '_blank', 'noopener,noreferrer');
 
   const NavLinks = useMemo(
     () =>
