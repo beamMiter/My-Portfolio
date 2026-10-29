@@ -271,6 +271,18 @@ export default function IntroWavePage() {
                           {String.fromCharCode(8217)}
                         </span>
                         m
+                        {/* hand-drawn accent: a burst of strokes off the
+                            top-right of "I'm" */}
+                        <span className={heroStyles.burstAnchor} aria-hidden="true">
+                          {/* three marker strokes fanned evenly from the m's
+                              corner, each bowed a little, the middle one
+                              longest */}
+                          <svg className={heroStyles.burst} viewBox="0 0 32 32" fill="none">
+                            <path d="M5.3 17.3 Q8.4 12.9 9.9 7.8" />
+                            <path d="M9.7 20.4 Q17.3 17.8 24.2 13.6" />
+                            <path d="M10.3 25.9 Q15.3 26.4 20.0 28.2" />
+                          </svg>
+                        </span>
                       </span>
                       <span
                         data-rise-fade
