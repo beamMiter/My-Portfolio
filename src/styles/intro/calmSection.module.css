@@ -1,25 +1,28 @@
-/* no dividers anywhere on the page now — 2/3/4 share one ground and read as
-   a single continuous body, so the padding is a chapter break, not an end. */
+/* section 2, told in type (CalmStory.tsx). No dividers anywhere on the page:
+   2/3/4 share one ground and read as one continuous body. */
 .section {
   position: relative;
-  /* the entrance animations start at x:±60, which would otherwise push a
-     horizontal scrollbar onto the page. `clip` stops that WITHOUT creating a
-     scroll container the way `hidden` does, so `position: sticky` on anything
-     inside still works. `hidden` stays first as the fallback for browsers
-     that don't know `clip` (Safari < 16).
-     no min-height: the height comes from the content, so a short section
-     can't leave an unexplained band of dead space at the bottom. */
+  /* scrambling text runs wider than the line for a frame or two; `clip`
+     stops that pushing a horizontal scrollbar without making the section a
+     scroll container. `hidden` is the fallback for browsers without `clip`.
+     a pinned stage is position: fixed, which this doesn't clip. */
   overflow: hidden;
   overflow: clip;
-  padding-top: 5rem;
-  padding-bottom: 4rem;
 }
 
-@media (min-width: 768px) {
-  .section {
-    padding-top: 7rem;
-    padding-bottom: 5.5rem;
-  }
+/* the pinned frame: a full screen, the story centred in it */
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: 3.5rem;
+  /* pinned, it's position: fixed, out of the section's clip; this keeps the
+     block from widening the page as it runs off the right edge */
+  overflow: hidden;
+  overflow: clip;
 }
 
 .inner {
@@ -41,124 +44,59 @@
 }
 @media (min-width: 1280px) {
   .inner {
-    padding-inline: 8rem; /* เปลี่ยนจาก 7rem เป็น 8rem เหมือน AI section */
+    padding-inline: 8rem; /* as the stack and process sections */
   }
 }
 @media (min-width: 1536px) {
   .inner {
-    padding-inline: 10rem; /* เปลี่ยนจาก 8rem เป็น 10rem เหมือน AI section */
+    padding-inline: 10rem;
   }
 }
 
-/* header block */
-.head {
-  margin-bottom: 2.5rem; /* mb-10 */
-}
-@media (min-width: 768px) {
-  .head {
-    margin-bottom: 3.5rem; /* md:mb-14 */
-  }
+/* the three lines. The type sizes off this box's width (cqw),
+   so the longest line always fits whatever the screen and the composition
+   scales like a poster */
+.composition {
+  position: relative;
+  container-type: inline-size;
 }
 
-.kickerRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.75rem; /* mb-3 */
-  color: rgb(113 113 122); /* zinc-500 */
-  font-size: 11px; /* text-[11px] */
+/* the three lines as one block, as wide as its widest line; motion carries
+   it across the frame by left (with xPercent, see CalmStory's place()) */
+.stack {
+  position: relative;
+  left: 0;
+  width: max-content;
 }
 
-@media (min-width: 768px) {
-  .kickerRow {
-    font-size: 0.75rem; /* md:text-xs */
-  }
+.line {
+  display: block;
 }
 
-.kickerLeft {
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+.line + .line {
+  margin-top: 0.12em;
 }
 
-.kickerRight {
-  display: none;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-@media (min-width: 768px) {
-  .kickerRight {
-    display: inline;
-  }
+/* the line rises out of this on arrival */
+.mask {
+  display: block;
+  overflow: hidden;
+  overflow: clip;
 }
 
-.title {
-  max-width: 56rem; /* max-w-4xl */
-  text-transform: uppercase;
-  color: rgb(250 250 250); /* zinc-50 */
-  font-size: clamp(34px, 6.2vw, 80px);
-  line-height: 1.06;
-  /* all-caps display type: negative tracking crammed the letters together —
-     caps want a touch of positive spacing (the hero title can go negative
-     because it's mixed-case). */
-  letter-spacing: 0.02em;
-}
-
-.accentText {
+/* the section titles' face — caps, regular weight — at poster size.
+   9.2cqw keeps the longest line any act sets (A QUEUE STALLS) inside
+   the stack; the 13vh cap keeps the pinned frame inside a short laptop
+   screen. (a browser without cqw drops the min() and keeps the 7vw) */
+.word {
   display: inline-block;
-  color: var(--dev-accent, #3edc8a);
-}
-
-.grid {
-  display: grid;
-  column-gap: 2.5rem;
-  row-gap: 2.5rem;
-}
-
-@media (min-width: 768px) {
-  .grid {
-    row-gap: 3.5rem;
-    grid-template-columns: 1.35fr 1.1fr 0.9fr;
-    align-items: center;
-  }
-}
-
-.leftText {
-  display: grid;
-  gap: 1rem;
-  order: 1;
-}
-@media (min-width: 1024px) {
-  .leftText {
-    gap: 1.25rem;
-  }
-}
-
-.p1 {
-  max-width: 36rem; /* max-w-xl */
-  color: rgb(212 212 216); /* zinc-300 */
-  font-size: clamp(16px, 1.5vw, 20px);
-  line-height: 1.7;
-  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
-  overflow-wrap: break-word;
-}
-
-.p2 {
-  max-width: 36rem;
-  color: rgb(161 161 170); /* zinc-400 */
-  font-size: clamp(15px, 1.35vw, 18px);
-  line-height: 1.7;
-  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
-  overflow-wrap: break-word;
-}
-
-.p2Strong {
-  color: rgb(212 212 216); /* zinc-300 */
-}
-
-.ctaBlock {
-  padding-top: 0.375rem; /* pt-1.5 */
-  display: grid;
-  gap: 0.75rem; /* space-y-3 */
+  font-size: 7vw;
+  font-size: min(9.2cqw, 13vh);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgb(250 250 250);
 }
 
 .contactBtn {
@@ -185,258 +123,4 @@
 .contactBtn:hover {
   border-color: rgb(52 211 153); /* emerald-400 */
   color: rgb(110 231 183); /* emerald-300 */
-}
-
-.focusBlock {
-  color: rgb(161 161 170); /* zinc-400 */
-  font-size: 13px;
-}
-@media (min-width: 768px) {
-  .focusBlock {
-    font-size: 14px;
-  }
-}
-
-.focusLabel {
-  color: rgb(113 113 122);
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  margin-bottom: 0.25rem;
-}
-
-.focusText {
-  line-height: 1.7;
-  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
-  overflow-wrap: break-word;
-}
-
-.midWrap {
-  position: relative;
-  width: 100%;
-  max-width: 28rem;
-  margin-inline: auto;
-  order: 2;
-}
-
-@media (min-width: 768px) {
-  .midWrap {
-    margin-inline: 0;
-    max-width: 100%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .midWrap {
-    max-width: 32rem;
-  }
-}
-
-.card {
-  position: relative;
-  aspect-ratio: 4 / 4.6;
-  overflow: hidden;
-  border-radius: 1.9rem;
-  border: 1px solid rgba(63, 63, 70, 0.7); /* zinc-700/70 */
-  background: rgb(9 9 11); /* zinc-950 */
-}
-
-.cardTopbar {
-  position: absolute;
-  inset-inline: 0;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1.25rem; /* px-5 py-3 */
-  color: rgb(161 161 170); /* zinc-400 */
-  font-size: 10px;
-}
-
-.dots {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem; /* gap-1.5 */
-}
-
-.dot {
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 9999px;
-  display: inline-block;
-}
-.dotRed { background: rgba(239, 68, 68, 0.85); }
-.dotAmber { background: rgba(251, 191, 36, 0.85); }
-.dotGreen { background: rgba(52, 211, 153, 0.85); }
-
-.cardLine {
-  position: absolute;
-  inset-inline: 1.25rem; /* inset-x-5 */
-  top: 2.5rem; /* top-10 */
-  height: 1px;
-  background: rgba(63, 63, 70, 0.7);
-}
-
-.cardInset {
-  position: absolute;
-  inset: 9px;
-  border-radius: 1.6rem;
-  border: 1px solid rgba(63, 63, 70, 0.4);
-  pointer-events: none;
-}
-
-.cardContent {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.25rem; /* gap-5 */
-  padding-inline: 1.5rem; /* px-6 */
-}
-
-.bars {
-  display: grid;
-  gap: 0.625rem; /* space-y-2.5 */
-}
-
-.barA { height: 10px; width: 8rem; border-radius: 9999px; background: rgba(16,185,129,0.9); }
-.barB { height: 6px; width: 11rem; border-radius: 9999px; background: rgba(244,244,245,0.85); }
-.barC { height: 6px; width: 9rem; border-radius: 9999px; background: rgba(113,113,122,0.85); }
-
-.list {
-  margin-top: 0.75rem; /* mt-3 */
-  display: grid;
-  gap: 0.625rem; /* space-y-2.5 */
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem; /* gap-3 */
-  font-size: 10px;
-  color: rgba(212, 212, 216, 0.9); /* zinc-300/90 */
-}
-
-.rowTick {
-  height: 3px;
-  width: 2.5rem; /* w-10 */
-  border-radius: 9999px;
-  background: rgba(16,185,129,0.8);
-}
-
-.rowLine {
-  height: 1px;
-  flex: 1;
-  border-radius: 9999px;
-  background: rgba(82, 82, 91, 0.7);
-}
-
-.rowLabel {
-  font-size: 9px;
-  color: rgba(161, 161, 170, 0.9);
-}
-
-/* reveal wipe overlay */
-.cardWipe {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background: rgb(9 9 11);
-  transform-origin: left;
-}
-
-.rightCol {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  order: 3;
-}
-
-@media (min-width: 768px) {
-  .rightCol {
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-}
-
-.availBlock {
-  width: 100%;
-  display: grid;
-  gap: 0.375rem; /* space-y-1.5 */
-}
-@media (min-width: 768px) {
-  .availBlock {
-    text-align: right;
-  }
-}
-
-.availLabel {
-  color: rgb(113 113 122);
-  text-transform: uppercase;
-  letter-spacing: 0.26em;
-  font-size: 10px;
-}
-@media (min-width: 768px) {
-  .availLabel {
-    font-size: 11px;
-  }
-}
-
-.availText {
-  color: rgb(161 161 170);
-  font-size: clamp(14px, 1.2vw, 16px);
-  max-width: 20rem;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-@media (min-width: 768px) {
-  .availText {
-    margin-left: auto;
-    text-align: right;
-  }
-}
-
-.periodCard {
-  /* no box — just the stacked text, matching .availBlock above it */
-  width: 100%;
-  display: grid;
-  gap: 0.25rem;
-  box-sizing: border-box;
-}
-
-@media (min-width: 768px) {
-  .periodCard {
-    text-align: right;
-    margin-left: auto;
-    max-width: 20rem;
-  }
-}
-
-.periodLabel {
-  color: rgb(113 113 122);
-  text-transform: uppercase;
-  letter-spacing: 0.26em;
-  font-size: 10px;
-}
-
-.periodYear {
-  color: rgb(244 244 245);
-  font-size: clamp(26px, 3.4vw, 40px);
-  line-height: 1.1;
-  letter-spacing: -0.08em;
-  white-space: nowrap;
-}
-
-.periodNote {
-  margin-top: 0.25rem;
-  font-size: 11px;
-  color: rgb(113 113 122);
-  word-break: break-word; /* เพิ่มเพื่อแก้ปัญหาคำติด */
-  overflow-wrap: break-word;
-}
-@media (min-width: 768px) {
-  .periodNote {
-    font-size: 12px;
-  }
 }

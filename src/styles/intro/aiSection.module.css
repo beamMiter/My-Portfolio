@@ -1,350 +1,242 @@
-/* src/styles/intro/aiSection.module.css */
+/* src/styles/intro/aiSection.module.css — section 4, a journey told in type
+   (ProcessStory.tsx). Same ground as 2 and 3, no dividers. */
 
-/* no divider — last chapter. a bit of trailing scroll room so the last
-   block can sit clear of the viewport's bottom edge (and be pulled up
-   toward centre), without leaving a yawning empty band. */
 .section {
+  /* the page's side padding, as the other sections' .inner use it */
+  --edge: 1.5rem;
   position: relative;
-  padding-top: 4rem;
-  padding-bottom: 26vh;
-  /* clip, not hidden: stops the x:±40 entrance animations spilling sideways
-     without turning the section into a scroll container. hidden is the
-     fallback. height is content-driven — no viewport-locked min-height. */
+  padding-bottom: 14vh;
+  /* the track runs far past the screen's right edge until it travels;
+     clip keeps that from becoming a sideways scrollbar */
   overflow: hidden;
   overflow: clip;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-top: 5.5rem;
-    padding-bottom: 32vh;
-  }
-}
-
-.inner {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  padding-inline: 1.5rem; /* px-6 */
-}
-
-@media (min-width: 768px) {
-  .inner {
-    padding-inline: 3rem; /* md:px-12 */
+    --edge: 3rem;
   }
 }
 @media (min-width: 1024px) {
-  .inner {
-    padding-inline: 5rem; /* lg:px-20 */
+  .section {
+    --edge: 5rem;
   }
 }
 @media (min-width: 1280px) {
-  .inner {
-    padding-inline: 8rem; /* xl:px-32 */
+  .section {
+    --edge: 8rem;
   }
 }
 @media (min-width: 1536px) {
-  .inner {
-    padding-inline: 10rem; /* 2xl:px-40 */
+  .section {
+    --edge: 10rem;
   }
 }
 
-/* FRAMING — kicker, title, intro; the strip sits under it. stacked on small
-   screens, laid out in one row from 1024px (see the block after .desc) */
-.leftCol {
-  max-width: 40rem;
-  color: rgb(244 244 245);
-  margin-bottom: 1.5rem;
+/* ---- as marked up: the panels top to bottom (reduced motion, no JS) ---- */
+.track {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  padding-top: 6rem;
 }
+
+.panel {
+  padding-inline: var(--edge);
+}
+
+/* ---- the journey: pinned, carried sideways by the scroll ---- */
+.section[data-journey] .pin {
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  overflow: clip;
+}
+
+.section[data-journey] .track {
+  flex-direction: row;
+  gap: 0;
+  width: max-content;
+  height: 100%;
+  padding-top: 0;
+}
+
+.section[data-journey] .panel {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 88vw;
+  padding-inline: 6vw;
+}
+
+/* the steps hang from one line, so their numerals pass at the same height
+   however their titles wrap */
+.section[data-journey] .step {
+  justify-content: flex-start;
+  padding-top: max(18vh, 4.5rem);
+}
+
+.section[data-journey] .intro {
+  width: 100vw;
+  padding-left: var(--edge);
+}
+
+/* a full screen with the page's left edge, so the last frame lands exactly
+   where the first one started: FROM there, TO here */
+.section[data-journey] .end {
+  width: 100vw;
+  padding-inline: var(--edge);
+}
+
 @media (min-width: 768px) {
-  .leftCol {
-    margin-bottom: 2.5rem;
+  .section[data-journey] .panel {
+    width: clamp(340px, 46vw, 680px);
+    padding-inline: 3.5vw;
+  }
+  /* wide enough to read, narrow enough that step 01 already shows at the
+     right edge — the cue that this one moves sideways */
+  .section[data-journey] .intro {
+    width: 74vw;
+    padding-left: var(--edge);
+  }
+  .section[data-journey] .end {
+    width: 100vw;
+    padding-inline: var(--edge);
   }
 }
 
-.kicker {
-  margin-bottom: 1rem;
-  font-size: 10px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: rgb(113 113 122);
-}
-@media (min-width: 768px) {
-  .kicker {
-    font-size: 11px;
-  }
-}
+/* ---- type ---- */
 
-.title {
-  font-size: clamp(32px, 5.6vw, 82px);
-  line-height: 1.05;
-  /* all-caps: was -0.05em, which ran the letters into each other */
-  letter-spacing: 0.02em;
+/* section 2's poster type; the vh cap keeps it inside a short screen.
+   FROM and TO are part of the line, set back in grey, not small labels */
+.giant {
+  max-width: 9em;
+  font-size: min(10.5vw, 15vh);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
   color: rgb(244 244 245);
 }
 
-.accentText {
+/* the ask is vague, so it's barely there: set faint, close to the ground.
+   (not hollow outlines: the system face's glyphs have overlapping contours,
+   which a text stroke draws as stray lines inside A and K) */
+.vague {
+  color: rgb(63 63 70); /* zinc-700 */
+}
+
+/* the running system starts as faint as the ask and comes up to full green
+   as it arrives: --fill goes 0 -> 1 (motion starts it at 0; the markup is
+   the finished state) */
+.fill {
+  --fill: 1;
+  color: color-mix(
+    in srgb,
+    var(--dev-accent, #3edc8a) calc(var(--fill) * 100%),
+    rgb(63 63 70)
+  );
+}
+
+.dim {
+  color: rgb(82 82 91); /* zinc-600 */
+}
+
+.accent {
   color: var(--dev-accent, #3edc8a);
-  display: inline-block;
 }
 
-.desc {
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgb(212 212 216);
-  margin-bottom: 2rem;
-}
-@media (min-width: 768px) {
-  .desc {
-    font-size: 16px;
-  }
+/* each step's text is Inter at reading size, never the big face shrunk */
+.stepText {
+  font-family: var(--font-inter-intro), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* horizontal heading: kicker + title on the left, the intro beside it on the
-   right, sitting on the title's last line. the title is set smaller here than
-   when it stacks full width — it has to fit its column in two lines.
-   the intro hugs the right edge, in line with the steps grid's: up to ~1440px
-   its column is no wider than its 30rem cap so it fills it anyway, but on a
-   wide screen the column outgrows the cap and the intro was left floating at
-   the column's start, lined up with nothing. */
-@media (min-width: 1024px) {
-  .leftCol {
-    max-width: none;
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-    column-gap: 4rem;
-    align-items: end;
-    margin-bottom: 3.5rem;
-  }
-  .kicker {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .title {
-    grid-column: 1;
-    grid-row: 2;
-    font-size: clamp(28px, 3.2vw, 68px);
-  }
-  .desc {
-    grid-column: 2;
-    grid-row: 2;
-    justify-self: end;
-    max-width: 30rem;
-    margin-bottom: 0.4rem;
-  }
-}
-
-/* AI LIST */
-.aiList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.aiItem {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.aiImage {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  pointer-events: none;
-  user-select: none;
-}
-@media (min-width: 768px) {
-  .aiImage {
-    width: 44px;
-    height: 44px;
-  }
-}
-
-.aiContent {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.aiHead {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.aiName {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(244 244 245);
-}
-@media (min-width: 768px) {
-  .aiName {
-    font-size: 15px;
-  }
-}
-
-.aiRole {
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgb(113 113 122);
-}
-@media (min-width: 768px) {
-  .aiRole {
-    font-size: 11px;
-  }
-}
-
-/* แก้ไขตรงนี้ - เพิ่ม word-break เพื่อแก้ปัญหาคำติด */
-.aiDesc {
-  font-size: 14px;
-  line-height: 1.7;
-  color: rgb(212 212 216);
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-@media (min-width: 768px) {
-  .aiDesc {
-    font-size: 15px;
-  }
-}
-
-/* PROCESS STRIP — one numbered column per step with hairlines between them,
-   no outer box. 1 column on a phone, 2 on a tablet, 4 from 1280px where they
-   have room. */
-.steps {
-  color: rgb(244 244 245);
-}
-
-/* the 1px gap shows this background, so the dividers come for free at every
-   column count — no per-breakpoint border juggling */
-.stepsGrid {
+/* the big line (as its two lines) and its brief. Narrower screens: the two
+   lines, then the brief under them. From 1200px, in the journey, the brief
+   takes the room beside FROM A, its last line on A's baseline; the first
+   row stays as tall as the line itself, so the big line doesn't move */
+.lockup {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  background: rgb(39 39 42);
+  grid-template-areas:
+    "first"
+    "second"
+    "brief";
 }
 
-@media (min-width: 768px) {
-  .stepsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 1280px) {
-  .stepsGrid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.giantFirst {
+  grid-area: first;
 }
 
-/* no box means nothing frames the first column, so it starts flush with the
-   heading above; the ones after a divider keep their inset */
-.step {
-  background: var(--dev-ground, rgb(9 9 11));
-  padding: 2rem 0 2.25rem;
+.giantSecond {
+  grid-area: second;
 }
-@media (min-width: 768px) {
-  .step {
-    padding: 2.5rem 2rem 2.75rem;
+
+@media (min-width: 1200px) {
+  .section[data-journey] .lockup {
+    grid-template-columns: max-content 19rem;
+    grid-template-areas:
+      "first brief"
+      "second second";
+    column-gap: 2.5vw;
   }
-}
-@media (min-width: 768px) and (max-width: 1279px) {
-  .step:nth-child(odd) {
-    padding-left: 0;
+  .section[data-journey] .giantFirst,
+  .section[data-journey] .lockup .brief {
+    align-self: last baseline;
   }
-}
-@media (min-width: 1280px) {
-  .step:first-child {
-    padding-left: 0;
-  }
-}
-@media (min-width: 1536px) {
-  .step {
-    padding-inline: 2.5rem;
+  .section[data-journey] .lockup .brief {
+    max-width: none;
+    margin-top: 0;
   }
 }
 
-.stepNum {
+/* set exactly like the line under the hero's name (hero.module.css .pText)
+   and section 2's subtitle: a subtitle to the big line, not small print */
+.brief {
+  grid-area: brief;
+  max-width: 26em;
+  margin-top: 1.5rem;
+  color: rgb(161 161 170); /* zinc-400 */
+  font-size: calc(clamp(14px, 1.09vw, 19px) * 1.34);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+/* the step numeral: big and quiet, drifting behind its words */
+.num {
   display: block;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  color: rgb(212 212 216);
+  margin-bottom: 1.25rem;
+  font-size: min(17vw, 26vh);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: rgb(52 52 58);
 }
 
 .stepTitle {
-  margin-top: 1.75rem;
-  font-size: clamp(18px, 1.35vw, 24px);
-  font-weight: 500;
-  line-height: 1.35;
+  max-width: 12em;
+  font-size: clamp(22px, 2.5vw, 40px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   color: rgb(250 250 250);
 }
 
 .stepText {
-  margin-top: 1rem;
-  font-size: 14px;
-  line-height: 1.75;
+  max-width: 36ch;
+  margin-top: 1.25rem;
   color: rgb(161 161 170);
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-@media (min-width: 1536px) {
-  .stepText {
-    font-size: 15px;
-  }
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.6;
 }
 
-/* PRINCIPLES CARD */
-.card {
-  border-radius: 1rem;
-  border: 1px solid rgb(39 39 42);
-  background: rgba(24, 24, 27, 0.4);
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+/* words rise from below their own mask */
+.mask {
+  display: block;
+  overflow: hidden;
+  overflow: clip;
 }
 
-.cardTitle {
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgb(161 161 170);
+.riser {
+  display: block;
 }
-@media (min-width: 768px) {
-  .cardTitle {
-    font-size: 11px;
-  }
-}
-
-/* แก้ไขตรงนี้ - เพิ่ม word-break */
-.cardList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  font-size: 12px;
-  color: rgb(212 212 216);
-}
-
-.cardList li {
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-.highlightTitle {
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--dev-accent, #3edc8a);
-}
-@media (min-width: 768px) {
-  .highlightTitle {
-    font-size: 11px;
-  }
-}
-
