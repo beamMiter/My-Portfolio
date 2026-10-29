@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Liter } from "next/font/google";
-import localFont from "next/font/local";
 import {
   Code2,
   ServerCog,
@@ -20,30 +19,14 @@ import {
   Globe,
 } from "lucide-react";
 import {
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiLaravel,
-  SiGo,
-  SiNodedotjs,
-  SiExpress,
-  SiSpringboot,
-  SiDocker,
-  SiPostgresql,
-  SiMysql,
-  SiMongodb,
   SiRedis,
   SiSqlite,
   SiLinux,
   SiJenkins,
   SiNginx,
   SiGit,
-  SiFlutter,
-  SiDart,
-  SiVuedotjs,
   SiJquery,
 } from "react-icons/si";
-import { FaJava } from "react-icons/fa";
 import Marquee from "react-fast-marquee";
 import { ICON_SRC_MAP, IconName } from "@/data/icons";
 import { useIntroUI } from "@/components/intro/IntroUIContext";
@@ -51,12 +34,11 @@ import { useIntroUI } from "@/components/intro/IntroUIContext";
 import PortfolioMosaic from "@/components/PortfolioMosaic";
 import IntroLaneReveal from "@/components/intro/IntroLaneReveal";
 import ContributionGrid from "@/components/intro/ContributionGrid";
-import StackIconLoop from "@/components/intro/StackIconLoop";
+import CalmStory from "@/components/intro/CalmStory";
+import StackStory from "@/components/intro/StackStory";
+import ProcessStory from "@/components/intro/ProcessStory";
 
 import heroStyles from "@/styles/intro/hero.module.css";
-import clamStyles from "@/styles/intro/calmSection.module.css";
-import stackStyles from "@/styles/intro/stackSection.module.css";
-import aiStyles from "@/styles/intro/aiSection.module.css";
 
 const liter = Liter({
   subsets: ["latin"],
@@ -64,38 +46,9 @@ const liter = Liter({
   display: "swap",
 });
 
-const inter = localFont({
-  src: [
-    {
-      path: "../../../public/fonts/Inter-VariableFont_opsz,wght.woff2",
-      weight: "100 900",
-      style: "normal",
-    },
-    {
-      path: "../../../public/fonts/Inter-Italic-VariableFont_opsz,wght.woff2",
-      weight: "100 900",
-      style: "italic",
-    },
-  ],
-  display: "swap",
-  adjustFontFallback: false,
-});
 
 const TITLES = ["Developer", "Full-stack Developer", "Software Engineer"];
 const SWITCH_MS = 6500;
-
-/**
- * One text-entrance pattern for sections 2–4: a quiet rise + fade, played
- * once (no reverse, so nothing flickers when the reader stops mid-section).
- * Each wrapper adds its own `transition` — same ease, a small `delay` to
- * stagger the blocks within a section so it reads one beat at a time.
- */
-const REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
-const revealUp = {
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-} as const;
 
 function VerticalTicker({
   items = TITLES,
@@ -434,384 +387,11 @@ export default function IntroWavePage() {
         </div>
       </div>
 
-      <section className={clamStyles.section}>
-        <div className={clamStyles.inner}>
-          <motion.div
-            {...revealUp}
-            transition={{ duration: 0.7, ease: REVEAL_EASE }}
-            className={clamStyles.head}
-          >
-            <div className={`${clamStyles.kickerRow} font-mono-dev`}>
-              <span className={clamStyles.kickerLeft}>
-                INTERNAL SOFTWARE · DEVELOPMENT
-              </span>
-              <span className={clamStyles.kickerRight}>
-                HOSPITAL & GOV PROJECTS
-              </span>
-            </div>
+      <CalmStory />
 
-            <h2 className={`${clamStyles.title} font-heading-dev`}>
-              CALM <span className={clamStyles.accentText}>SOFTWARE</span> FOR
-              REAL WORK
-            </h2>
-          </motion.div>
+      <StackStory />
 
-          <div className={clamStyles.grid}>
-            <motion.div
-              {...revealUp}
-              transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.08 }}
-              className={clamStyles.leftText}
-            >
-              <p className={clamStyles.p1}>
-                Hospitals don&apos;t get to have a bad day. When a queue
-                system stalls or a referral form breaks, someone&apos;s care
-                gets delayed—so the{" "}
-                <span className={clamStyles.accentText}>internal software</span>{" "}
-                behind it has to be boring in the best way: predictable,
-                legible, and always there.
-              </p>
-
-              <p className={clamStyles.p2}>
-                That&apos;s the world I build in—dashboards, queue systems,
-                referrals, and reporting tools that a nurse or an officer can
-                trust without thinking twice, because the moment they have to
-                think about the software, it&apos;s already failed them.{" "}
-                <span className={clamStyles.p2Strong}>
-                  Stable and easy to maintain isn&apos;t optional here.
-                </span>
-              </p>
-
-              <div className={clamStyles.ctaBlock}>
-                <div className={clamStyles.focusBlock}>
-                  <p className={`${clamStyles.focusLabel} font-mono-dev`}>
-                    CURRENT WORK
-                  </p>
-                  <p className={clamStyles.focusText}>
-                    Asset repair systems, referral flows, and reporting
-                    dashboards for hospital teams who need fewer clicks, not
-                    more features.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              {...revealUp}
-              transition={{ duration: 0.8, ease: REVEAL_EASE, delay: 0.12 }}
-              className={clamStyles.midWrap}
-            >
-              <div className={clamStyles.card}>
-                <div className={`${clamStyles.cardTopbar} font-mono-dev`}>
-                  <div className={clamStyles.dots}>
-                    <span
-                      className={`${clamStyles.dot} ${clamStyles.dotRed}`}
-                    />
-                    <span
-                      className={`${clamStyles.dot} ${clamStyles.dotAmber}`}
-                    />
-                    <span
-                      className={`${clamStyles.dot} ${clamStyles.dotGreen}`}
-                    />
-                  </div>
-                  <span>/ppk/internal · product.systems</span>
-                </div>
-
-                <div className={clamStyles.cardLine} />
-                <div className={clamStyles.cardInset} />
-
-                <div className={clamStyles.cardContent}>
-                  <div className={clamStyles.bars}>
-                    <div className={clamStyles.barA} />
-                    <div className={clamStyles.barB} />
-                    <div className={clamStyles.barC} />
-                  </div>
-
-                  <div className={clamStyles.list}>
-                    {[
-                      "Asset Repair Dashboard",
-                      "Service & Request Tracking",
-                      "Referral / Form Workflows",
-                      "Monitoring & Reporting",
-                      "Internal Dashboards & Queues",
-                    ].map((label, i) => (
-                      <div key={i} className={clamStyles.row}>
-                        <span className={clamStyles.rowTick} />
-                        <span className={clamStyles.rowLine} />
-                        <span
-                          className={`${clamStyles.rowLabel} font-mono-dev`}
-                        >
-                          {label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <motion.div
-                  className={clamStyles.cardWipe}
-                  initial={{ x: "0%" }}
-                  whileInView={{ x: "105%" }}
-                  viewport={{ once: true, amount: 0.55 }}
-                  transition={{ duration: 1.05, ease: [0.65, 0, 0.35, 1] }}
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              {...revealUp}
-              transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.16 }}
-              className={clamStyles.rightCol}
-            >
-              <div className={clamStyles.availBlock}>
-                <p className={`${clamStyles.availLabel} font-mono-dev`}>
-                  AVAILABLE
-                </p>
-                <p className={clamStyles.availText}>
-                  Open to work like this—internal tools and systems where
-                  reliability matters more than novelty.
-                </p>
-              </div>
-
-              <div className={clamStyles.periodCard}>
-                <p className={`${clamStyles.periodLabel} font-mono-dev`}>
-                  ACTIVE PERIOD
-                </p>
-                <p className={`${clamStyles.periodYear} font-heading-dev`}>
-                  2025 — 2026
-                </p>
-                <p className={clamStyles.periodNote}>
-                  Based in Chanthaburi, Thailand—building for teams who just
-                  need their tools to work.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <section className={stackStyles.section}>
-        <div className={stackStyles.inner}>
-          <motion.div
-            {...revealUp}
-            transition={{ duration: 0.7, ease: REVEAL_EASE }}
-          >
-            <div className={`${stackStyles.topRow} font-mono-dev`}>
-              <span className={stackStyles.topLeft}>
-                STACK · LANGUAGES · PLATFORMS
-              </span>
-              <span className={stackStyles.topRight}>
-                TYPESCRIPT · PHP · GO
-              </span>
-            </div>
-
-            <div className={stackStyles.grid}>
-              {/* LEFT COLUMN */}
-              <div className={stackStyles.leftCol}>
-                <div className={stackStyles.leadBlock}>
-                  <p className={`${stackStyles.leadKicker} font-mono-dev`}>
-                    DAILY TOOLING · HOW I PICK MY STACK
-                  </p>
-                  <p className={stackStyles.leadText}>
-                    Software that has to run quietly for years can&apos;t be
-                    built on whatever&apos;s trending this month. I pick tools
-                    the same way I build the systems themselves—for what
-                    holds up, not what&apos;s new—reaching for{" "}
-                    <span className={stackStyles.accentText}>
-                      long–lived internal systems
-                    </span>{" "}
-                    that have to survive years of change, not just a demo.
-                  </p>
-                </div>
-
-                {/* CORE STACK */}
-                <div className={stackStyles.block}>
-                  <p className={`${stackStyles.blockTitle} font-mono-dev`}>
-                    CORE STACK
-                  </p>
-
-                  <div className={stackStyles.iconRow}>
-                    {[
-                      { name: "React", Icon: SiReact },
-                      { name: "Next.js", Icon: SiNextdotjs },
-                      { name: "TypeScript", Icon: SiTypescript },
-                      { name: "Laravel", Icon: SiLaravel },
-                      { name: "Go", Icon: SiGo },
-                      { name: "Node.js", Icon: SiNodedotjs },
-                      { name: "Docker", Icon: SiDocker },
-                    ].map(({ name, Icon }) => (
-                      <div key={name} className={stackStyles.iconItem}>
-                        <Icon className={stackStyles.iconLg} color="white" />
-                        <span
-                          className={`${stackStyles.iconLabel} font-mono-dev`}
-                        >
-                          {name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <p className={stackStyles.blockNote}>
-                    The stack I actually open every morning—frontend, APIs,
-                    and the internal apps that have to keep running.
-                  </p>
-                </div>
-
-                {/* BACKEND & DATA */}
-                <div className={stackStyles.block}>
-                  <p className={`${stackStyles.blockTitle} font-mono-dev`}>
-                    BACKEND & DATA BASE
-                  </p>
-
-                  <div className={stackStyles.iconRow}>
-                    {[
-                      { name: "Java", Icon: FaJava },
-                      { name: "Spring Boot", Icon: SiSpringboot },
-                      { name: "Express", Icon: SiExpress },
-                      { name: "PostgreSQL", Icon: SiPostgresql },
-                      { name: "MySQL", Icon: SiMysql },
-                      { name: "MongoDB", Icon: SiMongodb },
-                    ].map(({ name, Icon }) => (
-                      <div key={name} className={stackStyles.iconItemWide}>
-                        <Icon className={stackStyles.iconMd} />
-                        <span
-                          className={`${stackStyles.iconLabelCenter} font-mono-dev`}
-                        >
-                          {name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <p className={stackStyles.blockNote}>
-                    Node with Express for most services, Java and Spring Boot
-                    where a project calls for it—on databases picked for
-                    stability first: easy backups, boring migrations.
-                  </p>
-                </div>
-
-                {/* ALSO USED */}
-                <div className={stackStyles.block}>
-                  <p className={`${stackStyles.blockTitle} font-mono-dev`}>
-                    ALSO USED / TOUCHED
-                  </p>
-
-                  <div className={stackStyles.iconRow}>
-                    {[
-                      { name: "Flutter", Icon: SiFlutter },
-                      { name: "Dart", Icon: SiDart },
-                      { name: "Vue.js", Icon: SiVuedotjs },
-                    ].map(({ name, Icon }) => (
-                      <div key={name} className={stackStyles.iconItem}>
-                        <Icon className={stackStyles.iconMd} />
-                        <span
-                          className={`${stackStyles.iconLabel} font-mono-dev`}
-                        >
-                          {name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <p className={stackStyles.blockNote}>
-                    Brought in when a project needs mobile reach, legacy
-                    integration, or has to speak to something already built.
-                  </p>
-                </div>
-              </div>
-
-              {/* RIGHT COLUMN */}
-              <motion.div
-                className={stackStyles.rightCol}
-                {...revealUp}
-                transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.1 }}
-              >
-                <div className={stackStyles.rightHead}>
-                  <h2 className={`${stackStyles.rightTitle} font-heading-dev`}>
-                    HOW I{" "}
-                    <span className={stackStyles.accentTextInline}>
-                      KEEP SYSTEMS RUNNING
-                    </span>
-                  </h2>
-                  <p className={`${stackStyles.rightSub} font-mono-dev`}>
-                    RUNTIME · FRAMEWORKS · DATABASES
-                  </p>
-                </div>
-
-                <div className={stackStyles.orbitWrap}>
-                  <div className={stackStyles.orbitBox}>
-                    <StackIconLoop />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className={aiStyles.section}>
-        <div className={aiStyles.inner}>
-          {/* the framing */}
-          <motion.div
-            {...revealUp}
-            transition={{ duration: 0.7, ease: REVEAL_EASE }}
-            className={aiStyles.leftCol}
-          >
-            <div className={`${aiStyles.kicker} font-mono-dev`}>
-              PROCESS · HOW A BUILD GOES
-            </div>
-
-            <h2 className={`${aiStyles.title} font-heading-dev`}>
-              FROM A VAGUE ASK{" "}
-              <span className={aiStyles.accentText}>
-                TO A RUNNING SYSTEM
-              </span>
-            </h2>
-
-            <p className={aiStyles.desc}>
-              The brief is usually one sentence and a screenshot of a
-              spreadsheet. The work is turning that into something a team
-              logs into every morning without thinking about it. Same four
-              steps every time.
-            </p>
-          </motion.div>
-
-          {/* the steps — one numbered column each, hairlines between */}
-          <motion.div
-            {...revealUp}
-            transition={{ duration: 0.7, ease: REVEAL_EASE, delay: 0.12 }}
-            className={`${aiStyles.steps} ${inter.className}`}
-          >
-            <div className={aiStyles.stepsGrid}>
-              {[
-                {
-                  title: "Understand the Real Workflow",
-                  text: "Before any code, I sit with the people who'll use it and watch what they actually do—the workarounds, the double entry, the step everyone dreads. That's the spec, not the sentence I was handed.",
-                },
-                {
-                  title: "Pick Boring, Proven Tech",
-                  text: "Postgres, a plain server, a framework I've shipped before. Easy backups and dull migrations matter more than novelty on a system people depend on all day.",
-                },
-                {
-                  title: "Ship in Thin Slices",
-                  text: "One real workflow at a time, in front of users within a week or two. Feedback on something running beats feedback on a mockup.",
-                },
-                {
-                  title: "Leave It Maintainable",
-                  text: "Readable code, decisions written down, and a handover so the next person—or me in six months—isn't reverse-engineering it.",
-                },
-              ].map((step, i) => (
-                <div key={step.title} className={aiStyles.step}>
-                  <span className={aiStyles.stepNum}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className={aiStyles.stepTitle}>{step.title}</h3>
-                  <p className={aiStyles.stepText}>{step.text}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <ProcessStory />
     </main>
   );
 }
