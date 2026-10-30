@@ -228,7 +228,7 @@ export default function StackStory() {
           <p className={styles.answerLine}>
             <span className={styles.mask}>
               <span data-rise className={styles.riser}>
-                I PICK <span className={styles.accent}>WHAT HOLDS UP,</span>
+                I PICK <span className={styles.accent}>WHAT HOLDS UP</span>
               </span>
             </span>
             <span className={styles.mask}>
